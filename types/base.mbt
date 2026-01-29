@@ -1,16 +1,16 @@
 ///| LSP Base Types
 
 ///| Document URI (typically file:// URL)
-pub type DocumentUri String derive(Eq)
+pub struct DocumentUri(String) derive(Eq)
 
 ///|
 pub impl Show for DocumentUri with output(self, logger) {
-  logger.write_string(self._)
+  logger.write_string(self.0)
 }
 
 ///|
 pub impl @json.ToJson for DocumentUri with to_json(self) {
-  @json.JsonValue::string(self._)
+  @json.JsonValue::string(self.0)
 }
 
 ///|
@@ -83,11 +83,11 @@ pub impl @json.FromJson for Range with from_json(json) {
     _ => raise @json.JsonError("expected object for Range")
   }
   let start = match obj.get("start") {
-    Some(v) => Position::from_json!(v)
+    Some(v) => Position::from_json(v)
     None => raise @json.JsonError("missing start")
   }
   let end = match obj.get("end") {
-    Some(v) => Position::from_json!(v)
+    Some(v) => Position::from_json(v)
     None => raise @json.JsonError("missing end")
   }
   Range::{ start, end }
@@ -119,11 +119,11 @@ pub impl @json.FromJson for Location with from_json(json) {
     _ => raise @json.JsonError("expected object for Location")
   }
   let uri = match obj.get("uri") {
-    Some(v) => DocumentUri::from_json!(v)
+    Some(v) => DocumentUri::from_json(v)
     None => raise @json.JsonError("missing uri")
   }
   let range = match obj.get("range") {
-    Some(v) => Range::from_json!(v)
+    Some(v) => Range::from_json(v)
     None => raise @json.JsonError("missing range")
   }
   Location::{ uri, range }
@@ -148,7 +148,7 @@ pub impl @json.FromJson for TextDocumentIdentifier with from_json(json) {
     _ => raise @json.JsonError("expected object for TextDocumentIdentifier")
   }
   let uri = match obj.get("uri") {
-    Some(v) => DocumentUri::from_json!(v)
+    Some(v) => DocumentUri::from_json(v)
     None => raise @json.JsonError("missing uri")
   }
   TextDocumentIdentifier::{ uri }
@@ -179,7 +179,7 @@ pub impl @json.FromJson for TextDocumentItem with from_json(json) {
     _ => raise @json.JsonError("expected object for TextDocumentItem")
   }
   let uri = match obj.get("uri") {
-    Some(v) => DocumentUri::from_json!(v)
+    Some(v) => DocumentUri::from_json(v)
     None => raise @json.JsonError("missing uri")
   }
   let language_id = match obj.get("languageId") {
@@ -218,7 +218,7 @@ pub impl @json.FromJson for VersionedTextDocumentIdentifier with from_json(json)
     _ => raise @json.JsonError("expected object for VersionedTextDocumentIdentifier")
   }
   let uri = match obj.get("uri") {
-    Some(v) => DocumentUri::from_json!(v)
+    Some(v) => DocumentUri::from_json(v)
     None => raise @json.JsonError("missing uri")
   }
   let version = match obj.get("version") {
@@ -249,11 +249,11 @@ pub impl @json.FromJson for TextDocumentPositionParams with from_json(json) {
     _ => raise @json.JsonError("expected object for TextDocumentPositionParams")
   }
   let text_document = match obj.get("textDocument") {
-    Some(v) => TextDocumentIdentifier::from_json!(v)
+    Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
   let position = match obj.get("position") {
-    Some(v) => Position::from_json!(v)
+    Some(v) => Position::from_json(v)
     None => raise @json.JsonError("missing position")
   }
   TextDocumentPositionParams::{ text_document, position }

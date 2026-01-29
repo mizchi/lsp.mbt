@@ -44,7 +44,7 @@ fn Parser::skip_whitespace(self : Parser) -> Unit {
 }
 
 ///|
-fn Parser::expect(self : Parser, c : Char) -> Unit!JsonError {
+fn Parser::expect(self : Parser, c : Char) -> Unit raise JsonError {
   match self.advance() {
     Some(ch) if ch == c => ()
     _ => raise JsonError("expected '\{c}'")
@@ -52,9 +52,9 @@ fn Parser::expect(self : Parser, c : Char) -> Unit!JsonError {
 }
 
 ///| Parse a JSON value from string
-pub fn parse(input : String) -> JsonValue!JsonError {
+pub fn parse(input : String) -> JsonValue raise JsonError {
   let parser = Parser::new(input)
-  let value = parser.parse_value!()
+  let value = parser.parse_value()
   parser.skip_whitespace()
   if parser.peek() != None {
     raise JsonError("unexpected trailing content")
@@ -63,19 +63,19 @@ pub fn parse(input : String) -> JsonValue!JsonError {
 }
 
 ///|
-fn Parser::parse_value(self : Parser) -> JsonValue!JsonError {
+fn Parser::parse_value(self : Parser) -> JsonValue raise JsonError {
   self.skip_whitespace()
   match self.peek() {
     None => raise JsonError("unexpected end of input")
-    Some('n') => self.parse_null!()
-    Some('t') => self.parse_true!()
-    Some('f') => self.parse_false!()
-    Some('"') => self.parse_string!()
-    Some('[') => self.parse_array!()
-    Some('{') => self.parse_object!()
+    Some('n') => self.parse_null()
+    Some('t') => self.parse_true()
+    Some('f') => self.parse_false()
+    Some('"') => self.parse_string()
+    Some('[') => self.parse_array()
+    Some('{') => self.parse_object()
     Some(c) =>
       if c == '-' || (c >= '0' && c <= '9') {
-        self.parse_number!()
+        self.parse_number()
       } else {
         raise JsonError("unexpected character: '\{c}'")
       }
@@ -83,36 +83,36 @@ fn Parser::parse_value(self : Parser) -> JsonValue!JsonError {
 }
 
 ///|
-fn Parser::parse_null(self : Parser) -> JsonValue!JsonError {
-  self.expect!('n')
-  self.expect!('u')
-  self.expect!('l')
-  self.expect!('l')
+fn Parser::parse_null(self : Parser) -> JsonValue raise JsonError {
+  self.expect('n')
+  self.expect('u')
+  self.expect('l')
+  self.expect('l')
   JsonValue::Null
 }
 
 ///|
-fn Parser::parse_true(self : Parser) -> JsonValue!JsonError {
-  self.expect!('t')
-  self.expect!('r')
-  self.expect!('u')
-  self.expect!('e')
+fn Parser::parse_true(self : Parser) -> JsonValue raise JsonError {
+  self.expect('t')
+  self.expect('r')
+  self.expect('u')
+  self.expect('e')
   JsonValue::Bool(true)
 }
 
 ///|
-fn Parser::parse_false(self : Parser) -> JsonValue!JsonError {
-  self.expect!('f')
-  self.expect!('a')
-  self.expect!('l')
-  self.expect!('s')
-  self.expect!('e')
+fn Parser::parse_false(self : Parser) -> JsonValue raise JsonError {
+  self.expect('f')
+  self.expect('a')
+  self.expect('l')
+  self.expect('s')
+  self.expect('e')
   JsonValue::Bool(false)
 }
 
 ///|
-fn Parser::parse_string(self : Parser) -> JsonValue!JsonError {
-  self.expect!('"')
+fn Parser::parse_string(self : Parser) -> JsonValue raise JsonError {
+  self.expect('"')
   let buf = StringBuilder::new()
   while {
     match self.peek() {
@@ -133,7 +133,7 @@ fn Parser::parse_string(self : Parser) -> JsonValue!JsonError {
           Some('r') => buf.write_char('\r')
           Some('t') => buf.write_char('\t')
           Some('u') => {
-            let code = self.parse_hex4!()
+            let code = self.parse_hex4()
             buf.write_char(code.unsafe_to_char())
           }
           _ => raise JsonError("invalid escape sequence")
@@ -142,12 +142,12 @@ fn Parser::parse_string(self : Parser) -> JsonValue!JsonError {
       None => raise JsonError("unterminated string")
     }
   }
-  self.expect!('"')
+  self.expect('"')
   JsonValue::String(buf.to_string())
 }
 
 ///|
-fn Parser::parse_hex4(self : Parser) -> Int!JsonError {
+fn Parser::parse_hex4(self : Parser) -> Int raise JsonError {
   let mut result = 0
   for i = 0; i < 4; i = i + 1 {
     match self.advance() {
@@ -170,7 +170,7 @@ fn Parser::parse_hex4(self : Parser) -> Int!JsonError {
 }
 
 ///|
-fn Parser::parse_number(self : Parser) -> JsonValue!JsonError {
+fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
   let start = self.pos
   // Optional minus
   if self.peek() == Some('-') {
@@ -237,9 +237,13 @@ fn Parser::parse_number(self : Parser) -> JsonValue!JsonError {
     }
     _ => ()
   }
-  let text = self.input.substring(start~, end=self.pos)
+  let text = try {
+    self.input[start:self.pos].to_string()
+  } catch {
+    _ => raise JsonError("invalid number substring")
+  }
   try {
-    let n = @strconv.parse_double!(text)
+    let n = @strconv.parse_double(text)
     JsonValue::Number(n)
   } catch {
     _ => raise JsonError("invalid number: \{text}")
@@ -247,30 +251,30 @@ fn Parser::parse_number(self : Parser) -> JsonValue!JsonError {
 }
 
 ///|
-fn Parser::parse_array(self : Parser) -> JsonValue!JsonError {
-  self.expect!('[')
+fn Parser::parse_array(self : Parser) -> JsonValue raise JsonError {
+  self.expect('[')
   let arr : Array[JsonValue] = []
   self.skip_whitespace()
   if self.peek() == Some(']') {
     let _ = self.advance()
     return JsonValue::Array(arr)
   }
-  arr.push(self.parse_value!())
+  arr.push(self.parse_value())
   while {
     self.skip_whitespace()
     self.peek() == Some(',')
   } {
     let _ = self.advance()
-    arr.push(self.parse_value!())
+    arr.push(self.parse_value())
   }
   self.skip_whitespace()
-  self.expect!(']')
+  self.expect(']')
   JsonValue::Array(arr)
 }
 
 ///|
-fn Parser::parse_object(self : Parser) -> JsonValue!JsonError {
-  self.expect!('{')
+fn Parser::parse_object(self : Parser) -> JsonValue raise JsonError {
+  self.expect('{')
   let obj : Map[String, JsonValue] = {}
   self.skip_whitespace()
   if self.peek() == Some('}') {
@@ -278,30 +282,30 @@ fn Parser::parse_object(self : Parser) -> JsonValue!JsonError {
     return JsonValue::Object(obj)
   }
   // First key-value
-  let (key, value) = self.parse_key_value!()
+  let (key, value) = self.parse_key_value()
   obj.set(key, value)
   while {
     self.skip_whitespace()
     self.peek() == Some(',')
   } {
     let _ = self.advance()
-    let (key, value) = self.parse_key_value!()
+    let (key, value) = self.parse_key_value()
     obj.set(key, value)
   }
   self.skip_whitespace()
-  self.expect!('}')
+  self.expect('}')
   JsonValue::Object(obj)
 }
 
 ///|
-fn Parser::parse_key_value(self : Parser) -> (String, JsonValue)!JsonError {
+fn Parser::parse_key_value(self : Parser) -> (String, JsonValue) raise JsonError {
   self.skip_whitespace()
-  let key = match self.parse_string!() {
+  let key = match self.parse_string() {
     JsonValue::String(s) => s
     _ => raise JsonError("expected string key")
   }
   self.skip_whitespace()
-  self.expect!(':')
-  let value = self.parse_value!()
+  self.expect(':')
+  let value = self.parse_value()
   (key, value)
 }

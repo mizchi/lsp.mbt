@@ -3,11 +3,13 @@
 ///| Method definition with typed params and result
 pub struct MethodDef[Params, Result] {
   name : String
+  phantom_params : Params?
+  phantom_result : Result?
 }
 
 ///|
-pub fn MethodDef::new[Params, Result](name : String) -> MethodDef[Params, Result] {
-  MethodDef::{ name }
+pub fn[Params, Result] MethodDef::new(name : String) -> MethodDef[Params, Result] {
+  MethodDef::{ name, phantom_params: None, phantom_result: None }
 }
 
 ///| Common LSP method definitions
@@ -61,34 +63,34 @@ pub fn method_text_document_formatting() -> MethodDef[@json.JsonValue, @json.Jso
 }
 
 ///| Helper to create a typed request handler
-pub fn make_handler[Params : @json.FromJson, Result : @json.ToJson](
-  f : (Params) -> Result!RpcError
+pub fn[Params : @json.FromJson, Result : @json.ToJson] make_handler(
+  f : (Params) -> Result raise RpcError
 ) -> Handler {
-  fn(req : Request) -> Response!RpcError {
+  Handler(fn(req : Request) -> Response raise RpcError {
     let params : Params = match req.params {
       Some(p) => {
         try {
-          Params::from_json!(p)
+          Params::from_json(p)
         } catch {
           _ => raise InvalidParams("failed to parse params")
         }
       }
       None => raise InvalidParams("missing params")
     }
-    let result = f!(params)
+    let result = f(params)
     Response::ok(req.id, result.to_json())
-  }
+  })
 }
 
 ///| Helper to create a typed notification handler
-pub fn make_notification_handler[Params : @json.FromJson](
+pub fn[Params : @json.FromJson] make_notification_handler(
   f : (Params) -> Unit
 ) -> (Request) -> Unit {
   fn(req : Request) {
     match req.params {
       Some(p) => {
         try {
-          let params : Params = Params::from_json!(p)
+          let params : Params = Params::from_json(p)
           f(params)
         } catch {
           _ => () // Ignore parse errors for notifications

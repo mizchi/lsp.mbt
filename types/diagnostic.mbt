@@ -83,7 +83,7 @@ pub impl @json.FromJson for DiagnosticRelatedInformation with from_json(json) {
     _ => raise @json.JsonError("expected object for DiagnosticRelatedInformation")
   }
   let location = match obj.get("location") {
-    Some(v) => Location::from_json!(v)
+    Some(v) => Location::from_json(v)
     None => raise @json.JsonError("missing location")
   }
   let message = match obj.get("message") {
@@ -187,7 +187,7 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     _ => raise @json.JsonError("expected object for Diagnostic")
   }
   let range = match obj.get("range") {
-    Some(v) => Range::from_json!(v)
+    Some(v) => Range::from_json(v)
     None => raise @json.JsonError("missing range")
   }
   let message = match obj.get("message") {
@@ -195,11 +195,11 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     _ => raise @json.JsonError("missing or invalid message")
   }
   let severity : DiagnosticSeverity? = match obj.get("severity") {
-    Some(v) if not(v.is_null()) => Some(DiagnosticSeverity::from_json!(v))
+    Some(v) if not(v.is_null()) => Some(DiagnosticSeverity::from_json(v))
     _ => None
   }
   let code : DiagnosticCode? = match obj.get("code") {
-    Some(v) if not(v.is_null()) => Some(DiagnosticCode::from_json!(v))
+    Some(v) if not(v.is_null()) => Some(DiagnosticCode::from_json(v))
     _ => None
   }
   let source : String? = match obj.get("source") {
@@ -210,7 +210,7 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     Some(@json.JsonValue::Array(arr)) => {
       let result : Array[DiagnosticTag] = []
       for item in arr {
-        result.push(DiagnosticTag::from_json!(item))
+        result.push(DiagnosticTag::from_json(item))
       }
       Some(result)
     }
@@ -222,7 +222,7 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     Some(@json.JsonValue::Array(arr)) => {
       let result : Array[DiagnosticRelatedInformation] = []
       for item in arr {
-        result.push(DiagnosticRelatedInformation::from_json!(item))
+        result.push(DiagnosticRelatedInformation::from_json(item))
       }
       Some(result)
     }
@@ -261,7 +261,7 @@ pub impl @json.FromJson for PublishDiagnosticsParams with from_json(json) {
     _ => raise @json.JsonError("expected object for PublishDiagnosticsParams")
   }
   let uri = match obj.get("uri") {
-    Some(v) => DocumentUri::from_json!(v)
+    Some(v) => DocumentUri::from_json(v)
     None => raise @json.JsonError("missing uri")
   }
   let version : Int? = match obj.get("version") {
@@ -272,7 +272,7 @@ pub impl @json.FromJson for PublishDiagnosticsParams with from_json(json) {
     Some(@json.JsonValue::Array(arr)) => {
       let result : Array[Diagnostic] = []
       for item in arr {
-        result.push(Diagnostic::from_json!(item))
+        result.push(Diagnostic::from_json(item))
       }
       result
     }

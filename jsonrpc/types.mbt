@@ -26,22 +26,22 @@ pub impl @json.FromJson for RequestId with from_json(json) {
 ///| JSON-RPC Request
 pub struct Request {
   id : RequestId?
-  method : String
+  method_name : String
   params : @json.JsonValue?
 } derive(Show)
 
 ///|
 pub fn Request::new(
-  method : String,
+  method_name : String,
   params~ : @json.JsonValue? = None,
   id~ : RequestId? = None
 ) -> Request {
-  Request::{ id, method, params }
+  Request::{ id, method_name, params }
 }
 
 ///|
 pub fn Request::is_notification(self : Request) -> Bool {
-  self.id.is_empty()
+  self.id is None
 }
 
 ///|
@@ -52,7 +52,7 @@ pub impl @json.ToJson for Request with to_json(self) {
     Some(id) => obj.set("id", id.to_json())
     None => ()
   }
-  obj.set("method", @json.JsonValue::string(self.method))
+  obj.set("method", @json.JsonValue::string(self.method_name))
   match self.params {
     Some(p) => obj.set("params", p)
     None => ()
@@ -66,16 +66,16 @@ pub impl @json.FromJson for Request with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Request")
   }
-  let method = match obj.get("method") {
+  let method_name = match obj.get("method") {
     Some(@json.JsonValue::String(m)) => m
     _ => raise @json.JsonError("missing or invalid method")
   }
   let id : RequestId? = match obj.get("id") {
-    Some(v) if not(v.is_null()) => Some(RequestId::from_json!(v))
+    Some(v) if not(v.is_null()) => Some(RequestId::from_json(v))
     _ => None
   }
   let params = obj.get("params")
-  Request::{ id, method, params }
+  Request::{ id, method_name, params }
 }
 
 ///| JSON-RPC Error
@@ -164,7 +164,7 @@ pub fn Response::err(id : RequestId?, error : ResponseError) -> Response {
 
 ///|
 pub fn Response::is_success(self : Response) -> Bool {
-  self.error.is_empty()
+  self.error is None
 }
 
 ///|
@@ -193,12 +193,12 @@ pub impl @json.FromJson for Response with from_json(json) {
     _ => raise @json.JsonError("expected object for Response")
   }
   let id : RequestId? = match obj.get("id") {
-    Some(v) if not(v.is_null()) => Some(RequestId::from_json!(v))
+    Some(v) if not(v.is_null()) => Some(RequestId::from_json(v))
     _ => None
   }
   let result = obj.get("result")
   let error : ResponseError? = match obj.get("error") {
-    Some(v) if not(v.is_null()) => Some(ResponseError::from_json!(v))
+    Some(v) if not(v.is_null()) => Some(ResponseError::from_json(v))
     _ => None
   }
   Response::{ id, result, error }
@@ -226,8 +226,8 @@ pub impl @json.FromJson for Message with from_json(json) {
   }
   // Check if it's a request (has method) or response (has result or error)
   if obj.contains("method") {
-    Request(Request::from_json!(json))
+    Request(Request::from_json(json))
   } else {
-    Response(Response::from_json!(json))
+    Response(Response::from_json(json))
   }
 }

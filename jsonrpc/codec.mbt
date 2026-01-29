@@ -48,13 +48,17 @@ pub fn Decoder::push(self : Decoder, data : String) -> Unit {
 }
 
 ///| Try to decode a complete message from the buffer
-pub fn Decoder::decode(self : Decoder) -> DecodeResult?!@json.JsonError {
+pub fn Decoder::decode(self : Decoder) -> DecodeResult? raise @json.JsonError {
   // Find header end
   let header_end = find_header_end(self.buffer)
   guard header_end >= 0 else { return None }
 
   // Parse Content-Length from header
-  let header = self.buffer.substring(start=0, end=header_end)
+  let header = try {
+    self.buffer[0:header_end].to_string()
+  } catch {
+    _ => return None
+  }
   let content_length = parse_content_length(header)
   guard content_length > 0 else { return None }
 
@@ -64,12 +68,20 @@ pub fn Decoder::decode(self : Decoder) -> DecodeResult?!@json.JsonError {
   guard content_end <= self.buffer.length() else { return None }
 
   // Extract and parse content
-  let content = self.buffer.substring(start=content_start, end=content_end)
-  let json = @json.parse!(content)
-  let message = Message::from_json!(json)
+  let content = try {
+    self.buffer[content_start:content_end].to_string()
+  } catch {
+    _ => return None
+  }
+  let json = @json.parse(content)
+  let message = Message::from_json(json)
 
   // Remove consumed data from buffer
-  self.buffer = self.buffer.substring(start=content_end, end=self.buffer.length())
+  self.buffer = try {
+    self.buffer[content_end:self.buffer.length()].to_string()
+  } catch {
+    _ => ""
+  }
 
   Some(DecodeResult::{ message, consumed: content_end })
 }

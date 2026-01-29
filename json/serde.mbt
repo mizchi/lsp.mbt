@@ -1,7 +1,9 @@
 ///| JSON serialization/deserialization traits
 
 ///| Error type for JSON operations
-pub(all) type! JsonError String
+pub(all) suberror JsonError {
+  JsonError(String)
+}
 
 ///| Create a JSON error
 pub fn json_error(msg : String) -> JsonError {
@@ -15,7 +17,7 @@ pub(open) trait ToJson {
 
 ///| Trait for types that can be parsed from JSON
 pub(open) trait FromJson {
-  from_json(JsonValue) -> Self!JsonError
+  from_json(JsonValue) -> Self raise JsonError
 }
 
 // Implementations for primitive types
@@ -48,7 +50,7 @@ pub impl FromJson for Int with from_json(json) {
 
 ///|
 pub impl ToJson for UInt with to_json(self) {
-  JsonValue::Number(self.to_int().to_double())
+  JsonValue::Number(self.reinterpret_as_int().to_double())
 }
 
 ///|
@@ -100,7 +102,7 @@ pub impl[T : FromJson] FromJson for Array[T] with from_json(json) {
     JsonValue::Array(arr) => {
       let result : Array[T] = []
       for item in arr {
-        result.push(T::from_json!(item))
+        result.push(T::from_json(item))
       }
       result
     }
@@ -120,7 +122,7 @@ pub impl[T : ToJson] ToJson for T? with to_json(self) {
 pub impl[T : FromJson] FromJson for T? with from_json(json) {
   match json {
     JsonValue::Null => None
-    _ => Some(T::from_json!(json))
+    _ => Some(T::from_json(json))
   }
 }
 
