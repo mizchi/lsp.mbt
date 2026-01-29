@@ -1,0 +1,12 @@
+{
+  "name": "lsp-codegen",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate": "npx tsx generate.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}
