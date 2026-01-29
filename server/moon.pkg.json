@@ -1,0 +1,7 @@
+{
+  "import": [
+    "mizchi/lsp/json",
+    "mizchi/lsp/jsonrpc",
+    "mizchi/lsp/types"
+  ]
+}
