@@ -1,0 +1,77 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/lsp/client"
+
+import {
+  "mizchi/lsp/json",
+  "mizchi/lsp/jsonrpc",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Client {
+  config : ClientConfig
+  decoder : @jsonrpc.Decoder
+  mut next_id : Int
+  pending : Map[Int, ResponseHandler]
+  notification_handlers : Map[String, NotificationHandler]
+  mut initialized : Bool
+}
+pub fn[T : Transport] Client::close_document(Self, T, String) -> Unit
+pub fn Client::create_did_close_notification(Self, String) -> String
+pub fn Client::create_did_open_notification(Self, String, String, Int, String) -> String
+pub fn Client::create_exit_notification(Self) -> String
+pub fn Client::create_initialize_request(Self) -> (Int, String)
+pub fn Client::create_initialized_notification(Self) -> String
+pub fn Client::create_shutdown_request(Self) -> (Int, String)
+pub fn[T : Transport] Client::exit(Self, T) -> Unit
+pub fn Client::feed(Self, String) -> Unit
+pub fn[T : Transport] Client::initialize(Self, T, (@jsonrpc.Response) -> Unit) -> Unit
+pub fn Client::is_initialized(Self) -> Bool
+pub fn Client::new(ClientConfig) -> Self
+pub fn Client::on_notification(Self, String, (@json.JsonValue?) -> Unit) -> Unit
+pub fn[T : Transport] Client::open_document(Self, T, String, String, Int, String) -> Unit
+pub fn[T : Transport] Client::process(Self, T) -> Unit
+pub fn Client::register_pending(Self, Int, (@jsonrpc.Response) -> Unit) -> Unit
+pub fn[T : Transport] Client::send_initialized(Self, T) -> Unit
+pub fn Client::set_initialized(Self) -> Unit
+pub fn[T : Transport] Client::shutdown(Self, T, (@jsonrpc.Response) -> Unit) -> Unit
+pub fn[T : Transport] Client::tick(Self, T) -> Bool
+
+pub(all) struct ClientConfig {
+  root_uri : String
+  process_id : Int
+}
+
+type NotificationHandler
+
+pub(all) enum ReadResult {
+  Data(String)
+  Eof
+  Error(String)
+}
+pub impl Eq for ReadResult
+pub impl Show for ReadResult
+
+type ResponseHandler
+
+pub struct StubTransport {
+  input_buffer : Array[String]
+  output_buffer : Array[String]
+}
+pub fn StubTransport::clear_output(Self) -> Unit
+pub fn StubTransport::get_output(Self) -> Array[String]
+pub fn StubTransport::new() -> Self
+pub fn StubTransport::push_input(Self, String) -> Unit
+pub impl Transport for StubTransport
+
+// Type aliases
+
+// Traits
+pub(open) trait Transport {
+  read(Self) -> ReadResult
+  write(Self, String) -> Unit
+}
+

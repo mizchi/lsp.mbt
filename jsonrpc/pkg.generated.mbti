@@ -1,0 +1,144 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/lsp/jsonrpc"
+
+import {
+  "mizchi/lsp/json",
+}
+
+// Values
+pub fn encode(Message) -> String
+
+pub fn encode_request(Request) -> String
+
+pub fn encode_response(Response) -> String
+
+pub fn error_internal_error() -> Int
+
+pub fn error_invalid_params() -> Int
+
+pub fn error_invalid_request() -> Int
+
+pub fn error_method_not_found() -> Int
+
+pub fn error_parse_error() -> Int
+
+pub fn[Params : @json.FromJson, Result : @json.ToJson] make_handler((Params) -> Result raise RpcError) -> Handler
+
+pub fn[Params : @json.FromJson] make_notification_handler((Params) -> Unit) -> (Request) -> Unit
+
+pub fn method_initialize() -> MethodDef[@json.JsonValue, @json.JsonValue]
+
+pub fn method_shutdown() -> MethodDef[Unit, @json.JsonValue]
+
+pub fn method_text_document_completion() -> MethodDef[@json.JsonValue, @json.JsonValue]
+
+pub fn method_text_document_definition() -> MethodDef[@json.JsonValue, @json.JsonValue?]
+
+pub fn method_text_document_did_change() -> MethodDef[@json.JsonValue, Unit]
+
+pub fn method_text_document_did_close() -> MethodDef[@json.JsonValue, Unit]
+
+pub fn method_text_document_did_open() -> MethodDef[@json.JsonValue, Unit]
+
+pub fn method_text_document_formatting() -> MethodDef[@json.JsonValue, @json.JsonValue]
+
+pub fn method_text_document_hover() -> MethodDef[@json.JsonValue, @json.JsonValue?]
+
+pub fn method_text_document_references() -> MethodDef[@json.JsonValue, @json.JsonValue]
+
+// Errors
+pub(all) suberror RpcError {
+  MethodNotFound(String)
+  InvalidParams(String)
+  InternalError(String)
+}
+pub fn RpcError::to_response_error(Self) -> ResponseError
+
+// Types and methods
+pub struct DecodeResult {
+  message : Message
+  consumed : Int
+}
+
+pub struct Decoder {
+  mut buffer : String
+}
+pub fn Decoder::decode(Self) -> DecodeResult? raise @json.JsonError
+pub fn Decoder::new() -> Self
+pub fn Decoder::push(Self, String) -> Unit
+
+pub struct Dispatcher {
+  handlers : Map[String, Handler]
+  notification_handlers : Map[String, (Request) -> Unit]
+}
+pub fn Dispatcher::dispatch(Self, Message) -> Response?
+pub fn Dispatcher::new() -> Self
+pub fn Dispatcher::on_notification(Self, String, (Request) -> Unit) -> Unit
+pub fn Dispatcher::on_request(Self, String, Handler) -> Unit
+pub fn Dispatcher::process(Self, String) -> String? raise @json.JsonError
+
+pub(all) struct Handler((Request) -> Response raise RpcError)
+#deprecated
+pub fn Handler::inner(Self) -> (Request) -> Response raise RpcError
+
+pub(all) enum Message {
+  Request(Request)
+  Response(Response)
+}
+pub impl @json.FromJson for Message
+pub impl @json.ToJson for Message
+pub impl Show for Message
+
+pub struct MethodDef[Params, Result] {
+  name : String
+  phantom_params : Params?
+  phantom_result : Result?
+}
+pub fn[Params, Result] MethodDef::new(String) -> Self[Params, Result]
+
+pub struct Request {
+  id : RequestId?
+  method_name : String
+  params : @json.JsonValue?
+}
+pub fn Request::is_notification(Self) -> Bool
+pub fn Request::new(String, params? : @json.JsonValue?, id? : RequestId?) -> Self
+pub impl @json.FromJson for Request
+pub impl @json.ToJson for Request
+pub impl Show for Request
+
+pub(all) enum RequestId {
+  Number(Int)
+  String(String)
+}
+pub impl @json.FromJson for RequestId
+pub impl @json.ToJson for RequestId
+pub impl Eq for RequestId
+pub impl Show for RequestId
+
+pub struct Response {
+  id : RequestId?
+  result : @json.JsonValue?
+  error : ResponseError?
+}
+pub fn Response::err(RequestId?, ResponseError) -> Self
+pub fn Response::is_success(Self) -> Bool
+pub fn Response::ok(RequestId?, @json.JsonValue) -> Self
+pub impl @json.FromJson for Response
+pub impl @json.ToJson for Response
+pub impl Show for Response
+
+pub struct ResponseError {
+  code : Int
+  message : String
+  data : @json.JsonValue?
+}
+pub fn ResponseError::new(Int, String, data? : @json.JsonValue?) -> Self
+pub impl @json.FromJson for ResponseError
+pub impl @json.ToJson for ResponseError
+pub impl Show for ResponseError
+
+// Type aliases
+
+// Traits
+

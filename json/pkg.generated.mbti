@@ -1,0 +1,72 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/lsp/json"
+
+// Values
+pub fn json_error(String) -> JsonError
+
+pub fn parse(String) -> JsonValue raise JsonError
+
+pub fn stringify(JsonValue) -> String
+
+pub fn stringify_pretty(JsonValue) -> String
+
+// Errors
+pub(all) suberror JsonError {
+  JsonError(String)
+}
+
+// Types and methods
+pub(all) enum JsonValue {
+  Null
+  Bool(Bool)
+  Number(Double)
+  String(String)
+  Array(Array[JsonValue])
+  Object(Map[String, JsonValue])
+}
+pub fn JsonValue::array(Array[Self]) -> Self
+pub fn JsonValue::as_array(Self) -> Array[Self]?
+pub fn JsonValue::as_bool(Self) -> Bool?
+pub fn JsonValue::as_int(Self) -> Int?
+pub fn JsonValue::as_number(Self) -> Double?
+pub fn JsonValue::as_object(Self) -> Map[String, Self]?
+pub fn JsonValue::as_string(Self) -> String?
+pub fn JsonValue::at(Self, Int) -> Self?
+pub fn JsonValue::bool(Bool) -> Self
+pub fn JsonValue::get(Self, String) -> Self?
+pub fn JsonValue::int(Int) -> Self
+pub fn JsonValue::is_null(Self) -> Bool
+pub fn JsonValue::null() -> Self
+pub fn JsonValue::number(Double) -> Self
+pub fn JsonValue::object(Map[String, Self]) -> Self
+pub fn JsonValue::string(String) -> Self
+pub impl FromJson for JsonValue
+pub impl ToJson for JsonValue
+pub impl Eq for JsonValue
+pub impl Show for JsonValue
+
+// Type aliases
+
+// Traits
+pub(open) trait FromJson {
+  from_json(JsonValue) -> Self raise JsonError
+}
+pub impl FromJson for Bool
+pub impl FromJson for Int
+pub impl FromJson for UInt
+pub impl FromJson for Double
+pub impl FromJson for String
+pub impl[T : FromJson] FromJson for T?
+pub impl[T : FromJson] FromJson for Array[T]
+
+pub(open) trait ToJson {
+  to_json(Self) -> JsonValue
+}
+pub impl ToJson for Bool
+pub impl ToJson for Int
+pub impl ToJson for UInt
+pub impl ToJson for Double
+pub impl ToJson for String
+pub impl[T : ToJson] ToJson for T?
+pub impl[T : ToJson] ToJson for Array[T]
+

@@ -1211,7 +1211,6 @@ pub impl @json.FromJson for LanguageKind with from_json(json) {
         "markdown" => Markdown
         "objective-c" => ObjectiveC
         "objective-cpp" => ObjectiveCPP
-        "pascal" => Pascal
         "perl" => Perl
         "perl6" => Perl6
         "php" => PHP
@@ -5430,14 +5429,14 @@ pub struct InitializedParams {
 }
 
 ///|
-pub impl @json.ToJson for InitializedParams with to_json(self) {
+pub impl @json.ToJson for InitializedParams with to_json(_self) {
   let obj : Map[String, @json.JsonValue] = {}
   @json.JsonValue::Object(obj)
 }
 
 ///|
 pub impl @json.FromJson for InitializedParams with from_json(json) {
-  let obj = match json {
+  let _ = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InitializedParams")
   }
@@ -10668,7 +10667,7 @@ pub struct Registration {
   ///| The id used to register the request. The id can be used to deregister
   id : String
   ///| The method / capability to register for.
-  method : String
+  method_ : String
   ///| Options necessary for the registration.
   register_options : LSPAny?
 }
@@ -10677,7 +10676,7 @@ pub struct Registration {
 pub impl @json.ToJson for Registration with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
   obj.set("id", @json.JsonValue::String(self.id))
-  obj.set("method", @json.JsonValue::String(self.method))
+  obj.set("method", @json.JsonValue::String(self.method_))
   match self.register_options {
     Some(v) => obj.set("registerOptions", v.to_json())
     None => ()
@@ -10695,7 +10694,7 @@ pub impl @json.FromJson for Registration with from_json(json) {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing id")
   }
-  let method = match obj.get("method") {
+  let method_ = match obj.get("method") {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing method")
   }
@@ -10703,7 +10702,7 @@ pub impl @json.FromJson for Registration with from_json(json) {
     Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
     _ => None
   }
-  Registration::{ id, method, register_options }
+  Registration::{ id, method_, register_options }
 }
 
 ///| General parameters to unregister a request or notification.
@@ -10711,14 +10710,14 @@ pub struct Unregistration {
   ///| The id used to unregister the request or notification. Usually an id
   id : String
   ///| The method to unregister for.
-  method : String
+  method_ : String
 }
 
 ///|
 pub impl @json.ToJson for Unregistration with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
   obj.set("id", @json.JsonValue::String(self.id))
-  obj.set("method", @json.JsonValue::String(self.method))
+  obj.set("method", @json.JsonValue::String(self.method_))
   @json.JsonValue::Object(obj)
 }
 
@@ -10732,11 +10731,11 @@ pub impl @json.FromJson for Unregistration with from_json(json) {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing id")
   }
-  let method = match obj.get("method") {
+  let method_ = match obj.get("method") {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing method")
   }
-  Unregistration::{ id, method }
+  Unregistration::{ id, method_ }
 }
 
 pub struct WorkspaceFoldersInitializeParams {

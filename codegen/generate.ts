@@ -255,13 +255,17 @@ class MoonBitGenerator {
       this.emit('}');
       this.emit('');
 
-      // Generate FromJson
+      // Generate FromJson - filter duplicates to avoid unreachable code
+      const seenValues = new Set<string>();
       this.emit(`///|`);
       this.emit(`pub impl @json.FromJson for ${name} with from_json(json) {`);
       this.emit(`  match json {`);
       this.emit(`    @json.JsonValue::String(s) => {`);
       this.emit(`      match s {`);
       for (const val of enumDef.values) {
+        const strValue = String(val.value);
+        if (seenValues.has(strValue)) continue; // Skip duplicates
+        seenValues.add(strValue);
         const variantName = this.sanitizeEnumVariant(val.name);
         this.emit(`        "${val.value}" => ${variantName}`);
       }
@@ -352,7 +356,9 @@ class MoonBitGenerator {
 
     // Generate ToJson
     this.emit(`///|`);
-    this.emit(`pub impl @json.ToJson for ${name} with to_json(self) {`);
+    // Use _self if no properties to avoid unused variable warning
+    const selfParam = allProperties.length === 0 ? '_self' : 'self';
+    this.emit(`pub impl @json.ToJson for ${name} with to_json(${selfParam}) {`);
     this.emit(`  let obj : Map[String, @json.JsonValue] = {}`);
     for (const prop of allProperties) {
       const propName = this.sanitizeFieldName(prop.name);
@@ -374,7 +380,9 @@ class MoonBitGenerator {
     // Generate FromJson
     this.emit(`///|`);
     this.emit(`pub impl @json.FromJson for ${name} with from_json(json) {`);
-    this.emit(`  let obj = match json {`);
+    // Use _ if no properties to avoid unused variable warning
+    const objVar = allProperties.length === 0 ? '_' : 'obj';
+    this.emit(`  let ${objVar} = match json {`);
     this.emit(`    @json.JsonValue::Object(o) => o`);
     this.emit(`    _ => raise @json.JsonError("expected object for ${name}")`);
     this.emit(`  }`);
@@ -708,7 +716,7 @@ class MoonBitGenerator {
       result = result.substring(1);
     }
     // Handle reserved words
-    const reserved = ['type', 'fn', 'let', 'match', 'if', 'else', 'for', 'while', 'struct', 'enum', 'pub', 'priv'];
+    const reserved = ['type', 'fn', 'let', 'match', 'if', 'else', 'for', 'while', 'struct', 'enum', 'pub', 'priv', 'method'];
     if (reserved.includes(result)) {
       result = result + '_';
     }

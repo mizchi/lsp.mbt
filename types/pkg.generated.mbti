@@ -1,0 +1,3558 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/lsp/types"
+
+import {
+  "mizchi/lsp/json",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct AnnotatedTextEdit {
+  range : Range
+  new_text : String
+  annotation_id : String
+}
+pub impl @json.FromJson for AnnotatedTextEdit
+pub impl @json.ToJson for AnnotatedTextEdit
+
+pub(all) enum ApplyKind {
+  Replace
+  Merge
+}
+pub impl @json.FromJson for ApplyKind
+pub impl @json.ToJson for ApplyKind
+
+pub struct ApplyWorkspaceEditParams {
+  label : String?
+  edit : WorkspaceEdit
+  metadata : WorkspaceEditMetadata?
+}
+pub impl @json.FromJson for ApplyWorkspaceEditParams
+pub impl @json.ToJson for ApplyWorkspaceEditParams
+
+pub struct ApplyWorkspaceEditResult {
+  applied : Bool
+  failure_reason : String?
+  failed_change : Int?
+}
+pub impl @json.FromJson for ApplyWorkspaceEditResult
+pub impl @json.ToJson for ApplyWorkspaceEditResult
+
+pub struct BaseSymbolInformation {
+  name : String
+  kind : SymbolKind
+  tags : Array[SymbolTag]?
+  container_name : String?
+}
+pub impl @json.FromJson for BaseSymbolInformation
+pub impl @json.ToJson for BaseSymbolInformation
+
+pub struct CallHierarchyClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for CallHierarchyClientCapabilities
+pub impl @json.ToJson for CallHierarchyClientCapabilities
+
+pub struct CallHierarchyIncomingCall {
+  from : CallHierarchyItem
+  from_ranges : Array[Range]
+}
+pub impl @json.FromJson for CallHierarchyIncomingCall
+pub impl @json.ToJson for CallHierarchyIncomingCall
+
+pub struct CallHierarchyIncomingCallsParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  item : CallHierarchyItem
+}
+pub impl @json.FromJson for CallHierarchyIncomingCallsParams
+pub impl @json.ToJson for CallHierarchyIncomingCallsParams
+
+pub struct CallHierarchyItem {
+  name : String
+  kind : SymbolKind
+  tags : Array[SymbolTag]?
+  detail : String?
+  uri : String
+  range : Range
+  selection_range : Range
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for CallHierarchyItem
+pub impl @json.ToJson for CallHierarchyItem
+
+pub struct CallHierarchyOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for CallHierarchyOptions
+pub impl @json.ToJson for CallHierarchyOptions
+
+pub struct CallHierarchyOutgoingCall {
+  to : CallHierarchyItem
+  from_ranges : Array[Range]
+}
+pub impl @json.FromJson for CallHierarchyOutgoingCall
+pub impl @json.ToJson for CallHierarchyOutgoingCall
+
+pub struct CallHierarchyOutgoingCallsParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  item : CallHierarchyItem
+}
+pub impl @json.FromJson for CallHierarchyOutgoingCallsParams
+pub impl @json.ToJson for CallHierarchyOutgoingCallsParams
+
+pub struct CallHierarchyPrepareParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+}
+pub impl @json.FromJson for CallHierarchyPrepareParams
+pub impl @json.ToJson for CallHierarchyPrepareParams
+
+pub struct CallHierarchyRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for CallHierarchyRegistrationOptions
+pub impl @json.ToJson for CallHierarchyRegistrationOptions
+
+pub struct CancelParams {
+  id : @json.JsonValue
+}
+pub impl @json.FromJson for CancelParams
+pub impl @json.ToJson for CancelParams
+
+pub struct ChangeAnnotation {
+  label : String
+  needs_confirmation : Bool?
+  description : String?
+}
+pub impl @json.FromJson for ChangeAnnotation
+pub impl @json.ToJson for ChangeAnnotation
+
+pub struct ChangeAnnotationsSupportOptions {
+  groups_on_label : Bool?
+}
+pub impl @json.FromJson for ChangeAnnotationsSupportOptions
+pub impl @json.ToJson for ChangeAnnotationsSupportOptions
+
+pub struct ClientCapabilities {
+  workspace : WorkspaceClientCapabilities?
+  text_document : TextDocumentClientCapabilities?
+  notebook_document : NotebookDocumentClientCapabilities?
+  window : WindowClientCapabilities?
+  general : GeneralClientCapabilities?
+  experimental : @json.JsonValue?
+}
+pub impl @json.FromJson for ClientCapabilities
+pub impl @json.ToJson for ClientCapabilities
+
+pub struct ClientCodeActionKindOptions {
+  value_set : Array[CodeActionKind]
+}
+pub impl @json.FromJson for ClientCodeActionKindOptions
+pub impl @json.ToJson for ClientCodeActionKindOptions
+
+pub struct ClientCodeActionLiteralOptions {
+  code_action_kind : ClientCodeActionKindOptions
+}
+pub impl @json.FromJson for ClientCodeActionLiteralOptions
+pub impl @json.ToJson for ClientCodeActionLiteralOptions
+
+pub struct ClientCodeActionResolveOptions {
+  properties : Array[String]
+}
+pub impl @json.FromJson for ClientCodeActionResolveOptions
+pub impl @json.ToJson for ClientCodeActionResolveOptions
+
+pub struct ClientCodeLensResolveOptions {
+  properties : Array[String]
+}
+pub impl @json.FromJson for ClientCodeLensResolveOptions
+pub impl @json.ToJson for ClientCodeLensResolveOptions
+
+pub struct ClientCompletionItemInsertTextModeOptions {
+  value_set : Array[InsertTextMode]
+}
+pub impl @json.FromJson for ClientCompletionItemInsertTextModeOptions
+pub impl @json.ToJson for ClientCompletionItemInsertTextModeOptions
+
+pub struct ClientCompletionItemOptions {
+  snippet_support : Bool?
+  commit_characters_support : Bool?
+  documentation_format : Array[MarkupKind]?
+  deprecated_support : Bool?
+  preselect_support : Bool?
+  tag_support : CompletionItemTagOptions?
+  insert_replace_support : Bool?
+  resolve_support : ClientCompletionItemResolveOptions?
+  insert_text_mode_support : ClientCompletionItemInsertTextModeOptions?
+  label_details_support : Bool?
+}
+pub impl @json.FromJson for ClientCompletionItemOptions
+pub impl @json.ToJson for ClientCompletionItemOptions
+
+pub struct ClientCompletionItemOptionsKind {
+  value_set : Array[CompletionItemKind]?
+}
+pub impl @json.FromJson for ClientCompletionItemOptionsKind
+pub impl @json.ToJson for ClientCompletionItemOptionsKind
+
+pub struct ClientCompletionItemResolveOptions {
+  properties : Array[String]
+}
+pub impl @json.FromJson for ClientCompletionItemResolveOptions
+pub impl @json.ToJson for ClientCompletionItemResolveOptions
+
+pub struct ClientDiagnosticsTagOptions {
+  value_set : Array[DiagnosticTag]
+}
+pub impl @json.FromJson for ClientDiagnosticsTagOptions
+pub impl @json.ToJson for ClientDiagnosticsTagOptions
+
+pub struct ClientFoldingRangeKindOptions {
+  value_set : Array[FoldingRangeKind]?
+}
+pub impl @json.FromJson for ClientFoldingRangeKindOptions
+pub impl @json.ToJson for ClientFoldingRangeKindOptions
+
+pub struct ClientFoldingRangeOptions {
+  collapsed_text : Bool?
+}
+pub impl @json.FromJson for ClientFoldingRangeOptions
+pub impl @json.ToJson for ClientFoldingRangeOptions
+
+pub struct ClientInfo {
+  name : String
+  version : String?
+}
+pub impl @json.FromJson for ClientInfo
+pub impl @json.ToJson for ClientInfo
+
+pub struct ClientInlayHintResolveOptions {
+  properties : Array[String]
+}
+pub impl @json.FromJson for ClientInlayHintResolveOptions
+pub impl @json.ToJson for ClientInlayHintResolveOptions
+
+pub struct ClientSemanticTokensRequestFullDelta {
+  delta : Bool?
+}
+pub impl @json.FromJson for ClientSemanticTokensRequestFullDelta
+pub impl @json.ToJson for ClientSemanticTokensRequestFullDelta
+
+pub struct ClientSemanticTokensRequestOptions {
+  range : @json.JsonValue?
+  full : @json.JsonValue?
+}
+pub impl @json.FromJson for ClientSemanticTokensRequestOptions
+pub impl @json.ToJson for ClientSemanticTokensRequestOptions
+
+pub struct ClientShowMessageActionItemOptions {
+  additional_properties_support : Bool?
+}
+pub impl @json.FromJson for ClientShowMessageActionItemOptions
+pub impl @json.ToJson for ClientShowMessageActionItemOptions
+
+pub struct ClientSignatureInformationOptions {
+  documentation_format : Array[MarkupKind]?
+  parameter_information : ClientSignatureParameterInformationOptions?
+  active_parameter_support : Bool?
+  no_active_parameter_support : Bool?
+}
+pub impl @json.FromJson for ClientSignatureInformationOptions
+pub impl @json.ToJson for ClientSignatureInformationOptions
+
+pub struct ClientSignatureParameterInformationOptions {
+  label_offset_support : Bool?
+}
+pub impl @json.FromJson for ClientSignatureParameterInformationOptions
+pub impl @json.ToJson for ClientSignatureParameterInformationOptions
+
+pub struct ClientSymbolKindOptions {
+  value_set : Array[SymbolKind]?
+}
+pub impl @json.FromJson for ClientSymbolKindOptions
+pub impl @json.ToJson for ClientSymbolKindOptions
+
+pub struct ClientSymbolResolveOptions {
+  properties : Array[String]
+}
+pub impl @json.FromJson for ClientSymbolResolveOptions
+pub impl @json.ToJson for ClientSymbolResolveOptions
+
+pub struct ClientSymbolTagOptions {
+  value_set : Array[SymbolTag]
+}
+pub impl @json.FromJson for ClientSymbolTagOptions
+pub impl @json.ToJson for ClientSymbolTagOptions
+
+pub struct CodeAction {
+  title : String
+  kind : CodeActionKind?
+  diagnostics : Array[Diagnostic]?
+  is_preferred : Bool?
+  disabled : CodeActionDisabled?
+  edit : WorkspaceEdit?
+  command : Command?
+  data : @json.JsonValue?
+  tags : Array[CodeActionTag]?
+}
+pub impl @json.FromJson for CodeAction
+pub impl @json.ToJson for CodeAction
+
+pub struct CodeActionClientCapabilities {
+  dynamic_registration : Bool?
+  code_action_literal_support : ClientCodeActionLiteralOptions?
+  is_preferred_support : Bool?
+  disabled_support : Bool?
+  data_support : Bool?
+  resolve_support : ClientCodeActionResolveOptions?
+  honors_change_annotations : Bool?
+  documentation_support : Bool?
+  tag_support : CodeActionTagOptions?
+}
+pub impl @json.FromJson for CodeActionClientCapabilities
+pub impl @json.ToJson for CodeActionClientCapabilities
+
+pub struct CodeActionContext {
+  diagnostics : Array[Diagnostic]
+  only : Array[CodeActionKind]?
+  trigger_kind : CodeActionTriggerKind?
+}
+pub impl @json.FromJson for CodeActionContext
+pub impl @json.ToJson for CodeActionContext
+
+pub struct CodeActionDisabled {
+  reason : String
+}
+pub impl @json.FromJson for CodeActionDisabled
+pub impl @json.ToJson for CodeActionDisabled
+
+pub(all) enum CodeActionKind {
+  Empty
+  QuickFix
+  Refactor
+  RefactorExtract
+  RefactorInline
+  RefactorMove
+  RefactorRewrite
+  Source
+  SourceOrganizeImports
+  SourceFixAll
+  Notebook
+}
+pub impl @json.FromJson for CodeActionKind
+pub impl @json.ToJson for CodeActionKind
+
+pub struct CodeActionKindDocumentation {
+  kind : CodeActionKind
+  command : Command
+}
+pub impl @json.FromJson for CodeActionKindDocumentation
+pub impl @json.ToJson for CodeActionKindDocumentation
+
+pub struct CodeActionOptions {
+  work_done_progress : Bool?
+  code_action_kinds : Array[CodeActionKind]?
+  documentation : Array[CodeActionKindDocumentation]?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for CodeActionOptions
+pub impl @json.ToJson for CodeActionOptions
+
+pub struct CodeActionParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  range : Range
+  context : CodeActionContext
+}
+pub impl @json.FromJson for CodeActionParams
+pub impl @json.ToJson for CodeActionParams
+
+pub struct CodeActionRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  code_action_kinds : Array[CodeActionKind]?
+  documentation : Array[CodeActionKindDocumentation]?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for CodeActionRegistrationOptions
+pub impl @json.ToJson for CodeActionRegistrationOptions
+
+pub(all) enum CodeActionTag {
+  LLMGenerated
+}
+pub impl @json.FromJson for CodeActionTag
+pub impl @json.ToJson for CodeActionTag
+
+pub struct CodeActionTagOptions {
+  value_set : Array[CodeActionTag]
+}
+pub impl @json.FromJson for CodeActionTagOptions
+pub impl @json.ToJson for CodeActionTagOptions
+
+pub(all) enum CodeActionTriggerKind {
+  Invoked
+  Automatic
+}
+pub impl @json.FromJson for CodeActionTriggerKind
+pub impl @json.ToJson for CodeActionTriggerKind
+
+pub struct CodeDescription {
+  href : String
+}
+pub impl @json.FromJson for CodeDescription
+pub impl @json.ToJson for CodeDescription
+
+pub struct CodeLens {
+  range : Range
+  command : Command?
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for CodeLens
+pub impl @json.ToJson for CodeLens
+
+pub struct CodeLensClientCapabilities {
+  dynamic_registration : Bool?
+  resolve_support : ClientCodeLensResolveOptions?
+}
+pub impl @json.FromJson for CodeLensClientCapabilities
+pub impl @json.ToJson for CodeLensClientCapabilities
+
+pub struct CodeLensOptions {
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for CodeLensOptions
+pub impl @json.ToJson for CodeLensOptions
+
+pub struct CodeLensParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for CodeLensParams
+pub impl @json.ToJson for CodeLensParams
+
+pub struct CodeLensRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for CodeLensRegistrationOptions
+pub impl @json.ToJson for CodeLensRegistrationOptions
+
+pub struct CodeLensWorkspaceClientCapabilities {
+  refresh_support : Bool?
+}
+pub impl @json.FromJson for CodeLensWorkspaceClientCapabilities
+pub impl @json.ToJson for CodeLensWorkspaceClientCapabilities
+
+pub struct Color {
+  red : Double
+  green : Double
+  blue : Double
+  alpha : Double
+}
+pub impl @json.FromJson for Color
+pub impl @json.ToJson for Color
+
+pub struct ColorInformation {
+  range : Range
+  color : Color
+}
+pub impl @json.FromJson for ColorInformation
+pub impl @json.ToJson for ColorInformation
+
+pub struct ColorPresentation {
+  label : String
+  text_edit : TextEdit?
+  additional_text_edits : Array[TextEdit]?
+}
+pub impl @json.FromJson for ColorPresentation
+pub impl @json.ToJson for ColorPresentation
+
+pub struct ColorPresentationParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  color : Color
+  range : Range
+}
+pub impl @json.FromJson for ColorPresentationParams
+pub impl @json.ToJson for ColorPresentationParams
+
+pub struct Command {
+  title : String
+  tooltip : String?
+  command : String
+  arguments : Array[@json.JsonValue]?
+}
+pub impl @json.FromJson for Command
+pub impl @json.ToJson for Command
+
+pub struct CompletionClientCapabilities {
+  dynamic_registration : Bool?
+  completion_item : ClientCompletionItemOptions?
+  completion_item_kind : ClientCompletionItemOptionsKind?
+  insert_text_mode : InsertTextMode?
+  context_support : Bool?
+  completion_list : CompletionListCapabilities?
+}
+pub impl @json.FromJson for CompletionClientCapabilities
+pub impl @json.ToJson for CompletionClientCapabilities
+
+pub struct CompletionContext {
+  trigger_kind : CompletionTriggerKind
+  trigger_character : String?
+}
+pub impl @json.FromJson for CompletionContext
+pub impl @json.ToJson for CompletionContext
+
+pub struct CompletionItem {
+  label : String
+  label_details : CompletionItemLabelDetails?
+  kind : CompletionItemKind?
+  tags : Array[CompletionItemTag]?
+  detail : String?
+  documentation : @json.JsonValue?
+  deprecated : Bool?
+  preselect : Bool?
+  sort_text : String?
+  filter_text : String?
+  insert_text : String?
+  insert_text_format : InsertTextFormat?
+  insert_text_mode : InsertTextMode?
+  text_edit : @json.JsonValue?
+  text_edit_text : String?
+  additional_text_edits : Array[TextEdit]?
+  commit_characters : Array[String]?
+  command : Command?
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for CompletionItem
+pub impl @json.ToJson for CompletionItem
+
+pub struct CompletionItemApplyKinds {
+  commit_characters : ApplyKind?
+  data : ApplyKind?
+}
+pub impl @json.FromJson for CompletionItemApplyKinds
+pub impl @json.ToJson for CompletionItemApplyKinds
+
+pub struct CompletionItemDefaults {
+  commit_characters : Array[String]?
+  edit_range : @json.JsonValue?
+  insert_text_format : InsertTextFormat?
+  insert_text_mode : InsertTextMode?
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for CompletionItemDefaults
+pub impl @json.ToJson for CompletionItemDefaults
+
+pub(all) enum CompletionItemKind {
+  Text
+  Method
+  Function
+  Constructor
+  Field
+  Variable
+  Class
+  Interface
+  Module
+  Property
+  Unit
+  Value
+  Enum
+  Keyword
+  Snippet
+  Color
+  File
+  Reference
+  Folder
+  EnumMember
+  Constant
+  Struct
+  Event
+  Operator
+  TypeParameter
+}
+pub impl @json.FromJson for CompletionItemKind
+pub impl @json.ToJson for CompletionItemKind
+
+pub struct CompletionItemLabelDetails {
+  detail : String?
+  description : String?
+}
+pub impl @json.FromJson for CompletionItemLabelDetails
+pub impl @json.ToJson for CompletionItemLabelDetails
+
+pub(all) enum CompletionItemTag {
+  Deprecated
+}
+pub impl @json.FromJson for CompletionItemTag
+pub impl @json.ToJson for CompletionItemTag
+
+pub struct CompletionItemTagOptions {
+  value_set : Array[CompletionItemTag]
+}
+pub impl @json.FromJson for CompletionItemTagOptions
+pub impl @json.ToJson for CompletionItemTagOptions
+
+pub struct CompletionList {
+  is_incomplete : Bool
+  item_defaults : CompletionItemDefaults?
+  apply_kind : CompletionItemApplyKinds?
+  items : Array[CompletionItem]
+}
+pub impl @json.FromJson for CompletionList
+pub impl @json.ToJson for CompletionList
+
+pub struct CompletionListCapabilities {
+  item_defaults : Array[String]?
+  apply_kind_support : Bool?
+}
+pub impl @json.FromJson for CompletionListCapabilities
+pub impl @json.ToJson for CompletionListCapabilities
+
+pub struct CompletionOptions {
+  work_done_progress : Bool?
+  trigger_characters : Array[String]?
+  all_commit_characters : Array[String]?
+  resolve_provider : Bool?
+  completion_item : ServerCompletionItemOptions?
+}
+pub impl @json.FromJson for CompletionOptions
+pub impl @json.ToJson for CompletionOptions
+
+pub struct CompletionParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  context : CompletionContext?
+}
+pub impl @json.FromJson for CompletionParams
+pub impl @json.ToJson for CompletionParams
+
+pub struct CompletionRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  trigger_characters : Array[String]?
+  all_commit_characters : Array[String]?
+  resolve_provider : Bool?
+  completion_item : ServerCompletionItemOptions?
+}
+pub impl @json.FromJson for CompletionRegistrationOptions
+pub impl @json.ToJson for CompletionRegistrationOptions
+
+pub(all) enum CompletionTriggerKind {
+  Invoked
+  TriggerCharacter
+  TriggerForIncompleteCompletions
+}
+pub impl @json.FromJson for CompletionTriggerKind
+pub impl @json.ToJson for CompletionTriggerKind
+
+pub struct ConfigurationItem {
+  scope_uri : String?
+  section : String?
+}
+pub impl @json.FromJson for ConfigurationItem
+pub impl @json.ToJson for ConfigurationItem
+
+pub struct ConfigurationParams {
+  items : Array[ConfigurationItem]
+}
+pub impl @json.FromJson for ConfigurationParams
+pub impl @json.ToJson for ConfigurationParams
+
+pub struct CreateFile {
+  kind : String
+  annotation_id : String?
+  uri : String
+  options : CreateFileOptions?
+}
+pub impl @json.FromJson for CreateFile
+pub impl @json.ToJson for CreateFile
+
+pub struct CreateFileOptions {
+  overwrite : Bool?
+  ignore_if_exists : Bool?
+}
+pub impl @json.FromJson for CreateFileOptions
+pub impl @json.ToJson for CreateFileOptions
+
+pub struct CreateFilesParams {
+  files : Array[FileCreate]
+}
+pub impl @json.FromJson for CreateFilesParams
+pub impl @json.ToJson for CreateFilesParams
+
+pub struct DeclarationClientCapabilities {
+  dynamic_registration : Bool?
+  link_support : Bool?
+}
+pub impl @json.FromJson for DeclarationClientCapabilities
+pub impl @json.ToJson for DeclarationClientCapabilities
+
+pub struct DeclarationOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DeclarationOptions
+pub impl @json.ToJson for DeclarationOptions
+
+pub struct DeclarationParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for DeclarationParams
+pub impl @json.ToJson for DeclarationParams
+
+pub struct DeclarationRegistrationOptions {
+  work_done_progress : Bool?
+  document_selector : @json.JsonValue
+  id : String?
+}
+pub impl @json.FromJson for DeclarationRegistrationOptions
+pub impl @json.ToJson for DeclarationRegistrationOptions
+
+pub struct DefinitionClientCapabilities {
+  dynamic_registration : Bool?
+  link_support : Bool?
+}
+pub impl @json.FromJson for DefinitionClientCapabilities
+pub impl @json.ToJson for DefinitionClientCapabilities
+
+pub struct DefinitionOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DefinitionOptions
+pub impl @json.ToJson for DefinitionOptions
+
+pub struct DefinitionParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for DefinitionParams
+pub impl @json.ToJson for DefinitionParams
+
+pub struct DefinitionRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DefinitionRegistrationOptions
+pub impl @json.ToJson for DefinitionRegistrationOptions
+
+pub struct DeleteFile {
+  kind : String
+  annotation_id : String?
+  uri : String
+  options : DeleteFileOptions?
+}
+pub impl @json.FromJson for DeleteFile
+pub impl @json.ToJson for DeleteFile
+
+pub struct DeleteFileOptions {
+  recursive : Bool?
+  ignore_if_not_exists : Bool?
+}
+pub impl @json.FromJson for DeleteFileOptions
+pub impl @json.ToJson for DeleteFileOptions
+
+pub struct DeleteFilesParams {
+  files : Array[FileDelete]
+}
+pub impl @json.FromJson for DeleteFilesParams
+pub impl @json.ToJson for DeleteFilesParams
+
+pub struct Diagnostic {
+  range : Range
+  severity : DiagnosticSeverity?
+  code : DiagnosticCode?
+  source : String?
+  message : String
+  tags : Array[DiagnosticTag]?
+  related_information : Array[DiagnosticRelatedInformation]?
+}
+pub fn Diagnostic::new(Range, String, severity? : DiagnosticSeverity?, code? : DiagnosticCode?, source? : String?, tags? : Array[DiagnosticTag]?, related_information? : Array[DiagnosticRelatedInformation]?) -> Self
+pub impl @json.FromJson for Diagnostic
+pub impl @json.ToJson for Diagnostic
+pub impl Show for Diagnostic
+
+pub struct DiagnosticClientCapabilities {
+  related_information : Bool?
+  tag_support : ClientDiagnosticsTagOptions?
+  code_description_support : Bool?
+  data_support : Bool?
+  dynamic_registration : Bool?
+  related_document_support : Bool?
+}
+pub impl @json.FromJson for DiagnosticClientCapabilities
+pub impl @json.ToJson for DiagnosticClientCapabilities
+
+pub enum DiagnosticCode {
+  Number(Int)
+  String(String)
+}
+pub impl @json.FromJson for DiagnosticCode
+pub impl @json.ToJson for DiagnosticCode
+pub impl Eq for DiagnosticCode
+pub impl Show for DiagnosticCode
+
+pub struct DiagnosticOptions {
+  work_done_progress : Bool?
+  identifier : String?
+  inter_file_dependencies : Bool
+  workspace_diagnostics : Bool
+}
+pub impl @json.FromJson for DiagnosticOptions
+pub impl @json.ToJson for DiagnosticOptions
+
+pub struct DiagnosticRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  identifier : String?
+  inter_file_dependencies : Bool
+  workspace_diagnostics : Bool
+  id : String?
+}
+pub impl @json.FromJson for DiagnosticRegistrationOptions
+pub impl @json.ToJson for DiagnosticRegistrationOptions
+
+pub struct DiagnosticRelatedInformation {
+  location : Location
+  message : String
+}
+pub impl @json.FromJson for DiagnosticRelatedInformation
+pub impl @json.ToJson for DiagnosticRelatedInformation
+pub impl Eq for DiagnosticRelatedInformation
+pub impl Show for DiagnosticRelatedInformation
+
+pub struct DiagnosticServerCancellationData {
+  retrigger_request : Bool
+}
+pub impl @json.FromJson for DiagnosticServerCancellationData
+pub impl @json.ToJson for DiagnosticServerCancellationData
+
+pub enum DiagnosticSeverity {
+  Error
+  Warning
+  Information
+  Hint
+}
+pub impl @json.FromJson for DiagnosticSeverity
+pub impl @json.ToJson for DiagnosticSeverity
+pub impl Eq for DiagnosticSeverity
+pub impl Show for DiagnosticSeverity
+
+pub enum DiagnosticTag {
+  Unnecessary
+  Deprecated
+}
+pub impl @json.FromJson for DiagnosticTag
+pub impl @json.ToJson for DiagnosticTag
+pub impl Eq for DiagnosticTag
+pub impl Show for DiagnosticTag
+
+pub struct DiagnosticWorkspaceClientCapabilities {
+  refresh_support : Bool?
+}
+pub impl @json.FromJson for DiagnosticWorkspaceClientCapabilities
+pub impl @json.ToJson for DiagnosticWorkspaceClientCapabilities
+
+pub struct DiagnosticsCapabilities {
+  related_information : Bool?
+  tag_support : ClientDiagnosticsTagOptions?
+  code_description_support : Bool?
+  data_support : Bool?
+}
+pub impl @json.FromJson for DiagnosticsCapabilities
+pub impl @json.ToJson for DiagnosticsCapabilities
+
+pub struct DidChangeConfigurationClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for DidChangeConfigurationClientCapabilities
+pub impl @json.ToJson for DidChangeConfigurationClientCapabilities
+
+pub struct DidChangeConfigurationParams {
+  settings : @json.JsonValue
+}
+pub impl @json.FromJson for DidChangeConfigurationParams
+pub impl @json.ToJson for DidChangeConfigurationParams
+
+pub struct DidChangeConfigurationRegistrationOptions {
+  section : @json.JsonValue?
+}
+pub impl @json.FromJson for DidChangeConfigurationRegistrationOptions
+pub impl @json.ToJson for DidChangeConfigurationRegistrationOptions
+
+pub struct DidChangeNotebookDocumentParams {
+  notebook_document : VersionedNotebookDocumentIdentifier
+  change : NotebookDocumentChangeEvent
+}
+pub impl @json.FromJson for DidChangeNotebookDocumentParams
+pub impl @json.ToJson for DidChangeNotebookDocumentParams
+
+pub struct DidChangeTextDocumentParams {
+  text_document : VersionedTextDocumentIdentifier
+  content_changes : Array[@json.JsonValue]
+}
+pub impl @json.FromJson for DidChangeTextDocumentParams
+pub impl @json.ToJson for DidChangeTextDocumentParams
+
+pub struct DidChangeWatchedFilesClientCapabilities {
+  dynamic_registration : Bool?
+  relative_pattern_support : Bool?
+}
+pub impl @json.FromJson for DidChangeWatchedFilesClientCapabilities
+pub impl @json.ToJson for DidChangeWatchedFilesClientCapabilities
+
+pub struct DidChangeWatchedFilesParams {
+  changes : Array[FileEvent]
+}
+pub impl @json.FromJson for DidChangeWatchedFilesParams
+pub impl @json.ToJson for DidChangeWatchedFilesParams
+
+pub struct DidChangeWatchedFilesRegistrationOptions {
+  watchers : Array[FileSystemWatcher]
+}
+pub impl @json.FromJson for DidChangeWatchedFilesRegistrationOptions
+pub impl @json.ToJson for DidChangeWatchedFilesRegistrationOptions
+
+pub struct DidChangeWorkspaceFoldersParams {
+  event : WorkspaceFoldersChangeEvent
+}
+pub impl @json.FromJson for DidChangeWorkspaceFoldersParams
+pub impl @json.ToJson for DidChangeWorkspaceFoldersParams
+
+pub struct DidCloseNotebookDocumentParams {
+  notebook_document : NotebookDocumentIdentifier
+  cell_text_documents : Array[TextDocumentIdentifier]
+}
+pub impl @json.FromJson for DidCloseNotebookDocumentParams
+pub impl @json.ToJson for DidCloseNotebookDocumentParams
+
+pub struct DidCloseTextDocumentParams {
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for DidCloseTextDocumentParams
+pub impl @json.ToJson for DidCloseTextDocumentParams
+
+pub struct DidOpenNotebookDocumentParams {
+  notebook_document : NotebookDocument
+  cell_text_documents : Array[TextDocumentItem]
+}
+pub impl @json.FromJson for DidOpenNotebookDocumentParams
+pub impl @json.ToJson for DidOpenNotebookDocumentParams
+
+pub struct DidOpenTextDocumentParams {
+  text_document : TextDocumentItem
+}
+pub impl @json.FromJson for DidOpenTextDocumentParams
+pub impl @json.ToJson for DidOpenTextDocumentParams
+
+pub struct DidSaveNotebookDocumentParams {
+  notebook_document : NotebookDocumentIdentifier
+}
+pub impl @json.FromJson for DidSaveNotebookDocumentParams
+pub impl @json.ToJson for DidSaveNotebookDocumentParams
+
+pub struct DidSaveTextDocumentParams {
+  text_document : TextDocumentIdentifier
+  text : String?
+}
+pub impl @json.FromJson for DidSaveTextDocumentParams
+pub impl @json.ToJson for DidSaveTextDocumentParams
+
+pub struct DocumentColorClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for DocumentColorClientCapabilities
+pub impl @json.ToJson for DocumentColorClientCapabilities
+
+pub struct DocumentColorOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DocumentColorOptions
+pub impl @json.ToJson for DocumentColorOptions
+
+pub struct DocumentColorParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for DocumentColorParams
+pub impl @json.ToJson for DocumentColorParams
+
+pub struct DocumentColorRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for DocumentColorRegistrationOptions
+pub impl @json.ToJson for DocumentColorRegistrationOptions
+
+pub struct DocumentDiagnosticParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  identifier : String?
+  previous_result_id : String?
+}
+pub impl @json.FromJson for DocumentDiagnosticParams
+pub impl @json.ToJson for DocumentDiagnosticParams
+
+pub(all) enum DocumentDiagnosticReportKind {
+  Full
+  Unchanged
+}
+pub impl @json.FromJson for DocumentDiagnosticReportKind
+pub impl @json.ToJson for DocumentDiagnosticReportKind
+
+pub struct DocumentDiagnosticReportPartialResult {
+  related_documents : @json.JsonValue
+}
+pub impl @json.FromJson for DocumentDiagnosticReportPartialResult
+pub impl @json.ToJson for DocumentDiagnosticReportPartialResult
+
+pub struct DocumentFormattingClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for DocumentFormattingClientCapabilities
+pub impl @json.ToJson for DocumentFormattingClientCapabilities
+
+pub struct DocumentFormattingOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DocumentFormattingOptions
+pub impl @json.ToJson for DocumentFormattingOptions
+
+pub struct DocumentFormattingParams {
+  work_done_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  options : FormattingOptions
+}
+pub impl @json.FromJson for DocumentFormattingParams
+pub impl @json.ToJson for DocumentFormattingParams
+
+pub struct DocumentFormattingRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DocumentFormattingRegistrationOptions
+pub impl @json.ToJson for DocumentFormattingRegistrationOptions
+
+pub struct DocumentHighlight {
+  range : Range
+  kind : DocumentHighlightKind?
+}
+pub impl @json.FromJson for DocumentHighlight
+pub impl @json.ToJson for DocumentHighlight
+
+pub struct DocumentHighlightClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for DocumentHighlightClientCapabilities
+pub impl @json.ToJson for DocumentHighlightClientCapabilities
+
+pub(all) enum DocumentHighlightKind {
+  Text
+  Read
+  Write
+}
+pub impl @json.FromJson for DocumentHighlightKind
+pub impl @json.ToJson for DocumentHighlightKind
+
+pub struct DocumentHighlightOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DocumentHighlightOptions
+pub impl @json.ToJson for DocumentHighlightOptions
+
+pub struct DocumentHighlightParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for DocumentHighlightParams
+pub impl @json.ToJson for DocumentHighlightParams
+
+pub struct DocumentHighlightRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for DocumentHighlightRegistrationOptions
+pub impl @json.ToJson for DocumentHighlightRegistrationOptions
+
+pub struct DocumentLink {
+  range : Range
+  target : String?
+  tooltip : String?
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for DocumentLink
+pub impl @json.ToJson for DocumentLink
+
+pub struct DocumentLinkClientCapabilities {
+  dynamic_registration : Bool?
+  tooltip_support : Bool?
+}
+pub impl @json.FromJson for DocumentLinkClientCapabilities
+pub impl @json.ToJson for DocumentLinkClientCapabilities
+
+pub struct DocumentLinkOptions {
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for DocumentLinkOptions
+pub impl @json.ToJson for DocumentLinkOptions
+
+pub struct DocumentLinkParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for DocumentLinkParams
+pub impl @json.ToJson for DocumentLinkParams
+
+pub struct DocumentLinkRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for DocumentLinkRegistrationOptions
+pub impl @json.ToJson for DocumentLinkRegistrationOptions
+
+pub struct DocumentOnTypeFormattingClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for DocumentOnTypeFormattingClientCapabilities
+pub impl @json.ToJson for DocumentOnTypeFormattingClientCapabilities
+
+pub struct DocumentOnTypeFormattingOptions {
+  first_trigger_character : String
+  more_trigger_character : Array[String]?
+}
+pub impl @json.FromJson for DocumentOnTypeFormattingOptions
+pub impl @json.ToJson for DocumentOnTypeFormattingOptions
+
+pub struct DocumentOnTypeFormattingParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  ch : String
+  options : FormattingOptions
+}
+pub impl @json.FromJson for DocumentOnTypeFormattingParams
+pub impl @json.ToJson for DocumentOnTypeFormattingParams
+
+pub struct DocumentOnTypeFormattingRegistrationOptions {
+  document_selector : @json.JsonValue
+  first_trigger_character : String
+  more_trigger_character : Array[String]?
+}
+pub impl @json.FromJson for DocumentOnTypeFormattingRegistrationOptions
+pub impl @json.ToJson for DocumentOnTypeFormattingRegistrationOptions
+
+pub struct DocumentRangeFormattingClientCapabilities {
+  dynamic_registration : Bool?
+  ranges_support : Bool?
+}
+pub impl @json.FromJson for DocumentRangeFormattingClientCapabilities
+pub impl @json.ToJson for DocumentRangeFormattingClientCapabilities
+
+pub struct DocumentRangeFormattingOptions {
+  work_done_progress : Bool?
+  ranges_support : Bool?
+}
+pub impl @json.FromJson for DocumentRangeFormattingOptions
+pub impl @json.ToJson for DocumentRangeFormattingOptions
+
+pub struct DocumentRangeFormattingParams {
+  work_done_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  range : Range
+  options : FormattingOptions
+}
+pub impl @json.FromJson for DocumentRangeFormattingParams
+pub impl @json.ToJson for DocumentRangeFormattingParams
+
+pub struct DocumentRangeFormattingRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ranges_support : Bool?
+}
+pub impl @json.FromJson for DocumentRangeFormattingRegistrationOptions
+pub impl @json.ToJson for DocumentRangeFormattingRegistrationOptions
+
+pub struct DocumentRangesFormattingParams {
+  work_done_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  ranges : Array[Range]
+  options : FormattingOptions
+}
+pub impl @json.FromJson for DocumentRangesFormattingParams
+pub impl @json.ToJson for DocumentRangesFormattingParams
+
+pub struct DocumentSymbol {
+  name : String
+  detail : String?
+  kind : SymbolKind
+  tags : Array[SymbolTag]?
+  deprecated : Bool?
+  range : Range
+  selection_range : Range
+  children : Array[DocumentSymbol]?
+}
+pub impl @json.FromJson for DocumentSymbol
+pub impl @json.ToJson for DocumentSymbol
+
+pub struct DocumentSymbolClientCapabilities {
+  dynamic_registration : Bool?
+  symbol_kind : ClientSymbolKindOptions?
+  hierarchical_document_symbol_support : Bool?
+  tag_support : ClientSymbolTagOptions?
+  label_support : Bool?
+}
+pub impl @json.FromJson for DocumentSymbolClientCapabilities
+pub impl @json.ToJson for DocumentSymbolClientCapabilities
+
+pub struct DocumentSymbolOptions {
+  work_done_progress : Bool?
+  label : String?
+}
+pub impl @json.FromJson for DocumentSymbolOptions
+pub impl @json.ToJson for DocumentSymbolOptions
+
+pub struct DocumentSymbolParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for DocumentSymbolParams
+pub impl @json.ToJson for DocumentSymbolParams
+
+pub struct DocumentSymbolRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  label : String?
+}
+pub impl @json.FromJson for DocumentSymbolRegistrationOptions
+pub impl @json.ToJson for DocumentSymbolRegistrationOptions
+
+pub struct DocumentUri(String)
+#deprecated
+pub fn DocumentUri::inner(Self) -> String
+pub impl @json.FromJson for DocumentUri
+pub impl @json.ToJson for DocumentUri
+pub impl Eq for DocumentUri
+pub impl Show for DocumentUri
+
+pub struct EditRangeWithInsertReplace {
+  insert : Range
+  replace : Range
+}
+pub impl @json.FromJson for EditRangeWithInsertReplace
+pub impl @json.ToJson for EditRangeWithInsertReplace
+
+pub(all) enum ErrorCodes {
+  ParseError
+  InvalidRequest
+  MethodNotFound
+  InvalidParams
+  InternalError
+  ServerNotInitialized
+  UnknownErrorCode
+}
+pub impl @json.FromJson for ErrorCodes
+pub impl @json.ToJson for ErrorCodes
+
+pub struct ExecuteCommandClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for ExecuteCommandClientCapabilities
+pub impl @json.ToJson for ExecuteCommandClientCapabilities
+
+pub struct ExecuteCommandOptions {
+  work_done_progress : Bool?
+  commands : Array[String]
+}
+pub impl @json.FromJson for ExecuteCommandOptions
+pub impl @json.ToJson for ExecuteCommandOptions
+
+pub struct ExecuteCommandParams {
+  work_done_token : @json.JsonValue?
+  command : String
+  arguments : Array[@json.JsonValue]?
+}
+pub impl @json.FromJson for ExecuteCommandParams
+pub impl @json.ToJson for ExecuteCommandParams
+
+pub struct ExecuteCommandRegistrationOptions {
+  work_done_progress : Bool?
+  commands : Array[String]
+}
+pub impl @json.FromJson for ExecuteCommandRegistrationOptions
+pub impl @json.ToJson for ExecuteCommandRegistrationOptions
+
+pub struct ExecutionSummary {
+  execution_order : Int
+  success : Bool?
+}
+pub impl @json.FromJson for ExecutionSummary
+pub impl @json.ToJson for ExecutionSummary
+
+pub(all) enum FailureHandlingKind {
+  Abort
+  Transactional
+  TextOnlyTransactional
+  Undo
+}
+pub impl @json.FromJson for FailureHandlingKind
+pub impl @json.ToJson for FailureHandlingKind
+
+pub(all) enum FileChangeType {
+  Created
+  Changed
+  Deleted
+}
+pub impl @json.FromJson for FileChangeType
+pub impl @json.ToJson for FileChangeType
+
+pub struct FileCreate {
+  uri : String
+}
+pub impl @json.FromJson for FileCreate
+pub impl @json.ToJson for FileCreate
+
+pub struct FileDelete {
+  uri : String
+}
+pub impl @json.FromJson for FileDelete
+pub impl @json.ToJson for FileDelete
+
+pub struct FileEvent {
+  uri : String
+  type_ : FileChangeType
+}
+pub impl @json.FromJson for FileEvent
+pub impl @json.ToJson for FileEvent
+
+pub struct FileOperationClientCapabilities {
+  dynamic_registration : Bool?
+  did_create : Bool?
+  will_create : Bool?
+  did_rename : Bool?
+  will_rename : Bool?
+  did_delete : Bool?
+  will_delete : Bool?
+}
+pub impl @json.FromJson for FileOperationClientCapabilities
+pub impl @json.ToJson for FileOperationClientCapabilities
+
+pub struct FileOperationFilter {
+  scheme : String?
+  pattern : FileOperationPattern
+}
+pub impl @json.FromJson for FileOperationFilter
+pub impl @json.ToJson for FileOperationFilter
+
+pub struct FileOperationOptions {
+  did_create : FileOperationRegistrationOptions?
+  will_create : FileOperationRegistrationOptions?
+  did_rename : FileOperationRegistrationOptions?
+  will_rename : FileOperationRegistrationOptions?
+  did_delete : FileOperationRegistrationOptions?
+  will_delete : FileOperationRegistrationOptions?
+}
+pub impl @json.FromJson for FileOperationOptions
+pub impl @json.ToJson for FileOperationOptions
+
+pub struct FileOperationPattern {
+  glob : String
+  matches : FileOperationPatternKind?
+  options : FileOperationPatternOptions?
+}
+pub impl @json.FromJson for FileOperationPattern
+pub impl @json.ToJson for FileOperationPattern
+
+pub(all) enum FileOperationPatternKind {
+  File
+  Folder
+}
+pub impl @json.FromJson for FileOperationPatternKind
+pub impl @json.ToJson for FileOperationPatternKind
+
+pub struct FileOperationPatternOptions {
+  ignore_case : Bool?
+}
+pub impl @json.FromJson for FileOperationPatternOptions
+pub impl @json.ToJson for FileOperationPatternOptions
+
+pub struct FileOperationRegistrationOptions {
+  filters : Array[FileOperationFilter]
+}
+pub impl @json.FromJson for FileOperationRegistrationOptions
+pub impl @json.ToJson for FileOperationRegistrationOptions
+
+pub struct FileRename {
+  old_uri : String
+  new_uri : String
+}
+pub impl @json.FromJson for FileRename
+pub impl @json.ToJson for FileRename
+
+pub struct FileSystemWatcher {
+  glob_pattern : @json.JsonValue
+  kind : WatchKind?
+}
+pub impl @json.FromJson for FileSystemWatcher
+pub impl @json.ToJson for FileSystemWatcher
+
+pub struct FoldingRange {
+  start_line : Int
+  start_character : Int?
+  end_line : Int
+  end_character : Int?
+  kind : FoldingRangeKind?
+  collapsed_text : String?
+}
+pub impl @json.FromJson for FoldingRange
+pub impl @json.ToJson for FoldingRange
+
+pub struct FoldingRangeClientCapabilities {
+  dynamic_registration : Bool?
+  range_limit : Int?
+  line_folding_only : Bool?
+  folding_range_kind : ClientFoldingRangeKindOptions?
+  folding_range : ClientFoldingRangeOptions?
+}
+pub impl @json.FromJson for FoldingRangeClientCapabilities
+pub impl @json.ToJson for FoldingRangeClientCapabilities
+
+pub(all) enum FoldingRangeKind {
+  Comment
+  Imports
+  Region
+}
+pub impl @json.FromJson for FoldingRangeKind
+pub impl @json.ToJson for FoldingRangeKind
+
+pub struct FoldingRangeOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for FoldingRangeOptions
+pub impl @json.ToJson for FoldingRangeOptions
+
+pub struct FoldingRangeParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for FoldingRangeParams
+pub impl @json.ToJson for FoldingRangeParams
+
+pub struct FoldingRangeRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for FoldingRangeRegistrationOptions
+pub impl @json.ToJson for FoldingRangeRegistrationOptions
+
+pub struct FoldingRangeWorkspaceClientCapabilities {
+  refresh_support : Bool?
+}
+pub impl @json.FromJson for FoldingRangeWorkspaceClientCapabilities
+pub impl @json.ToJson for FoldingRangeWorkspaceClientCapabilities
+
+pub struct FormattingOptions {
+  tab_size : Int
+  insert_spaces : Bool
+  trim_trailing_whitespace : Bool?
+  insert_final_newline : Bool?
+  trim_final_newlines : Bool?
+}
+pub impl @json.FromJson for FormattingOptions
+pub impl @json.ToJson for FormattingOptions
+
+pub struct FullDocumentDiagnosticReport {
+  kind : String
+  result_id : String?
+  items : Array[Diagnostic]
+}
+pub impl @json.FromJson for FullDocumentDiagnosticReport
+pub impl @json.ToJson for FullDocumentDiagnosticReport
+
+pub struct GeneralClientCapabilities {
+  stale_request_support : StaleRequestSupportOptions?
+  regular_expressions : RegularExpressionsClientCapabilities?
+  markdown : MarkdownClientCapabilities?
+  position_encodings : Array[PositionEncodingKind]?
+}
+pub impl @json.FromJson for GeneralClientCapabilities
+pub impl @json.ToJson for GeneralClientCapabilities
+
+pub struct Hover {
+  contents : @json.JsonValue
+  range : Range?
+}
+pub impl @json.FromJson for Hover
+pub impl @json.ToJson for Hover
+
+pub struct HoverClientCapabilities {
+  dynamic_registration : Bool?
+  content_format : Array[MarkupKind]?
+}
+pub impl @json.FromJson for HoverClientCapabilities
+pub impl @json.ToJson for HoverClientCapabilities
+
+pub struct HoverOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for HoverOptions
+pub impl @json.ToJson for HoverOptions
+
+pub struct HoverParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+}
+pub impl @json.FromJson for HoverParams
+pub impl @json.ToJson for HoverParams
+
+pub struct HoverRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for HoverRegistrationOptions
+pub impl @json.ToJson for HoverRegistrationOptions
+
+pub struct ImplementationClientCapabilities {
+  dynamic_registration : Bool?
+  link_support : Bool?
+}
+pub impl @json.FromJson for ImplementationClientCapabilities
+pub impl @json.ToJson for ImplementationClientCapabilities
+
+pub struct ImplementationOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for ImplementationOptions
+pub impl @json.ToJson for ImplementationOptions
+
+pub struct ImplementationParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for ImplementationParams
+pub impl @json.ToJson for ImplementationParams
+
+pub struct ImplementationRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for ImplementationRegistrationOptions
+pub impl @json.ToJson for ImplementationRegistrationOptions
+
+pub struct InitializeError {
+  retry : Bool
+}
+pub impl @json.FromJson for InitializeError
+pub impl @json.ToJson for InitializeError
+
+pub struct InitializeParams {
+  work_done_token : @json.JsonValue?
+  process_id : @json.JsonValue
+  client_info : ClientInfo?
+  locale : String?
+  root_path : @json.JsonValue?
+  root_uri : @json.JsonValue
+  capabilities : ClientCapabilities
+  initialization_options : @json.JsonValue?
+  trace : TraceValue?
+  workspace_folders : @json.JsonValue?
+}
+pub impl @json.FromJson for InitializeParams
+pub impl @json.ToJson for InitializeParams
+
+pub struct InitializeResult {
+  capabilities : ServerCapabilities
+  server_info : ServerInfo?
+}
+pub impl @json.FromJson for InitializeResult
+pub impl @json.ToJson for InitializeResult
+
+pub struct InitializedParams {
+}
+pub impl @json.FromJson for InitializedParams
+pub impl @json.ToJson for InitializedParams
+
+pub struct InlayHint {
+  position : Position
+  label : @json.JsonValue
+  kind : InlayHintKind?
+  text_edits : Array[TextEdit]?
+  tooltip : @json.JsonValue?
+  padding_left : Bool?
+  padding_right : Bool?
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for InlayHint
+pub impl @json.ToJson for InlayHint
+
+pub struct InlayHintClientCapabilities {
+  dynamic_registration : Bool?
+  resolve_support : ClientInlayHintResolveOptions?
+}
+pub impl @json.FromJson for InlayHintClientCapabilities
+pub impl @json.ToJson for InlayHintClientCapabilities
+
+pub(all) enum InlayHintKind {
+  Type
+  Parameter
+}
+pub impl @json.FromJson for InlayHintKind
+pub impl @json.ToJson for InlayHintKind
+
+pub struct InlayHintLabelPart {
+  value : String
+  tooltip : @json.JsonValue?
+  location : Location?
+  command : Command?
+}
+pub impl @json.FromJson for InlayHintLabelPart
+pub impl @json.ToJson for InlayHintLabelPart
+
+pub struct InlayHintOptions {
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for InlayHintOptions
+pub impl @json.ToJson for InlayHintOptions
+
+pub struct InlayHintParams {
+  work_done_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  range : Range
+}
+pub impl @json.FromJson for InlayHintParams
+pub impl @json.ToJson for InlayHintParams
+
+pub struct InlayHintRegistrationOptions {
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+  document_selector : @json.JsonValue
+  id : String?
+}
+pub impl @json.FromJson for InlayHintRegistrationOptions
+pub impl @json.ToJson for InlayHintRegistrationOptions
+
+pub struct InlayHintWorkspaceClientCapabilities {
+  refresh_support : Bool?
+}
+pub impl @json.FromJson for InlayHintWorkspaceClientCapabilities
+pub impl @json.ToJson for InlayHintWorkspaceClientCapabilities
+
+pub struct InlineCompletionClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for InlineCompletionClientCapabilities
+pub impl @json.ToJson for InlineCompletionClientCapabilities
+
+pub struct InlineCompletionContext {
+  trigger_kind : InlineCompletionTriggerKind
+  selected_completion_info : SelectedCompletionInfo?
+}
+pub impl @json.FromJson for InlineCompletionContext
+pub impl @json.ToJson for InlineCompletionContext
+
+pub struct InlineCompletionItem {
+  insert_text : @json.JsonValue
+  filter_text : String?
+  range : Range?
+  command : Command?
+}
+pub impl @json.FromJson for InlineCompletionItem
+pub impl @json.ToJson for InlineCompletionItem
+
+pub struct InlineCompletionList {
+  items : Array[InlineCompletionItem]
+}
+pub impl @json.FromJson for InlineCompletionList
+pub impl @json.ToJson for InlineCompletionList
+
+pub struct InlineCompletionOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for InlineCompletionOptions
+pub impl @json.ToJson for InlineCompletionOptions
+
+pub struct InlineCompletionParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  context : InlineCompletionContext
+}
+pub impl @json.FromJson for InlineCompletionParams
+pub impl @json.ToJson for InlineCompletionParams
+
+pub struct InlineCompletionRegistrationOptions {
+  work_done_progress : Bool?
+  document_selector : @json.JsonValue
+  id : String?
+}
+pub impl @json.FromJson for InlineCompletionRegistrationOptions
+pub impl @json.ToJson for InlineCompletionRegistrationOptions
+
+pub(all) enum InlineCompletionTriggerKind {
+  Invoked
+  Automatic
+}
+pub impl @json.FromJson for InlineCompletionTriggerKind
+pub impl @json.ToJson for InlineCompletionTriggerKind
+
+pub struct InlineValueClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for InlineValueClientCapabilities
+pub impl @json.ToJson for InlineValueClientCapabilities
+
+pub struct InlineValueContext {
+  frame_id : Int
+  stopped_location : Range
+}
+pub impl @json.FromJson for InlineValueContext
+pub impl @json.ToJson for InlineValueContext
+
+pub struct InlineValueEvaluatableExpression {
+  range : Range
+  expression : String?
+}
+pub impl @json.FromJson for InlineValueEvaluatableExpression
+pub impl @json.ToJson for InlineValueEvaluatableExpression
+
+pub struct InlineValueOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for InlineValueOptions
+pub impl @json.ToJson for InlineValueOptions
+
+pub struct InlineValueParams {
+  work_done_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  range : Range
+  context : InlineValueContext
+}
+pub impl @json.FromJson for InlineValueParams
+pub impl @json.ToJson for InlineValueParams
+
+pub struct InlineValueRegistrationOptions {
+  work_done_progress : Bool?
+  document_selector : @json.JsonValue
+  id : String?
+}
+pub impl @json.FromJson for InlineValueRegistrationOptions
+pub impl @json.ToJson for InlineValueRegistrationOptions
+
+pub struct InlineValueText {
+  range : Range
+  text : String
+}
+pub impl @json.FromJson for InlineValueText
+pub impl @json.ToJson for InlineValueText
+
+pub struct InlineValueVariableLookup {
+  range : Range
+  variable_name : String?
+  case_sensitive_lookup : Bool
+}
+pub impl @json.FromJson for InlineValueVariableLookup
+pub impl @json.ToJson for InlineValueVariableLookup
+
+pub struct InlineValueWorkspaceClientCapabilities {
+  refresh_support : Bool?
+}
+pub impl @json.FromJson for InlineValueWorkspaceClientCapabilities
+pub impl @json.ToJson for InlineValueWorkspaceClientCapabilities
+
+pub struct InsertReplaceEdit {
+  new_text : String
+  insert : Range
+  replace : Range
+}
+pub impl @json.FromJson for InsertReplaceEdit
+pub impl @json.ToJson for InsertReplaceEdit
+
+pub(all) enum InsertTextFormat {
+  PlainText
+  Snippet
+}
+pub impl @json.FromJson for InsertTextFormat
+pub impl @json.ToJson for InsertTextFormat
+
+pub(all) enum InsertTextMode {
+  AsIs
+  AdjustIndentation
+}
+pub impl @json.FromJson for InsertTextMode
+pub impl @json.ToJson for InsertTextMode
+
+pub(all) enum LSPErrorCodes {
+  RequestFailed
+  ServerCancelled
+  ContentModified
+  RequestCancelled
+}
+pub impl @json.FromJson for LSPErrorCodes
+pub impl @json.ToJson for LSPErrorCodes
+
+pub(all) enum LanguageKind {
+  ABAP
+  WindowsBat
+  BibTeX
+  Clojure
+  Coffeescript
+  C
+  CPP
+  CSharp
+  CSS
+  D
+  Delphi
+  Diff
+  Dart
+  Dockerfile
+  Elixir
+  Erlang
+  FSharp
+  GitCommit
+  GitRebase
+  Go
+  Groovy
+  Handlebars
+  Haskell
+  HTML
+  Ini
+  Java
+  JavaScript
+  JavaScriptReact
+  JSON
+  LaTeX
+  Less
+  Lua
+  Makefile
+  Markdown
+  ObjectiveC
+  ObjectiveCPP
+  Pascal
+  Perl
+  Perl6
+  PHP
+  Powershell
+  Pug
+  Python
+  R
+  Razor
+  Ruby
+  Rust
+  SCSS
+  SASS
+  Scala
+  ShaderLab
+  ShellScript
+  SQL
+  Swift
+  TypeScript
+  TypeScriptReact
+  TeX
+  VisualBasic
+  XML
+  XSL
+  YAML
+}
+pub impl @json.FromJson for LanguageKind
+pub impl @json.ToJson for LanguageKind
+
+pub struct LinkedEditingRangeClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for LinkedEditingRangeClientCapabilities
+pub impl @json.ToJson for LinkedEditingRangeClientCapabilities
+
+pub struct LinkedEditingRangeOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for LinkedEditingRangeOptions
+pub impl @json.ToJson for LinkedEditingRangeOptions
+
+pub struct LinkedEditingRangeParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+}
+pub impl @json.FromJson for LinkedEditingRangeParams
+pub impl @json.ToJson for LinkedEditingRangeParams
+
+pub struct LinkedEditingRangeRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for LinkedEditingRangeRegistrationOptions
+pub impl @json.ToJson for LinkedEditingRangeRegistrationOptions
+
+pub struct LinkedEditingRanges {
+  ranges : Array[Range]
+  word_pattern : String?
+}
+pub impl @json.FromJson for LinkedEditingRanges
+pub impl @json.ToJson for LinkedEditingRanges
+
+pub struct Location {
+  uri : DocumentUri
+  range : Range
+}
+pub fn Location::new(DocumentUri, Range) -> Self
+pub impl @json.FromJson for Location
+pub impl @json.ToJson for Location
+pub impl Eq for Location
+pub impl Show for Location
+
+#alias(DeclarationLink)
+#alias(DefinitionLink)
+pub struct LocationLink {
+  origin_selection_range : Range?
+  target_uri : String
+  target_range : Range
+  target_selection_range : Range
+}
+pub impl @json.FromJson for LocationLink
+pub impl @json.ToJson for LocationLink
+
+pub struct LocationUriOnly {
+  uri : String
+}
+pub impl @json.FromJson for LocationUriOnly
+pub impl @json.ToJson for LocationUriOnly
+
+pub struct LogMessageParams {
+  type_ : MessageType
+  message : String
+}
+pub impl @json.FromJson for LogMessageParams
+pub impl @json.ToJson for LogMessageParams
+
+pub struct LogTraceParams {
+  message : String
+  verbose : String?
+}
+pub impl @json.FromJson for LogTraceParams
+pub impl @json.ToJson for LogTraceParams
+
+pub struct MarkdownClientCapabilities {
+  parser : String
+  version : String?
+  allowed_tags : Array[String]?
+}
+pub impl @json.FromJson for MarkdownClientCapabilities
+pub impl @json.ToJson for MarkdownClientCapabilities
+
+pub struct MarkedStringWithLanguage {
+  language : String
+  value : String
+}
+pub impl @json.FromJson for MarkedStringWithLanguage
+pub impl @json.ToJson for MarkedStringWithLanguage
+
+pub struct MarkupContent {
+  kind : MarkupKind
+  value : String
+}
+pub impl @json.FromJson for MarkupContent
+pub impl @json.ToJson for MarkupContent
+
+pub(all) enum MarkupKind {
+  PlainText
+  Markdown
+}
+pub impl @json.FromJson for MarkupKind
+pub impl @json.ToJson for MarkupKind
+
+pub struct MessageActionItem {
+  title : String
+}
+pub impl @json.FromJson for MessageActionItem
+pub impl @json.ToJson for MessageActionItem
+
+pub(all) enum MessageType {
+  Error
+  Warning
+  Info
+  Log
+  Debug
+}
+pub impl @json.FromJson for MessageType
+pub impl @json.ToJson for MessageType
+
+pub struct Moniker {
+  scheme : String
+  identifier : String
+  unique : UniquenessLevel
+  kind : MonikerKind?
+}
+pub impl @json.FromJson for Moniker
+pub impl @json.ToJson for Moniker
+
+pub struct MonikerClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for MonikerClientCapabilities
+pub impl @json.ToJson for MonikerClientCapabilities
+
+pub(all) enum MonikerKind {
+  Import
+  Export
+  Local
+}
+pub impl @json.FromJson for MonikerKind
+pub impl @json.ToJson for MonikerKind
+
+pub struct MonikerOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for MonikerOptions
+pub impl @json.ToJson for MonikerOptions
+
+pub struct MonikerParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for MonikerParams
+pub impl @json.ToJson for MonikerParams
+
+pub struct MonikerRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for MonikerRegistrationOptions
+pub impl @json.ToJson for MonikerRegistrationOptions
+
+pub struct NotebookCell {
+  kind : NotebookCellKind
+  document : String
+  metadata : @json.JsonValue?
+  execution_summary : ExecutionSummary?
+}
+pub impl @json.FromJson for NotebookCell
+pub impl @json.ToJson for NotebookCell
+
+pub struct NotebookCellArrayChange {
+  start : Int
+  delete_count : Int
+  cells : Array[NotebookCell]?
+}
+pub impl @json.FromJson for NotebookCellArrayChange
+pub impl @json.ToJson for NotebookCellArrayChange
+
+pub(all) enum NotebookCellKind {
+  Markup
+  Code
+}
+pub impl @json.FromJson for NotebookCellKind
+pub impl @json.ToJson for NotebookCellKind
+
+pub struct NotebookCellLanguage {
+  language : String
+}
+pub impl @json.FromJson for NotebookCellLanguage
+pub impl @json.ToJson for NotebookCellLanguage
+
+pub struct NotebookCellTextDocumentFilter {
+  notebook : @json.JsonValue
+  language : String?
+}
+pub impl @json.FromJson for NotebookCellTextDocumentFilter
+pub impl @json.ToJson for NotebookCellTextDocumentFilter
+
+pub struct NotebookDocument {
+  uri : String
+  notebook_type : String
+  version : Int
+  metadata : @json.JsonValue?
+  cells : Array[NotebookCell]
+}
+pub impl @json.FromJson for NotebookDocument
+pub impl @json.ToJson for NotebookDocument
+
+pub struct NotebookDocumentCellChangeStructure {
+  array : NotebookCellArrayChange
+  did_open : Array[TextDocumentItem]?
+  did_close : Array[TextDocumentIdentifier]?
+}
+pub impl @json.FromJson for NotebookDocumentCellChangeStructure
+pub impl @json.ToJson for NotebookDocumentCellChangeStructure
+
+pub struct NotebookDocumentCellChanges {
+  structure : NotebookDocumentCellChangeStructure?
+  data : Array[NotebookCell]?
+  text_content : Array[NotebookDocumentCellContentChanges]?
+}
+pub impl @json.FromJson for NotebookDocumentCellChanges
+pub impl @json.ToJson for NotebookDocumentCellChanges
+
+pub struct NotebookDocumentCellContentChanges {
+  document : VersionedTextDocumentIdentifier
+  changes : Array[@json.JsonValue]
+}
+pub impl @json.FromJson for NotebookDocumentCellContentChanges
+pub impl @json.ToJson for NotebookDocumentCellContentChanges
+
+pub struct NotebookDocumentChangeEvent {
+  metadata : @json.JsonValue?
+  cells : NotebookDocumentCellChanges?
+}
+pub impl @json.FromJson for NotebookDocumentChangeEvent
+pub impl @json.ToJson for NotebookDocumentChangeEvent
+
+pub struct NotebookDocumentClientCapabilities {
+  synchronization : NotebookDocumentSyncClientCapabilities
+}
+pub impl @json.FromJson for NotebookDocumentClientCapabilities
+pub impl @json.ToJson for NotebookDocumentClientCapabilities
+
+pub struct NotebookDocumentFilterNotebookType {
+  notebook_type : String
+  scheme : String?
+  pattern : @json.JsonValue?
+}
+pub impl @json.FromJson for NotebookDocumentFilterNotebookType
+pub impl @json.ToJson for NotebookDocumentFilterNotebookType
+
+pub struct NotebookDocumentFilterPattern {
+  notebook_type : String?
+  scheme : String?
+  pattern : @json.JsonValue
+}
+pub impl @json.FromJson for NotebookDocumentFilterPattern
+pub impl @json.ToJson for NotebookDocumentFilterPattern
+
+pub struct NotebookDocumentFilterScheme {
+  notebook_type : String?
+  scheme : String
+  pattern : @json.JsonValue?
+}
+pub impl @json.FromJson for NotebookDocumentFilterScheme
+pub impl @json.ToJson for NotebookDocumentFilterScheme
+
+pub struct NotebookDocumentFilterWithCells {
+  notebook : @json.JsonValue?
+  cells : Array[NotebookCellLanguage]
+}
+pub impl @json.FromJson for NotebookDocumentFilterWithCells
+pub impl @json.ToJson for NotebookDocumentFilterWithCells
+
+pub struct NotebookDocumentFilterWithNotebook {
+  notebook : @json.JsonValue
+  cells : Array[NotebookCellLanguage]?
+}
+pub impl @json.FromJson for NotebookDocumentFilterWithNotebook
+pub impl @json.ToJson for NotebookDocumentFilterWithNotebook
+
+pub struct NotebookDocumentIdentifier {
+  uri : String
+}
+pub impl @json.FromJson for NotebookDocumentIdentifier
+pub impl @json.ToJson for NotebookDocumentIdentifier
+
+pub struct NotebookDocumentSyncClientCapabilities {
+  dynamic_registration : Bool?
+  execution_summary_support : Bool?
+}
+pub impl @json.FromJson for NotebookDocumentSyncClientCapabilities
+pub impl @json.ToJson for NotebookDocumentSyncClientCapabilities
+
+pub struct NotebookDocumentSyncOptions {
+  notebook_selector : Array[@json.JsonValue]
+  save : Bool?
+}
+pub impl @json.FromJson for NotebookDocumentSyncOptions
+pub impl @json.ToJson for NotebookDocumentSyncOptions
+
+pub struct NotebookDocumentSyncRegistrationOptions {
+  notebook_selector : Array[@json.JsonValue]
+  save : Bool?
+  id : String?
+}
+pub impl @json.FromJson for NotebookDocumentSyncRegistrationOptions
+pub impl @json.ToJson for NotebookDocumentSyncRegistrationOptions
+
+pub struct OptionalVersionedTextDocumentIdentifier {
+  uri : String
+  version : @json.JsonValue
+}
+pub impl @json.FromJson for OptionalVersionedTextDocumentIdentifier
+pub impl @json.ToJson for OptionalVersionedTextDocumentIdentifier
+
+pub struct ParameterInformation {
+  label : @json.JsonValue
+  documentation : @json.JsonValue?
+}
+pub impl @json.FromJson for ParameterInformation
+pub impl @json.ToJson for ParameterInformation
+
+pub struct PartialResultParams {
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for PartialResultParams
+pub impl @json.ToJson for PartialResultParams
+
+pub struct Position {
+  line : UInt
+  character : UInt
+}
+pub fn Position::new(UInt, UInt) -> Self
+pub impl @json.FromJson for Position
+pub impl @json.ToJson for Position
+pub impl Eq for Position
+pub impl Show for Position
+
+pub(all) enum PositionEncodingKind {
+  UTF8
+  UTF16
+  UTF32
+}
+pub impl @json.FromJson for PositionEncodingKind
+pub impl @json.ToJson for PositionEncodingKind
+
+pub struct PrepareRenameDefaultBehavior {
+  default_behavior : Bool
+}
+pub impl @json.FromJson for PrepareRenameDefaultBehavior
+pub impl @json.ToJson for PrepareRenameDefaultBehavior
+
+pub struct PrepareRenameParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+}
+pub impl @json.FromJson for PrepareRenameParams
+pub impl @json.ToJson for PrepareRenameParams
+
+pub struct PrepareRenamePlaceholder {
+  range : Range
+  placeholder : String
+}
+pub impl @json.FromJson for PrepareRenamePlaceholder
+pub impl @json.ToJson for PrepareRenamePlaceholder
+
+pub(all) enum PrepareSupportDefaultBehavior {
+  Identifier
+}
+pub impl @json.FromJson for PrepareSupportDefaultBehavior
+pub impl @json.ToJson for PrepareSupportDefaultBehavior
+
+pub struct PreviousResultId {
+  uri : String
+  value : String
+}
+pub impl @json.FromJson for PreviousResultId
+pub impl @json.ToJson for PreviousResultId
+
+pub struct ProgressParams {
+  token : @json.JsonValue
+  value : @json.JsonValue
+}
+pub impl @json.FromJson for ProgressParams
+pub impl @json.ToJson for ProgressParams
+
+pub struct PublishDiagnosticsClientCapabilities {
+  related_information : Bool?
+  tag_support : ClientDiagnosticsTagOptions?
+  code_description_support : Bool?
+  data_support : Bool?
+  version_support : Bool?
+}
+pub impl @json.FromJson for PublishDiagnosticsClientCapabilities
+pub impl @json.ToJson for PublishDiagnosticsClientCapabilities
+
+pub struct PublishDiagnosticsParams {
+  uri : DocumentUri
+  version : Int?
+  diagnostics : Array[Diagnostic]
+}
+pub impl @json.FromJson for PublishDiagnosticsParams
+pub impl @json.ToJson for PublishDiagnosticsParams
+pub impl Show for PublishDiagnosticsParams
+
+pub struct Range {
+  start : Position
+  end : Position
+}
+pub fn Range::new(Position, Position) -> Self
+pub impl @json.FromJson for Range
+pub impl @json.ToJson for Range
+pub impl Eq for Range
+pub impl Show for Range
+
+pub struct ReferenceClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for ReferenceClientCapabilities
+pub impl @json.ToJson for ReferenceClientCapabilities
+
+pub struct ReferenceContext {
+  include_declaration : Bool
+}
+pub impl @json.FromJson for ReferenceContext
+pub impl @json.ToJson for ReferenceContext
+
+pub struct ReferenceOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for ReferenceOptions
+pub impl @json.ToJson for ReferenceOptions
+
+pub struct ReferenceParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  context : ReferenceContext
+}
+pub impl @json.FromJson for ReferenceParams
+pub impl @json.ToJson for ReferenceParams
+
+pub struct ReferenceRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for ReferenceRegistrationOptions
+pub impl @json.ToJson for ReferenceRegistrationOptions
+
+pub struct Registration {
+  id : String
+  method : String
+  register_options : @json.JsonValue?
+}
+pub impl @json.FromJson for Registration
+pub impl @json.ToJson for Registration
+
+pub struct RegistrationParams {
+  registrations : Array[Registration]
+}
+pub impl @json.FromJson for RegistrationParams
+pub impl @json.ToJson for RegistrationParams
+
+pub struct RegularExpressionsClientCapabilities {
+  engine : String
+  version : String?
+}
+pub impl @json.FromJson for RegularExpressionsClientCapabilities
+pub impl @json.ToJson for RegularExpressionsClientCapabilities
+
+pub struct RelatedFullDocumentDiagnosticReport {
+  kind : String
+  result_id : String?
+  items : Array[Diagnostic]
+  related_documents : @json.JsonValue?
+}
+pub impl @json.FromJson for RelatedFullDocumentDiagnosticReport
+pub impl @json.ToJson for RelatedFullDocumentDiagnosticReport
+
+pub struct RelatedUnchangedDocumentDiagnosticReport {
+  kind : String
+  result_id : String
+  related_documents : @json.JsonValue?
+}
+pub impl @json.FromJson for RelatedUnchangedDocumentDiagnosticReport
+pub impl @json.ToJson for RelatedUnchangedDocumentDiagnosticReport
+
+pub struct RelativePattern {
+  base_uri : @json.JsonValue
+  pattern : String
+}
+pub impl @json.FromJson for RelativePattern
+pub impl @json.ToJson for RelativePattern
+
+pub struct RenameClientCapabilities {
+  dynamic_registration : Bool?
+  prepare_support : Bool?
+  prepare_support_default_behavior : PrepareSupportDefaultBehavior?
+  honors_change_annotations : Bool?
+}
+pub impl @json.FromJson for RenameClientCapabilities
+pub impl @json.ToJson for RenameClientCapabilities
+
+pub struct RenameFile {
+  kind : String
+  annotation_id : String?
+  old_uri : String
+  new_uri : String
+  options : RenameFileOptions?
+}
+pub impl @json.FromJson for RenameFile
+pub impl @json.ToJson for RenameFile
+
+pub struct RenameFileOptions {
+  overwrite : Bool?
+  ignore_if_exists : Bool?
+}
+pub impl @json.FromJson for RenameFileOptions
+pub impl @json.ToJson for RenameFileOptions
+
+pub struct RenameFilesParams {
+  files : Array[FileRename]
+}
+pub impl @json.FromJson for RenameFilesParams
+pub impl @json.ToJson for RenameFilesParams
+
+pub struct RenameOptions {
+  work_done_progress : Bool?
+  prepare_provider : Bool?
+}
+pub impl @json.FromJson for RenameOptions
+pub impl @json.ToJson for RenameOptions
+
+pub struct RenameParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  new_name : String
+}
+pub impl @json.FromJson for RenameParams
+pub impl @json.ToJson for RenameParams
+
+pub struct RenameRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  prepare_provider : Bool?
+}
+pub impl @json.FromJson for RenameRegistrationOptions
+pub impl @json.ToJson for RenameRegistrationOptions
+
+pub struct ResourceOperation {
+  kind : String
+  annotation_id : String?
+}
+pub impl @json.FromJson for ResourceOperation
+pub impl @json.ToJson for ResourceOperation
+
+pub(all) enum ResourceOperationKind {
+  Create
+  Rename
+  Delete
+}
+pub impl @json.FromJson for ResourceOperationKind
+pub impl @json.ToJson for ResourceOperationKind
+
+pub struct SaveOptions {
+  include_text : Bool?
+}
+pub impl @json.FromJson for SaveOptions
+pub impl @json.ToJson for SaveOptions
+
+pub struct SelectedCompletionInfo {
+  range : Range
+  text : String
+}
+pub impl @json.FromJson for SelectedCompletionInfo
+pub impl @json.ToJson for SelectedCompletionInfo
+
+pub struct SelectionRange {
+  range : Range
+  parent : SelectionRange?
+}
+pub impl @json.FromJson for SelectionRange
+pub impl @json.ToJson for SelectionRange
+
+pub struct SelectionRangeClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for SelectionRangeClientCapabilities
+pub impl @json.ToJson for SelectionRangeClientCapabilities
+
+pub struct SelectionRangeOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for SelectionRangeOptions
+pub impl @json.ToJson for SelectionRangeOptions
+
+pub struct SelectionRangeParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  positions : Array[Position]
+}
+pub impl @json.FromJson for SelectionRangeParams
+pub impl @json.ToJson for SelectionRangeParams
+
+pub struct SelectionRangeRegistrationOptions {
+  work_done_progress : Bool?
+  document_selector : @json.JsonValue
+  id : String?
+}
+pub impl @json.FromJson for SelectionRangeRegistrationOptions
+pub impl @json.ToJson for SelectionRangeRegistrationOptions
+
+pub(all) enum SemanticTokenModifiers {
+  Declaration
+  Definition
+  Readonly
+  Static
+  Deprecated
+  Abstract
+  Async
+  Modification
+  Documentation
+  DefaultLibrary
+}
+pub impl @json.FromJson for SemanticTokenModifiers
+pub impl @json.ToJson for SemanticTokenModifiers
+
+pub(all) enum SemanticTokenTypes {
+  Namespace
+  Type
+  Class
+  Enum
+  Interface
+  Struct
+  TypeParameter
+  Parameter
+  Variable
+  Property
+  EnumMember
+  Event
+  Function
+  Method
+  Macro
+  Keyword
+  Modifier
+  Comment
+  String
+  Number
+  Regexp
+  Operator
+  Decorator
+  Label
+}
+pub impl @json.FromJson for SemanticTokenTypes
+pub impl @json.ToJson for SemanticTokenTypes
+
+pub struct SemanticTokens {
+  result_id : String?
+  data : Array[Int]
+}
+pub impl @json.FromJson for SemanticTokens
+pub impl @json.ToJson for SemanticTokens
+
+pub struct SemanticTokensClientCapabilities {
+  dynamic_registration : Bool?
+  requests : ClientSemanticTokensRequestOptions
+  token_types : Array[String]
+  token_modifiers : Array[String]
+  formats : Array[TokenFormat]
+  overlapping_token_support : Bool?
+  multiline_token_support : Bool?
+  server_cancel_support : Bool?
+  augments_syntax_tokens : Bool?
+}
+pub impl @json.FromJson for SemanticTokensClientCapabilities
+pub impl @json.ToJson for SemanticTokensClientCapabilities
+
+pub struct SemanticTokensDelta {
+  result_id : String?
+  edits : Array[SemanticTokensEdit]
+}
+pub impl @json.FromJson for SemanticTokensDelta
+pub impl @json.ToJson for SemanticTokensDelta
+
+pub struct SemanticTokensDeltaParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  previous_result_id : String
+}
+pub impl @json.FromJson for SemanticTokensDeltaParams
+pub impl @json.ToJson for SemanticTokensDeltaParams
+
+pub struct SemanticTokensDeltaPartialResult {
+  edits : Array[SemanticTokensEdit]
+}
+pub impl @json.FromJson for SemanticTokensDeltaPartialResult
+pub impl @json.ToJson for SemanticTokensDeltaPartialResult
+
+pub struct SemanticTokensEdit {
+  start : Int
+  delete_count : Int
+  data : Array[Int]?
+}
+pub impl @json.FromJson for SemanticTokensEdit
+pub impl @json.ToJson for SemanticTokensEdit
+
+pub struct SemanticTokensFullDelta {
+  delta : Bool?
+}
+pub impl @json.FromJson for SemanticTokensFullDelta
+pub impl @json.ToJson for SemanticTokensFullDelta
+
+pub struct SemanticTokensLegend {
+  token_types : Array[String]
+  token_modifiers : Array[String]
+}
+pub impl @json.FromJson for SemanticTokensLegend
+pub impl @json.ToJson for SemanticTokensLegend
+
+pub struct SemanticTokensOptions {
+  work_done_progress : Bool?
+  legend : SemanticTokensLegend
+  range : @json.JsonValue?
+  full : @json.JsonValue?
+}
+pub impl @json.FromJson for SemanticTokensOptions
+pub impl @json.ToJson for SemanticTokensOptions
+
+pub struct SemanticTokensParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+}
+pub impl @json.FromJson for SemanticTokensParams
+pub impl @json.ToJson for SemanticTokensParams
+
+pub struct SemanticTokensPartialResult {
+  data : Array[Int]
+}
+pub impl @json.FromJson for SemanticTokensPartialResult
+pub impl @json.ToJson for SemanticTokensPartialResult
+
+pub struct SemanticTokensRangeParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  text_document : TextDocumentIdentifier
+  range : Range
+}
+pub impl @json.FromJson for SemanticTokensRangeParams
+pub impl @json.ToJson for SemanticTokensRangeParams
+
+pub struct SemanticTokensRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  legend : SemanticTokensLegend
+  range : @json.JsonValue?
+  full : @json.JsonValue?
+  id : String?
+}
+pub impl @json.FromJson for SemanticTokensRegistrationOptions
+pub impl @json.ToJson for SemanticTokensRegistrationOptions
+
+pub struct SemanticTokensWorkspaceClientCapabilities {
+  refresh_support : Bool?
+}
+pub impl @json.FromJson for SemanticTokensWorkspaceClientCapabilities
+pub impl @json.ToJson for SemanticTokensWorkspaceClientCapabilities
+
+pub struct ServerCapabilities {
+  position_encoding : PositionEncodingKind?
+  text_document_sync : @json.JsonValue?
+  notebook_document_sync : @json.JsonValue?
+  completion_provider : CompletionOptions?
+  hover_provider : @json.JsonValue?
+  signature_help_provider : SignatureHelpOptions?
+  declaration_provider : @json.JsonValue?
+  definition_provider : @json.JsonValue?
+  type_definition_provider : @json.JsonValue?
+  implementation_provider : @json.JsonValue?
+  references_provider : @json.JsonValue?
+  document_highlight_provider : @json.JsonValue?
+  document_symbol_provider : @json.JsonValue?
+  code_action_provider : @json.JsonValue?
+  code_lens_provider : CodeLensOptions?
+  document_link_provider : DocumentLinkOptions?
+  color_provider : @json.JsonValue?
+  workspace_symbol_provider : @json.JsonValue?
+  document_formatting_provider : @json.JsonValue?
+  document_range_formatting_provider : @json.JsonValue?
+  document_on_type_formatting_provider : DocumentOnTypeFormattingOptions?
+  rename_provider : @json.JsonValue?
+  folding_range_provider : @json.JsonValue?
+  selection_range_provider : @json.JsonValue?
+  execute_command_provider : ExecuteCommandOptions?
+  call_hierarchy_provider : @json.JsonValue?
+  linked_editing_range_provider : @json.JsonValue?
+  semantic_tokens_provider : @json.JsonValue?
+  moniker_provider : @json.JsonValue?
+  type_hierarchy_provider : @json.JsonValue?
+  inline_value_provider : @json.JsonValue?
+  inlay_hint_provider : @json.JsonValue?
+  diagnostic_provider : @json.JsonValue?
+  inline_completion_provider : @json.JsonValue?
+  workspace : WorkspaceOptions?
+  experimental : @json.JsonValue?
+}
+pub impl @json.FromJson for ServerCapabilities
+pub impl @json.ToJson for ServerCapabilities
+
+pub struct ServerCompletionItemOptions {
+  label_details_support : Bool?
+}
+pub impl @json.FromJson for ServerCompletionItemOptions
+pub impl @json.ToJson for ServerCompletionItemOptions
+
+pub struct ServerInfo {
+  name : String
+  version : String?
+}
+pub impl @json.FromJson for ServerInfo
+pub impl @json.ToJson for ServerInfo
+
+pub struct SetTraceParams {
+  value : TraceValue
+}
+pub impl @json.FromJson for SetTraceParams
+pub impl @json.ToJson for SetTraceParams
+
+pub struct ShowDocumentClientCapabilities {
+  support : Bool
+}
+pub impl @json.FromJson for ShowDocumentClientCapabilities
+pub impl @json.ToJson for ShowDocumentClientCapabilities
+
+pub struct ShowDocumentParams {
+  uri : String
+  external : Bool?
+  take_focus : Bool?
+  selection : Range?
+}
+pub impl @json.FromJson for ShowDocumentParams
+pub impl @json.ToJson for ShowDocumentParams
+
+pub struct ShowDocumentResult {
+  success : Bool
+}
+pub impl @json.FromJson for ShowDocumentResult
+pub impl @json.ToJson for ShowDocumentResult
+
+pub struct ShowMessageParams {
+  type_ : MessageType
+  message : String
+}
+pub impl @json.FromJson for ShowMessageParams
+pub impl @json.ToJson for ShowMessageParams
+
+pub struct ShowMessageRequestClientCapabilities {
+  message_action_item : ClientShowMessageActionItemOptions?
+}
+pub impl @json.FromJson for ShowMessageRequestClientCapabilities
+pub impl @json.ToJson for ShowMessageRequestClientCapabilities
+
+pub struct ShowMessageRequestParams {
+  type_ : MessageType
+  message : String
+  actions : Array[MessageActionItem]?
+}
+pub impl @json.FromJson for ShowMessageRequestParams
+pub impl @json.ToJson for ShowMessageRequestParams
+
+pub struct SignatureHelp {
+  signatures : Array[SignatureInformation]
+  active_signature : Int?
+  active_parameter : @json.JsonValue?
+}
+pub impl @json.FromJson for SignatureHelp
+pub impl @json.ToJson for SignatureHelp
+
+pub struct SignatureHelpClientCapabilities {
+  dynamic_registration : Bool?
+  signature_information : ClientSignatureInformationOptions?
+  context_support : Bool?
+}
+pub impl @json.FromJson for SignatureHelpClientCapabilities
+pub impl @json.ToJson for SignatureHelpClientCapabilities
+
+pub struct SignatureHelpContext {
+  trigger_kind : SignatureHelpTriggerKind
+  trigger_character : String?
+  is_retrigger : Bool
+  active_signature_help : SignatureHelp?
+}
+pub impl @json.FromJson for SignatureHelpContext
+pub impl @json.ToJson for SignatureHelpContext
+
+pub struct SignatureHelpOptions {
+  work_done_progress : Bool?
+  trigger_characters : Array[String]?
+  retrigger_characters : Array[String]?
+}
+pub impl @json.FromJson for SignatureHelpOptions
+pub impl @json.ToJson for SignatureHelpOptions
+
+pub struct SignatureHelpParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  context : SignatureHelpContext?
+}
+pub impl @json.FromJson for SignatureHelpParams
+pub impl @json.ToJson for SignatureHelpParams
+
+pub struct SignatureHelpRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  trigger_characters : Array[String]?
+  retrigger_characters : Array[String]?
+}
+pub impl @json.FromJson for SignatureHelpRegistrationOptions
+pub impl @json.ToJson for SignatureHelpRegistrationOptions
+
+pub(all) enum SignatureHelpTriggerKind {
+  Invoked
+  TriggerCharacter
+  ContentChange
+}
+pub impl @json.FromJson for SignatureHelpTriggerKind
+pub impl @json.ToJson for SignatureHelpTriggerKind
+
+pub struct SignatureInformation {
+  label : String
+  documentation : @json.JsonValue?
+  parameters : Array[ParameterInformation]?
+  active_parameter : @json.JsonValue?
+}
+pub impl @json.FromJson for SignatureInformation
+pub impl @json.ToJson for SignatureInformation
+
+pub struct SnippetTextEdit {
+  range : Range
+  snippet : StringValue
+  annotation_id : String?
+}
+pub impl @json.FromJson for SnippetTextEdit
+pub impl @json.ToJson for SnippetTextEdit
+
+pub struct StaleRequestSupportOptions {
+  cancel : Bool
+  retry_on_content_modified : Array[String]
+}
+pub impl @json.FromJson for StaleRequestSupportOptions
+pub impl @json.ToJson for StaleRequestSupportOptions
+
+pub struct StaticRegistrationOptions {
+  id : String?
+}
+pub impl @json.FromJson for StaticRegistrationOptions
+pub impl @json.ToJson for StaticRegistrationOptions
+
+pub struct StringValue {
+  kind : String
+  value : String
+}
+pub impl @json.FromJson for StringValue
+pub impl @json.ToJson for StringValue
+
+pub struct SymbolInformation {
+  name : String
+  kind : SymbolKind
+  tags : Array[SymbolTag]?
+  container_name : String?
+  deprecated : Bool?
+  location : Location
+}
+pub impl @json.FromJson for SymbolInformation
+pub impl @json.ToJson for SymbolInformation
+
+pub(all) enum SymbolKind {
+  File
+  Module
+  Namespace
+  Package
+  Class
+  Method
+  Property
+  Field
+  Constructor
+  Enum
+  Interface
+  Function
+  Variable
+  Constant
+  String
+  Number
+  Boolean
+  Array
+  Object
+  Key
+  Null
+  EnumMember
+  Struct
+  Event
+  Operator
+  TypeParameter
+}
+pub impl @json.FromJson for SymbolKind
+pub impl @json.ToJson for SymbolKind
+
+pub(all) enum SymbolTag {
+  Deprecated
+}
+pub impl @json.FromJson for SymbolTag
+pub impl @json.ToJson for SymbolTag
+
+pub struct TextDocumentChangeRegistrationOptions {
+  document_selector : @json.JsonValue
+  sync_kind : TextDocumentSyncKind
+}
+pub impl @json.FromJson for TextDocumentChangeRegistrationOptions
+pub impl @json.ToJson for TextDocumentChangeRegistrationOptions
+
+pub struct TextDocumentClientCapabilities {
+  synchronization : TextDocumentSyncClientCapabilities?
+  filters : TextDocumentFilterClientCapabilities?
+  completion : CompletionClientCapabilities?
+  hover : HoverClientCapabilities?
+  signature_help : SignatureHelpClientCapabilities?
+  declaration : DeclarationClientCapabilities?
+  definition : DefinitionClientCapabilities?
+  type_definition : TypeDefinitionClientCapabilities?
+  implementation : ImplementationClientCapabilities?
+  references : ReferenceClientCapabilities?
+  document_highlight : DocumentHighlightClientCapabilities?
+  document_symbol : DocumentSymbolClientCapabilities?
+  code_action : CodeActionClientCapabilities?
+  code_lens : CodeLensClientCapabilities?
+  document_link : DocumentLinkClientCapabilities?
+  color_provider : DocumentColorClientCapabilities?
+  formatting : DocumentFormattingClientCapabilities?
+  range_formatting : DocumentRangeFormattingClientCapabilities?
+  on_type_formatting : DocumentOnTypeFormattingClientCapabilities?
+  rename : RenameClientCapabilities?
+  folding_range : FoldingRangeClientCapabilities?
+  selection_range : SelectionRangeClientCapabilities?
+  publish_diagnostics : PublishDiagnosticsClientCapabilities?
+  call_hierarchy : CallHierarchyClientCapabilities?
+  semantic_tokens : SemanticTokensClientCapabilities?
+  linked_editing_range : LinkedEditingRangeClientCapabilities?
+  moniker : MonikerClientCapabilities?
+  type_hierarchy : TypeHierarchyClientCapabilities?
+  inline_value : InlineValueClientCapabilities?
+  inlay_hint : InlayHintClientCapabilities?
+  diagnostic : DiagnosticClientCapabilities?
+  inline_completion : InlineCompletionClientCapabilities?
+}
+pub impl @json.FromJson for TextDocumentClientCapabilities
+pub impl @json.ToJson for TextDocumentClientCapabilities
+
+pub struct TextDocumentContentChangePartial {
+  range : Range
+  range_length : Int?
+  text : String
+}
+pub impl @json.FromJson for TextDocumentContentChangePartial
+pub impl @json.ToJson for TextDocumentContentChangePartial
+
+pub struct TextDocumentContentChangeWholeDocument {
+  text : String
+}
+pub impl @json.FromJson for TextDocumentContentChangeWholeDocument
+pub impl @json.ToJson for TextDocumentContentChangeWholeDocument
+
+pub struct TextDocumentContentClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for TextDocumentContentClientCapabilities
+pub impl @json.ToJson for TextDocumentContentClientCapabilities
+
+pub struct TextDocumentContentOptions {
+  schemes : Array[String]
+}
+pub impl @json.FromJson for TextDocumentContentOptions
+pub impl @json.ToJson for TextDocumentContentOptions
+
+pub struct TextDocumentContentParams {
+  uri : String
+}
+pub impl @json.FromJson for TextDocumentContentParams
+pub impl @json.ToJson for TextDocumentContentParams
+
+pub struct TextDocumentContentRefreshParams {
+  uri : String
+}
+pub impl @json.FromJson for TextDocumentContentRefreshParams
+pub impl @json.ToJson for TextDocumentContentRefreshParams
+
+pub struct TextDocumentContentRegistrationOptions {
+  schemes : Array[String]
+  id : String?
+}
+pub impl @json.FromJson for TextDocumentContentRegistrationOptions
+pub impl @json.ToJson for TextDocumentContentRegistrationOptions
+
+pub struct TextDocumentContentResult {
+  text : String
+}
+pub impl @json.FromJson for TextDocumentContentResult
+pub impl @json.ToJson for TextDocumentContentResult
+
+pub struct TextDocumentEdit {
+  text_document : OptionalVersionedTextDocumentIdentifier
+  edits : Array[@json.JsonValue]
+}
+pub impl @json.FromJson for TextDocumentEdit
+pub impl @json.ToJson for TextDocumentEdit
+
+pub struct TextDocumentFilterClientCapabilities {
+  relative_pattern_support : Bool?
+}
+pub impl @json.FromJson for TextDocumentFilterClientCapabilities
+pub impl @json.ToJson for TextDocumentFilterClientCapabilities
+
+pub struct TextDocumentFilterLanguage {
+  language : String
+  scheme : String?
+  pattern : @json.JsonValue?
+}
+pub impl @json.FromJson for TextDocumentFilterLanguage
+pub impl @json.ToJson for TextDocumentFilterLanguage
+
+pub struct TextDocumentFilterPattern {
+  language : String?
+  scheme : String?
+  pattern : @json.JsonValue
+}
+pub impl @json.FromJson for TextDocumentFilterPattern
+pub impl @json.ToJson for TextDocumentFilterPattern
+
+pub struct TextDocumentFilterScheme {
+  language : String?
+  scheme : String
+  pattern : @json.JsonValue?
+}
+pub impl @json.FromJson for TextDocumentFilterScheme
+pub impl @json.ToJson for TextDocumentFilterScheme
+
+pub struct TextDocumentIdentifier {
+  uri : DocumentUri
+}
+pub impl @json.FromJson for TextDocumentIdentifier
+pub impl @json.ToJson for TextDocumentIdentifier
+pub impl Eq for TextDocumentIdentifier
+pub impl Show for TextDocumentIdentifier
+
+pub struct TextDocumentItem {
+  uri : DocumentUri
+  language_id : String
+  version : Int
+  text : String
+}
+pub impl @json.FromJson for TextDocumentItem
+pub impl @json.ToJson for TextDocumentItem
+pub impl Show for TextDocumentItem
+
+pub struct TextDocumentPositionParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+}
+pub impl @json.FromJson for TextDocumentPositionParams
+pub impl @json.ToJson for TextDocumentPositionParams
+pub impl Eq for TextDocumentPositionParams
+pub impl Show for TextDocumentPositionParams
+
+pub struct TextDocumentRegistrationOptions {
+  document_selector : @json.JsonValue
+}
+pub impl @json.FromJson for TextDocumentRegistrationOptions
+pub impl @json.ToJson for TextDocumentRegistrationOptions
+
+pub(all) enum TextDocumentSaveReason {
+  Manual
+  AfterDelay
+  FocusOut
+}
+pub impl @json.FromJson for TextDocumentSaveReason
+pub impl @json.ToJson for TextDocumentSaveReason
+
+pub struct TextDocumentSaveRegistrationOptions {
+  document_selector : @json.JsonValue
+  include_text : Bool?
+}
+pub impl @json.FromJson for TextDocumentSaveRegistrationOptions
+pub impl @json.ToJson for TextDocumentSaveRegistrationOptions
+
+pub struct TextDocumentSyncClientCapabilities {
+  dynamic_registration : Bool?
+  will_save : Bool?
+  will_save_wait_until : Bool?
+  did_save : Bool?
+}
+pub impl @json.FromJson for TextDocumentSyncClientCapabilities
+pub impl @json.ToJson for TextDocumentSyncClientCapabilities
+
+pub(all) enum TextDocumentSyncKind {
+  None
+  Full
+  Incremental
+}
+pub impl @json.FromJson for TextDocumentSyncKind
+pub impl @json.ToJson for TextDocumentSyncKind
+
+pub struct TextDocumentSyncOptions {
+  open_close : Bool?
+  change : TextDocumentSyncKind?
+  will_save : Bool?
+  will_save_wait_until : Bool?
+  save : @json.JsonValue?
+}
+pub impl @json.FromJson for TextDocumentSyncOptions
+pub impl @json.ToJson for TextDocumentSyncOptions
+
+pub struct TextEdit {
+  range : Range
+  new_text : String
+}
+pub impl @json.FromJson for TextEdit
+pub impl @json.ToJson for TextEdit
+
+pub(all) enum TokenFormat {
+  Relative
+}
+pub impl @json.FromJson for TokenFormat
+pub impl @json.ToJson for TokenFormat
+
+pub(all) enum TraceValue {
+  Off
+  Messages
+  Verbose
+}
+pub impl @json.FromJson for TraceValue
+pub impl @json.ToJson for TraceValue
+
+pub struct TypeDefinitionClientCapabilities {
+  dynamic_registration : Bool?
+  link_support : Bool?
+}
+pub impl @json.FromJson for TypeDefinitionClientCapabilities
+pub impl @json.ToJson for TypeDefinitionClientCapabilities
+
+pub struct TypeDefinitionOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for TypeDefinitionOptions
+pub impl @json.ToJson for TypeDefinitionOptions
+
+pub struct TypeDefinitionParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+}
+pub impl @json.FromJson for TypeDefinitionParams
+pub impl @json.ToJson for TypeDefinitionParams
+
+pub struct TypeDefinitionRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for TypeDefinitionRegistrationOptions
+pub impl @json.ToJson for TypeDefinitionRegistrationOptions
+
+pub struct TypeHierarchyClientCapabilities {
+  dynamic_registration : Bool?
+}
+pub impl @json.FromJson for TypeHierarchyClientCapabilities
+pub impl @json.ToJson for TypeHierarchyClientCapabilities
+
+pub struct TypeHierarchyItem {
+  name : String
+  kind : SymbolKind
+  tags : Array[SymbolTag]?
+  detail : String?
+  uri : String
+  range : Range
+  selection_range : Range
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for TypeHierarchyItem
+pub impl @json.ToJson for TypeHierarchyItem
+
+pub struct TypeHierarchyOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for TypeHierarchyOptions
+pub impl @json.ToJson for TypeHierarchyOptions
+
+pub struct TypeHierarchyPrepareParams {
+  text_document : TextDocumentIdentifier
+  position : Position
+  work_done_token : @json.JsonValue?
+}
+pub impl @json.FromJson for TypeHierarchyPrepareParams
+pub impl @json.ToJson for TypeHierarchyPrepareParams
+
+pub struct TypeHierarchyRegistrationOptions {
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  id : String?
+}
+pub impl @json.FromJson for TypeHierarchyRegistrationOptions
+pub impl @json.ToJson for TypeHierarchyRegistrationOptions
+
+pub struct TypeHierarchySubtypesParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  item : TypeHierarchyItem
+}
+pub impl @json.FromJson for TypeHierarchySubtypesParams
+pub impl @json.ToJson for TypeHierarchySubtypesParams
+
+pub struct TypeHierarchySupertypesParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  item : TypeHierarchyItem
+}
+pub impl @json.FromJson for TypeHierarchySupertypesParams
+pub impl @json.ToJson for TypeHierarchySupertypesParams
+
+pub struct UnchangedDocumentDiagnosticReport {
+  kind : String
+  result_id : String
+}
+pub impl @json.FromJson for UnchangedDocumentDiagnosticReport
+pub impl @json.ToJson for UnchangedDocumentDiagnosticReport
+
+pub(all) enum UniquenessLevel {
+  Document
+  Project
+  Group
+  Scheme
+  Global
+}
+pub impl @json.FromJson for UniquenessLevel
+pub impl @json.ToJson for UniquenessLevel
+
+pub struct Unregistration {
+  id : String
+  method : String
+}
+pub impl @json.FromJson for Unregistration
+pub impl @json.ToJson for Unregistration
+
+pub struct UnregistrationParams {
+  unregisterations : Array[Unregistration]
+}
+pub impl @json.FromJson for UnregistrationParams
+pub impl @json.ToJson for UnregistrationParams
+
+pub struct VersionedNotebookDocumentIdentifier {
+  version : Int
+  uri : String
+}
+pub impl @json.FromJson for VersionedNotebookDocumentIdentifier
+pub impl @json.ToJson for VersionedNotebookDocumentIdentifier
+
+pub struct VersionedTextDocumentIdentifier {
+  uri : DocumentUri
+  version : Int
+}
+pub impl @json.FromJson for VersionedTextDocumentIdentifier
+pub impl @json.ToJson for VersionedTextDocumentIdentifier
+pub impl Eq for VersionedTextDocumentIdentifier
+pub impl Show for VersionedTextDocumentIdentifier
+
+pub(all) enum WatchKind {
+  Create
+  Change
+  Delete
+}
+pub impl @json.FromJson for WatchKind
+pub impl @json.ToJson for WatchKind
+
+pub struct WillSaveTextDocumentParams {
+  text_document : TextDocumentIdentifier
+  reason : TextDocumentSaveReason
+}
+pub impl @json.FromJson for WillSaveTextDocumentParams
+pub impl @json.ToJson for WillSaveTextDocumentParams
+
+pub struct WindowClientCapabilities {
+  work_done_progress : Bool?
+  show_message : ShowMessageRequestClientCapabilities?
+  show_document : ShowDocumentClientCapabilities?
+}
+pub impl @json.FromJson for WindowClientCapabilities
+pub impl @json.ToJson for WindowClientCapabilities
+
+pub struct WorkDoneProgressBegin {
+  kind : String
+  title : String
+  cancellable : Bool?
+  message : String?
+  percentage : Int?
+}
+pub impl @json.FromJson for WorkDoneProgressBegin
+pub impl @json.ToJson for WorkDoneProgressBegin
+
+pub struct WorkDoneProgressCancelParams {
+  token : @json.JsonValue
+}
+pub impl @json.FromJson for WorkDoneProgressCancelParams
+pub impl @json.ToJson for WorkDoneProgressCancelParams
+
+pub struct WorkDoneProgressCreateParams {
+  token : @json.JsonValue
+}
+pub impl @json.FromJson for WorkDoneProgressCreateParams
+pub impl @json.ToJson for WorkDoneProgressCreateParams
+
+pub struct WorkDoneProgressEnd {
+  kind : String
+  message : String?
+}
+pub impl @json.FromJson for WorkDoneProgressEnd
+pub impl @json.ToJson for WorkDoneProgressEnd
+
+pub struct WorkDoneProgressOptions {
+  work_done_progress : Bool?
+}
+pub impl @json.FromJson for WorkDoneProgressOptions
+pub impl @json.ToJson for WorkDoneProgressOptions
+
+pub struct WorkDoneProgressParams {
+  work_done_token : @json.JsonValue?
+}
+pub impl @json.FromJson for WorkDoneProgressParams
+pub impl @json.ToJson for WorkDoneProgressParams
+
+pub struct WorkDoneProgressReport {
+  kind : String
+  cancellable : Bool?
+  message : String?
+  percentage : Int?
+}
+pub impl @json.FromJson for WorkDoneProgressReport
+pub impl @json.ToJson for WorkDoneProgressReport
+
+pub struct WorkspaceClientCapabilities {
+  apply_edit : Bool?
+  workspace_edit : WorkspaceEditClientCapabilities?
+  did_change_configuration : DidChangeConfigurationClientCapabilities?
+  did_change_watched_files : DidChangeWatchedFilesClientCapabilities?
+  symbol : WorkspaceSymbolClientCapabilities?
+  execute_command : ExecuteCommandClientCapabilities?
+  workspace_folders : Bool?
+  configuration : Bool?
+  semantic_tokens : SemanticTokensWorkspaceClientCapabilities?
+  code_lens : CodeLensWorkspaceClientCapabilities?
+  file_operations : FileOperationClientCapabilities?
+  inline_value : InlineValueWorkspaceClientCapabilities?
+  inlay_hint : InlayHintWorkspaceClientCapabilities?
+  diagnostics : DiagnosticWorkspaceClientCapabilities?
+  folding_range : FoldingRangeWorkspaceClientCapabilities?
+  text_document_content : TextDocumentContentClientCapabilities?
+}
+pub impl @json.FromJson for WorkspaceClientCapabilities
+pub impl @json.ToJson for WorkspaceClientCapabilities
+
+pub struct WorkspaceDiagnosticParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  identifier : String?
+  previous_result_ids : Array[PreviousResultId]
+}
+pub impl @json.FromJson for WorkspaceDiagnosticParams
+pub impl @json.ToJson for WorkspaceDiagnosticParams
+
+pub struct WorkspaceDiagnosticReport {
+  items : Array[@json.JsonValue]
+}
+pub impl @json.FromJson for WorkspaceDiagnosticReport
+pub impl @json.ToJson for WorkspaceDiagnosticReport
+
+pub struct WorkspaceDiagnosticReportPartialResult {
+  items : Array[@json.JsonValue]
+}
+pub impl @json.FromJson for WorkspaceDiagnosticReportPartialResult
+pub impl @json.ToJson for WorkspaceDiagnosticReportPartialResult
+
+pub struct WorkspaceEdit {
+  changes : @json.JsonValue?
+  document_changes : Array[@json.JsonValue]?
+  change_annotations : @json.JsonValue?
+}
+pub impl @json.FromJson for WorkspaceEdit
+pub impl @json.ToJson for WorkspaceEdit
+
+pub struct WorkspaceEditClientCapabilities {
+  document_changes : Bool?
+  resource_operations : Array[ResourceOperationKind]?
+  failure_handling : FailureHandlingKind?
+  normalizes_line_endings : Bool?
+  change_annotation_support : ChangeAnnotationsSupportOptions?
+  metadata_support : Bool?
+  snippet_edit_support : Bool?
+}
+pub impl @json.FromJson for WorkspaceEditClientCapabilities
+pub impl @json.ToJson for WorkspaceEditClientCapabilities
+
+pub struct WorkspaceEditMetadata {
+  is_refactoring : Bool?
+}
+pub impl @json.FromJson for WorkspaceEditMetadata
+pub impl @json.ToJson for WorkspaceEditMetadata
+
+pub struct WorkspaceFolder {
+  uri : String
+  name : String
+}
+pub impl @json.FromJson for WorkspaceFolder
+pub impl @json.ToJson for WorkspaceFolder
+
+pub struct WorkspaceFoldersChangeEvent {
+  added : Array[WorkspaceFolder]
+  removed : Array[WorkspaceFolder]
+}
+pub impl @json.FromJson for WorkspaceFoldersChangeEvent
+pub impl @json.ToJson for WorkspaceFoldersChangeEvent
+
+pub struct WorkspaceFoldersInitializeParams {
+  workspace_folders : @json.JsonValue?
+}
+pub impl @json.FromJson for WorkspaceFoldersInitializeParams
+pub impl @json.ToJson for WorkspaceFoldersInitializeParams
+
+pub struct WorkspaceFoldersServerCapabilities {
+  supported : Bool?
+  change_notifications : @json.JsonValue?
+}
+pub impl @json.FromJson for WorkspaceFoldersServerCapabilities
+pub impl @json.ToJson for WorkspaceFoldersServerCapabilities
+
+pub struct WorkspaceFullDocumentDiagnosticReport {
+  kind : String
+  result_id : String?
+  items : Array[Diagnostic]
+  uri : String
+  version : @json.JsonValue
+}
+pub impl @json.FromJson for WorkspaceFullDocumentDiagnosticReport
+pub impl @json.ToJson for WorkspaceFullDocumentDiagnosticReport
+
+pub struct WorkspaceOptions {
+  workspace_folders : WorkspaceFoldersServerCapabilities?
+  file_operations : FileOperationOptions?
+  text_document_content : @json.JsonValue?
+}
+pub impl @json.FromJson for WorkspaceOptions
+pub impl @json.ToJson for WorkspaceOptions
+
+pub struct WorkspaceSymbol {
+  name : String
+  kind : SymbolKind
+  tags : Array[SymbolTag]?
+  container_name : String?
+  location : @json.JsonValue
+  data : @json.JsonValue?
+}
+pub impl @json.FromJson for WorkspaceSymbol
+pub impl @json.ToJson for WorkspaceSymbol
+
+pub struct WorkspaceSymbolClientCapabilities {
+  dynamic_registration : Bool?
+  symbol_kind : ClientSymbolKindOptions?
+  tag_support : ClientSymbolTagOptions?
+  resolve_support : ClientSymbolResolveOptions?
+}
+pub impl @json.FromJson for WorkspaceSymbolClientCapabilities
+pub impl @json.ToJson for WorkspaceSymbolClientCapabilities
+
+pub struct WorkspaceSymbolOptions {
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for WorkspaceSymbolOptions
+pub impl @json.ToJson for WorkspaceSymbolOptions
+
+pub struct WorkspaceSymbolParams {
+  work_done_token : @json.JsonValue?
+  partial_result_token : @json.JsonValue?
+  query : String
+}
+pub impl @json.FromJson for WorkspaceSymbolParams
+pub impl @json.ToJson for WorkspaceSymbolParams
+
+pub struct WorkspaceSymbolRegistrationOptions {
+  work_done_progress : Bool?
+  resolve_provider : Bool?
+}
+pub impl @json.FromJson for WorkspaceSymbolRegistrationOptions
+pub impl @json.ToJson for WorkspaceSymbolRegistrationOptions
+
+pub struct WorkspaceUnchangedDocumentDiagnosticReport {
+  kind : String
+  result_id : String
+  uri : String
+  version : @json.JsonValue
+}
+pub impl @json.FromJson for WorkspaceUnchangedDocumentDiagnosticReport
+pub impl @json.ToJson for WorkspaceUnchangedDocumentDiagnosticReport
+
+// Type aliases
+pub type ChangeAnnotationIdentifier = String
+
+pub using @json {type JsonValue as Declaration}
+
+pub using @json {type JsonValue as Definition}
+
+pub using @json {type JsonValue as DocumentDiagnosticReport}
+
+pub using @json {type JsonValue as DocumentFilter}
+
+pub type DocumentSelector = Array[@json.JsonValue]
+
+pub using @json {type JsonValue as GlobPattern}
+
+pub using @json {type JsonValue as InlineValue}
+
+pub using @json {type JsonValue as LSPAny}
+
+pub type LSPArray = Array[@json.JsonValue]
+
+pub using @json {type JsonValue as LSPObject}
+
+pub using @json {type JsonValue as MarkedString}
+
+pub using @json {type JsonValue as NotebookDocumentFilter}
+
+pub type Pattern = String
+
+pub using @json {type JsonValue as PrepareRenameResult}
+
+pub using @json {type JsonValue as ProgressToken}
+
+pub type RegularExpressionEngineKind = String
+
+pub using @json {type JsonValue as TextDocumentContentChangeEvent}
+
+pub using @json {type JsonValue as TextDocumentFilter}
+
+pub using @json {type JsonValue as WorkspaceDocumentDiagnosticReport}
+
+// Traits
+

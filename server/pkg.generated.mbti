@@ -1,0 +1,57 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/lsp/server"
+
+import {
+  "mizchi/lsp/jsonrpc",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub(all) enum ReadResult {
+  Data(String)
+  Eof
+  Error(String)
+}
+pub impl Eq for ReadResult
+pub impl Show for ReadResult
+
+pub struct Server {
+  config : ServerConfig
+  dispatcher : @jsonrpc.Dispatcher
+  decoder : @jsonrpc.Decoder
+}
+pub fn[H : IoHandler] Server::feed(Self, H, String) -> Unit
+pub fn Server::new(ServerConfig) -> Self
+pub fn Server::on_notification(Self, String, (@jsonrpc.Request) -> Unit) -> Unit
+pub fn Server::on_request(Self, String, @jsonrpc.Handler) -> Unit
+pub fn Server::process_message(Self, @jsonrpc.Message) -> @jsonrpc.Response?
+pub fn[H : IoHandler] Server::run(Self, H) -> Unit
+
+pub(all) struct ServerConfig {
+  name : String
+  version : String
+}
+
+pub struct StubIoHandler {
+  input_buffer : Array[String]
+  output_buffer : Array[String]
+  error_buffer : Array[String]
+}
+pub fn StubIoHandler::get_errors(Self) -> Array[String]
+pub fn StubIoHandler::get_output(Self) -> Array[String]
+pub fn StubIoHandler::new() -> Self
+pub fn StubIoHandler::push_input(Self, String) -> Unit
+pub impl IoHandler for StubIoHandler
+
+// Type aliases
+
+// Traits
+pub(open) trait IoHandler {
+  read(Self) -> ReadResult
+  write(Self, String) -> Unit
+  write_error(Self, String) -> Unit
+}
+

@@ -1,0 +1,84 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/lsp/fs"
+
+// Values
+pub fn path_to_uri(String) -> String
+
+// Errors
+
+// Types and methods
+pub(all) struct DirEntry {
+  name : String
+  kind : EntryKind
+}
+pub impl Eq for DirEntry
+pub impl Show for DirEntry
+
+pub struct DocumentStore[F] {
+  fs : F
+  documents : Map[String, TextDocument]
+}
+pub fn[F] DocumentStore::close(Self[F], String) -> Unit
+pub fn[F] DocumentStore::get(Self[F], String) -> TextDocument?
+pub fn[F] DocumentStore::list_open(Self[F]) -> Array[String]
+pub fn[F] DocumentStore::new(F) -> Self[F]
+pub fn[F : FileSystem] DocumentStore::open(Self[F], String, String, Int, String?) -> TextDocument?
+pub fn[F : FileSystem] DocumentStore::read_file(Self[F], String) -> FsResult[String]
+pub fn[F : FileSystem] DocumentStore::save(Self[F], String) -> FsResult[Unit]
+pub fn[F] DocumentStore::update(Self[F], String, Int, String) -> Bool
+pub fn[F : FileSystem] DocumentStore::write_file(Self[F], String, String) -> FsResult[Unit]
+
+pub(all) enum EntryKind {
+  File
+  Directory
+}
+pub impl Eq for EntryKind
+pub impl Show for EntryKind
+
+type FsNode
+
+pub(all) enum FsResult[T] {
+  Ok(T)
+  NotFound(String)
+  PermissionDenied(String)
+  IoError(String)
+}
+pub fn[T] FsResult::is_ok(Self[T]) -> Bool
+pub fn[T] FsResult::unwrap(Self[T]) -> T
+pub impl[T : Eq] Eq for FsResult[T]
+pub impl[T : Show] Show for FsResult[T]
+
+pub struct MemoryFs {
+  // private fields
+}
+pub fn MemoryFs::new() -> Self
+pub impl FileSystem for MemoryFs
+
+pub struct TextDocument {
+  uri : String
+  language_id : String
+  mut version : Int
+  mut content : String
+}
+pub fn TextDocument::get_content(Self) -> String
+pub fn TextDocument::get_language_id(Self) -> String
+pub fn TextDocument::get_uri(Self) -> String
+pub fn TextDocument::get_version(Self) -> Int
+pub fn TextDocument::new(String, String, Int, String) -> Self
+pub fn TextDocument::set_content(Self, Int, String) -> Unit
+
+// Type aliases
+
+// Traits
+pub(open) trait FileSystem {
+  read_file(Self, String) -> FsResult[String]
+  write_file(Self, String, String) -> FsResult[Unit]
+  exists(Self, String) -> Bool
+  is_file(Self, String) -> Bool
+  is_directory(Self, String) -> Bool
+  read_dir(Self, String) -> FsResult[Array[DirEntry]]
+  create_dir(Self, String) -> FsResult[Unit]
+  remove_file(Self, String) -> FsResult[Unit]
+  remove_dir(Self, String) -> FsResult[Unit]
+}
+
