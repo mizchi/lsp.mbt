@@ -116,9 +116,71 @@ class MoonBitGenerator {
   private output: string[] = [];
   private generatedTypes: Set<string> = new Set();
   private model: MetaModel;
+  private structureMap: Map<string, Structure> = new Map();
 
   constructor(model: MetaModel) {
     this.model = model;
+    // Build structure lookup map
+    for (const struct of model.structures) {
+      this.structureMap.set(struct.name, struct);
+    }
+  }
+
+  // Collect all properties including inherited ones
+  private collectAllProperties(struct: Structure, visited: Set<string> = new Set()): Property[] {
+    if (visited.has(struct.name)) {
+      return []; // Avoid circular inheritance
+    }
+    visited.add(struct.name);
+
+    const allProps: Property[] = [];
+    const seenNames = new Set<string>();
+
+    // First collect from extends (parent types)
+    if (struct.extends) {
+      for (const ext of struct.extends) {
+        if (ext.kind === 'reference') {
+          const parentStruct = this.structureMap.get(ext.name);
+          if (parentStruct) {
+            const parentProps = this.collectAllProperties(parentStruct, visited);
+            for (const prop of parentProps) {
+              if (!seenNames.has(prop.name)) {
+                allProps.push(prop);
+                seenNames.add(prop.name);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Then collect from mixins
+    if (struct.mixins) {
+      for (const mixin of struct.mixins) {
+        if (mixin.kind === 'reference') {
+          const mixinStruct = this.structureMap.get(mixin.name);
+          if (mixinStruct) {
+            const mixinProps = this.collectAllProperties(mixinStruct, visited);
+            for (const prop of mixinProps) {
+              if (!seenNames.has(prop.name)) {
+                allProps.push(prop);
+                seenNames.add(prop.name);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Finally add own properties (can override parent)
+    for (const prop of struct.properties) {
+      if (!seenNames.has(prop.name)) {
+        allProps.push(prop);
+        seenNames.add(prop.name);
+      }
+    }
+
+    return allProps;
   }
 
   generate(): string {
@@ -261,20 +323,23 @@ class MoonBitGenerator {
     if (SKIP_TYPES.has(name)) return;
     this.generatedTypes.add(name);
 
-    // For structures with extends/mixins, generate a type alias to JsonValue for now
-    if (struct.extends && struct.extends.length > 0) {
-      this.emit(`///| TODO: ${name} extends ${struct.extends.map(e => this.resolveTypeName(e)).join(', ')}`);
-      this.emit(`pub type ${name} = @json.JsonValue`);
-      this.emit('');
-      return;
-    }
+    // Collect all properties including inherited ones
+    const allProperties = this.collectAllProperties(struct);
 
     if (struct.documentation) {
       this.emit(`///| ${this.formatDoc(struct.documentation)}`);
     }
 
+    // Add note about inheritance
+    if (struct.extends && struct.extends.length > 0) {
+      this.emit(`///| Extends: ${struct.extends.map(e => this.resolveTypeName(e)).join(', ')}`);
+    }
+    if (struct.mixins && struct.mixins.length > 0) {
+      this.emit(`///| Mixins: ${struct.mixins.map(m => this.resolveTypeName(m)).join(', ')}`);
+    }
+
     this.emit(`pub struct ${name} {`);
-    for (const prop of struct.properties) {
+    for (const prop of allProperties) {
       const propName = this.sanitizeFieldName(prop.name);
       const propType = this.resolveType(prop.type, prop.optional);
       if (prop.documentation) {
@@ -289,7 +354,7 @@ class MoonBitGenerator {
     this.emit(`///|`);
     this.emit(`pub impl @json.ToJson for ${name} with to_json(self) {`);
     this.emit(`  let obj : Map[String, @json.JsonValue] = {}`);
-    for (const prop of struct.properties) {
+    for (const prop of allProperties) {
       const propName = this.sanitizeFieldName(prop.name);
       const jsonKey = prop.name;
       const toJsonExpr = this.generateToJsonExpr(prop.type, `self.${propName}`);
@@ -313,7 +378,7 @@ class MoonBitGenerator {
     this.emit(`    @json.JsonValue::Object(o) => o`);
     this.emit(`    _ => raise @json.JsonError("expected object for ${name}")`);
     this.emit(`  }`);
-    for (const prop of struct.properties) {
+    for (const prop of allProperties) {
       const propName = this.sanitizeFieldName(prop.name);
       const jsonKey = prop.name;
       const propType = this.resolveType(prop.type, false);
@@ -385,7 +450,7 @@ class MoonBitGenerator {
         }
       }
     }
-    const fields = struct.properties.map(p => this.sanitizeFieldName(p.name)).join(', ');
+    const fields = allProperties.map(p => this.sanitizeFieldName(p.name)).join(', ');
     this.emit(`  ${name}::{ ${fields} }`);
     this.emit('}');
     this.emit('');

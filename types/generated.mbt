@@ -1697,17 +1697,205 @@ pub impl @json.FromJson for TokenFormat with from_json(json) {
 
 // ============ Structures ============
 
-///| TODO: ImplementationParams extends TextDocumentPositionParams
-pub type ImplementationParams = @json.JsonValue
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct ImplementationParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+}
 
-///| TODO: ImplementationRegistrationOptions extends TextDocumentRegistrationOptions, ImplementationOptions
-pub type ImplementationRegistrationOptions = @json.JsonValue
+///|
+pub impl @json.ToJson for ImplementationParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
 
-///| TODO: TypeDefinitionParams extends TextDocumentPositionParams
-pub type TypeDefinitionParams = @json.JsonValue
+///|
+pub impl @json.FromJson for ImplementationParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for ImplementationParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  ImplementationParams::{ text_document, position, work_done_token, partial_result_token }
+}
 
-///| TODO: TypeDefinitionRegistrationOptions extends TextDocumentRegistrationOptions, TypeDefinitionOptions
-pub type TypeDefinitionRegistrationOptions = @json.JsonValue
+///| Extends: TextDocumentRegistrationOptions, ImplementationOptions
+///| Mixins: StaticRegistrationOptions
+pub struct ImplementationRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for ImplementationRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for ImplementationRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for ImplementationRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  ImplementationRegistrationOptions::{ document_selector, work_done_progress, id }
+}
+
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct TypeDefinitionParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for TypeDefinitionParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TypeDefinitionParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TypeDefinitionParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  TypeDefinitionParams::{ text_document, position, work_done_token, partial_result_token }
+}
+
+///| Extends: TextDocumentRegistrationOptions, TypeDefinitionOptions
+///| Mixins: StaticRegistrationOptions
+pub struct TypeDefinitionRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for TypeDefinitionRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TypeDefinitionRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TypeDefinitionRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  TypeDefinitionRegistrationOptions::{ document_selector, work_done_progress, id }
+}
 
 ///| A workspace folder inside a client.
 pub struct WorkspaceFolder {
@@ -1794,7 +1982,12 @@ pub impl @json.FromJson for ConfigurationParams with from_json(json) {
 }
 
 ///| Parameters for a {@link DocumentColorRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct DocumentColorParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
 }
@@ -1802,6 +1995,14 @@ pub struct DocumentColorParams {
 ///|
 pub impl @json.ToJson for DocumentColorParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -1812,11 +2013,19 @@ pub impl @json.FromJson for DocumentColorParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentColorParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
-  DocumentColorParams::{ text_document }
+  DocumentColorParams::{ work_done_token, partial_result_token, text_document }
 }
 
 ///| Represents a color range from a document.
@@ -1852,11 +2061,59 @@ pub impl @json.FromJson for ColorInformation with from_json(json) {
   ColorInformation::{ range, color }
 }
 
-///| TODO: DocumentColorRegistrationOptions extends TextDocumentRegistrationOptions, DocumentColorOptions
-pub type DocumentColorRegistrationOptions = @json.JsonValue
+///| Extends: TextDocumentRegistrationOptions, DocumentColorOptions
+///| Mixins: StaticRegistrationOptions
+pub struct DocumentColorRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for DocumentColorRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentColorRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentColorRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  DocumentColorRegistrationOptions::{ document_selector, work_done_progress, id }
+}
 
 ///| Parameters for a {@link ColorPresentationRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct ColorPresentationParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The color to request presentations for.
@@ -1868,6 +2125,14 @@ pub struct ColorPresentationParams {
 ///|
 pub impl @json.ToJson for ColorPresentationParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("color", self.color.to_json())
   obj.set("range", self.range.to_json())
@@ -1879,6 +2144,14 @@ pub impl @json.FromJson for ColorPresentationParams with from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ColorPresentationParams")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
   }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
@@ -1892,7 +2165,7 @@ pub impl @json.FromJson for ColorPresentationParams with from_json(json) {
     Some(v) => Range::from_json(v)
     None => raise @json.JsonError("missing range")
   }
-  ColorPresentationParams::{ text_document, color, range }
+  ColorPresentationParams::{ work_done_token, partial_result_token, text_document, color, range }
 }
 
 pub struct ColorPresentation {
@@ -1994,7 +2267,12 @@ pub impl @json.FromJson for TextDocumentRegistrationOptions with from_json(json)
 }
 
 ///| Parameters for a {@link FoldingRangeRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct FoldingRangeParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
 }
@@ -2002,6 +2280,14 @@ pub struct FoldingRangeParams {
 ///|
 pub impl @json.ToJson for FoldingRangeParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -2012,11 +2298,19 @@ pub impl @json.FromJson for FoldingRangeParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FoldingRangeParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
-  FoldingRangeParams::{ text_document }
+  FoldingRangeParams::{ work_done_token, partial_result_token, text_document }
 }
 
 ///| Represents a folding range. To be valid, start and end line must be bigger than zero and smaller
@@ -2092,17 +2386,159 @@ pub impl @json.FromJson for FoldingRange with from_json(json) {
   FoldingRange::{ start_line, start_character, end_line, end_character, kind, collapsed_text }
 }
 
-///| TODO: FoldingRangeRegistrationOptions extends TextDocumentRegistrationOptions, FoldingRangeOptions
-pub type FoldingRangeRegistrationOptions = @json.JsonValue
+///| Extends: TextDocumentRegistrationOptions, FoldingRangeOptions
+///| Mixins: StaticRegistrationOptions
+pub struct FoldingRangeRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
 
-///| TODO: DeclarationParams extends TextDocumentPositionParams
-pub type DeclarationParams = @json.JsonValue
+///|
+pub impl @json.ToJson for FoldingRangeRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
 
-///| TODO: DeclarationRegistrationOptions extends DeclarationOptions, TextDocumentRegistrationOptions
-pub type DeclarationRegistrationOptions = @json.JsonValue
+///|
+pub impl @json.FromJson for FoldingRangeRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for FoldingRangeRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  FoldingRangeRegistrationOptions::{ document_selector, work_done_progress, id }
+}
+
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct DeclarationParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for DeclarationParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DeclarationParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DeclarationParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  DeclarationParams::{ text_document, position, work_done_token, partial_result_token }
+}
+
+///| Extends: DeclarationOptions, TextDocumentRegistrationOptions
+///| Mixins: StaticRegistrationOptions
+pub struct DeclarationRegistrationOptions {
+  work_done_progress : Bool?
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for DeclarationRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("documentSelector", self.document_selector)
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DeclarationRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DeclarationRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  DeclarationRegistrationOptions::{ work_done_progress, document_selector, id }
+}
 
 ///| A parameter literal used in selection range requests.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct SelectionRangeParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The positions inside the text document.
@@ -2112,6 +2548,14 @@ pub struct SelectionRangeParams {
 ///|
 pub impl @json.ToJson for SelectionRangeParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("positions", @json.JsonValue::Array(self.positions.map(fn(item) { item.to_json() })))
   @json.JsonValue::Object(obj)
@@ -2123,6 +2567,14 @@ pub impl @json.FromJson for SelectionRangeParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SelectionRangeParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
@@ -2131,7 +2583,7 @@ pub impl @json.FromJson for SelectionRangeParams with from_json(json) {
     Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { Position::from_json(item) }); _ => [] }
     None => raise @json.JsonError("missing positions")
   }
-  SelectionRangeParams::{ text_document, positions }
+  SelectionRangeParams::{ work_done_token, partial_result_token, text_document, positions }
 }
 
 ///| A selection range represents a part of a selection hierarchy. A selection range
@@ -2170,8 +2622,51 @@ pub impl @json.FromJson for SelectionRange with from_json(json) {
   SelectionRange::{ range, parent }
 }
 
-///| TODO: SelectionRangeRegistrationOptions extends SelectionRangeOptions, TextDocumentRegistrationOptions
-pub type SelectionRangeRegistrationOptions = @json.JsonValue
+///| Extends: SelectionRangeOptions, TextDocumentRegistrationOptions
+///| Mixins: StaticRegistrationOptions
+pub struct SelectionRangeRegistrationOptions {
+  work_done_progress : Bool?
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for SelectionRangeRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("documentSelector", self.document_selector)
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for SelectionRangeRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for SelectionRangeRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  SelectionRangeRegistrationOptions::{ work_done_progress, document_selector, id }
+}
 
 pub struct WorkDoneProgressCreateParams {
   ///| The token to be used to report progress.
@@ -2223,8 +2718,50 @@ pub impl @json.FromJson for WorkDoneProgressCancelParams with from_json(json) {
   WorkDoneProgressCancelParams::{ token }
 }
 
-///| TODO: CallHierarchyPrepareParams extends TextDocumentPositionParams
-pub type CallHierarchyPrepareParams = @json.JsonValue
+///| The parameter of a `textDocument/prepareCallHierarchy` request.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct CallHierarchyPrepareParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for CallHierarchyPrepareParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for CallHierarchyPrepareParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CallHierarchyPrepareParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  CallHierarchyPrepareParams::{ text_document, position, work_done_token }
+}
 
 ///| Represents programming constructs like functions or constructors in the context
 pub struct CallHierarchyItem {
@@ -2310,17 +2847,74 @@ pub impl @json.FromJson for CallHierarchyItem with from_json(json) {
   CallHierarchyItem::{ name, kind, tags, detail, uri, range, selection_range, data }
 }
 
-///| TODO: CallHierarchyRegistrationOptions extends TextDocumentRegistrationOptions, CallHierarchyOptions
-pub type CallHierarchyRegistrationOptions = @json.JsonValue
+///| Call hierarchy options used during static or dynamic registration.
+///| Extends: TextDocumentRegistrationOptions, CallHierarchyOptions
+///| Mixins: StaticRegistrationOptions
+pub struct CallHierarchyRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for CallHierarchyRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for CallHierarchyRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CallHierarchyRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  CallHierarchyRegistrationOptions::{ document_selector, work_done_progress, id }
+}
 
 ///| The parameter of a `callHierarchy/incomingCalls` request.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct CallHierarchyIncomingCallsParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   item : CallHierarchyItem
 }
 
 ///|
 pub impl @json.ToJson for CallHierarchyIncomingCallsParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("item", self.item.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -2331,11 +2925,19 @@ pub impl @json.FromJson for CallHierarchyIncomingCallsParams with from_json(json
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyIncomingCallsParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let item = match obj.get("item") {
     Some(v) => CallHierarchyItem::from_json(v)
     None => raise @json.JsonError("missing item")
   }
-  CallHierarchyIncomingCallsParams::{ item }
+  CallHierarchyIncomingCallsParams::{ work_done_token, partial_result_token, item }
 }
 
 ///| Represents an incoming call, e.g. a caller of a method or constructor.
@@ -2372,13 +2974,26 @@ pub impl @json.FromJson for CallHierarchyIncomingCall with from_json(json) {
 }
 
 ///| The parameter of a `callHierarchy/outgoingCalls` request.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct CallHierarchyOutgoingCallsParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   item : CallHierarchyItem
 }
 
 ///|
 pub impl @json.ToJson for CallHierarchyOutgoingCallsParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("item", self.item.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -2389,11 +3004,19 @@ pub impl @json.FromJson for CallHierarchyOutgoingCallsParams with from_json(json
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyOutgoingCallsParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let item = match obj.get("item") {
     Some(v) => CallHierarchyItem::from_json(v)
     None => raise @json.JsonError("missing item")
   }
-  CallHierarchyOutgoingCallsParams::{ item }
+  CallHierarchyOutgoingCallsParams::{ work_done_token, partial_result_token, item }
 }
 
 ///| Represents an outgoing call, e.g. calling a getter from a method or a method from a constructor etc.
@@ -2430,7 +3053,12 @@ pub impl @json.FromJson for CallHierarchyOutgoingCall with from_json(json) {
 }
 
 ///| @since 3.16.0
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct SemanticTokensParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
 }
@@ -2438,6 +3066,14 @@ pub struct SemanticTokensParams {
 ///|
 pub impl @json.ToJson for SemanticTokensParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -2448,11 +3084,19 @@ pub impl @json.FromJson for SemanticTokensParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
-  SemanticTokensParams::{ text_document }
+  SemanticTokensParams::{ work_done_token, partial_result_token, text_document }
 }
 
 ///| @since 3.16.0
@@ -2516,11 +3160,81 @@ pub impl @json.FromJson for SemanticTokensPartialResult with from_json(json) {
   SemanticTokensPartialResult::{ data }
 }
 
-///| TODO: SemanticTokensRegistrationOptions extends TextDocumentRegistrationOptions, SemanticTokensOptions
-pub type SemanticTokensRegistrationOptions = @json.JsonValue
+///| @since 3.16.0
+///| Extends: TextDocumentRegistrationOptions, SemanticTokensOptions
+///| Mixins: StaticRegistrationOptions
+pub struct SemanticTokensRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The legend used by the server
+  legend : SemanticTokensLegend
+  ///| Server supports providing semantic tokens for a specific range
+  range : @json.JsonValue?
+  ///| Server supports providing semantic tokens for a full document.
+  full : @json.JsonValue?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for SemanticTokensRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("legend", self.legend.to_json())
+  match self.range {
+    Some(v) => obj.set("range", v)
+    None => ()
+  }
+  match self.full {
+    Some(v) => obj.set("full", v)
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for SemanticTokensRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for SemanticTokensRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let legend = match obj.get("legend") {
+    Some(v) => SemanticTokensLegend::from_json(v)
+    None => raise @json.JsonError("missing legend")
+  }
+  let range : @json.JsonValue? = obj.get("range")
+  let full : @json.JsonValue? = obj.get("full")
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  SemanticTokensRegistrationOptions::{ document_selector, work_done_progress, legend, range, full, id }
+}
 
 ///| @since 3.16.0
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct SemanticTokensDeltaParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The result id of a previous response. The result Id can either point to a full response
@@ -2530,6 +3244,14 @@ pub struct SemanticTokensDeltaParams {
 ///|
 pub impl @json.ToJson for SemanticTokensDeltaParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("previousResultId", @json.JsonValue::String(self.previous_result_id))
   @json.JsonValue::Object(obj)
@@ -2541,6 +3263,14 @@ pub impl @json.FromJson for SemanticTokensDeltaParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensDeltaParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
@@ -2549,7 +3279,7 @@ pub impl @json.FromJson for SemanticTokensDeltaParams with from_json(json) {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing previousResultId")
   }
-  SemanticTokensDeltaParams::{ text_document, previous_result_id }
+  SemanticTokensDeltaParams::{ work_done_token, partial_result_token, text_document, previous_result_id }
 }
 
 ///| @since 3.16.0
@@ -2613,7 +3343,12 @@ pub impl @json.FromJson for SemanticTokensDeltaPartialResult with from_json(json
 }
 
 ///| @since 3.16.0
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct SemanticTokensRangeParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The range the semantic tokens are requested for.
@@ -2623,6 +3358,14 @@ pub struct SemanticTokensRangeParams {
 ///|
 pub impl @json.ToJson for SemanticTokensRangeParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("range", self.range.to_json())
   @json.JsonValue::Object(obj)
@@ -2634,6 +3377,14 @@ pub impl @json.FromJson for SemanticTokensRangeParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensRangeParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
@@ -2642,7 +3393,7 @@ pub impl @json.FromJson for SemanticTokensRangeParams with from_json(json) {
     Some(v) => Range::from_json(v)
     None => raise @json.JsonError("missing range")
   }
-  SemanticTokensRangeParams::{ text_document, range }
+  SemanticTokensRangeParams::{ work_done_token, partial_result_token, text_document, range }
 }
 
 ///| Params to show a resource in the UI.
@@ -2727,8 +3478,49 @@ pub impl @json.FromJson for ShowDocumentResult with from_json(json) {
   ShowDocumentResult::{ success }
 }
 
-///| TODO: LinkedEditingRangeParams extends TextDocumentPositionParams
-pub type LinkedEditingRangeParams = @json.JsonValue
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct LinkedEditingRangeParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for LinkedEditingRangeParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for LinkedEditingRangeParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for LinkedEditingRangeParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  LinkedEditingRangeParams::{ text_document, position, work_done_token }
+}
 
 ///| The result of a linked editing range request.
 pub struct LinkedEditingRanges {
@@ -2766,8 +3558,51 @@ pub impl @json.FromJson for LinkedEditingRanges with from_json(json) {
   LinkedEditingRanges::{ ranges, word_pattern }
 }
 
-///| TODO: LinkedEditingRangeRegistrationOptions extends TextDocumentRegistrationOptions, LinkedEditingRangeOptions
-pub type LinkedEditingRangeRegistrationOptions = @json.JsonValue
+///| Extends: TextDocumentRegistrationOptions, LinkedEditingRangeOptions
+///| Mixins: StaticRegistrationOptions
+pub struct LinkedEditingRangeRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for LinkedEditingRangeRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for LinkedEditingRangeRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for LinkedEditingRangeRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  LinkedEditingRangeRegistrationOptions::{ document_selector, work_done_progress, id }
+}
 
 ///| The parameters sent in notifications/requests for user-initiated creation of
 pub struct CreateFilesParams {
@@ -2916,8 +3751,59 @@ pub impl @json.FromJson for DeleteFilesParams with from_json(json) {
   DeleteFilesParams::{ files }
 }
 
-///| TODO: MonikerParams extends TextDocumentPositionParams
-pub type MonikerParams = @json.JsonValue
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct MonikerParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for MonikerParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for MonikerParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for MonikerParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  MonikerParams::{ text_document, position, work_done_token, partial_result_token }
+}
 
 ///| Moniker definition to match LSIF 0.5 moniker definition.
 pub struct Moniker {
@@ -2969,11 +3855,85 @@ pub impl @json.FromJson for Moniker with from_json(json) {
   Moniker::{ scheme, identifier, unique, kind }
 }
 
-///| TODO: MonikerRegistrationOptions extends TextDocumentRegistrationOptions, MonikerOptions
-pub type MonikerRegistrationOptions = @json.JsonValue
+///| Extends: TextDocumentRegistrationOptions, MonikerOptions
+pub struct MonikerRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
 
-///| TODO: TypeHierarchyPrepareParams extends TextDocumentPositionParams
-pub type TypeHierarchyPrepareParams = @json.JsonValue
+///|
+pub impl @json.ToJson for MonikerRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for MonikerRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for MonikerRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  MonikerRegistrationOptions::{ document_selector, work_done_progress }
+}
+
+///| The parameter of a `textDocument/prepareTypeHierarchy` request.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct TypeHierarchyPrepareParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for TypeHierarchyPrepareParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TypeHierarchyPrepareParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TypeHierarchyPrepareParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  TypeHierarchyPrepareParams::{ text_document, position, work_done_token }
+}
 
 ///| @since 3.17.0
 pub struct TypeHierarchyItem {
@@ -3059,17 +4019,74 @@ pub impl @json.FromJson for TypeHierarchyItem with from_json(json) {
   TypeHierarchyItem::{ name, kind, tags, detail, uri, range, selection_range, data }
 }
 
-///| TODO: TypeHierarchyRegistrationOptions extends TextDocumentRegistrationOptions, TypeHierarchyOptions
-pub type TypeHierarchyRegistrationOptions = @json.JsonValue
+///| Type hierarchy options used during static or dynamic registration.
+///| Extends: TextDocumentRegistrationOptions, TypeHierarchyOptions
+///| Mixins: StaticRegistrationOptions
+pub struct TypeHierarchyRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for TypeHierarchyRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TypeHierarchyRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TypeHierarchyRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  TypeHierarchyRegistrationOptions::{ document_selector, work_done_progress, id }
+}
 
 ///| The parameter of a `typeHierarchy/supertypes` request.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct TypeHierarchySupertypesParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   item : TypeHierarchyItem
 }
 
 ///|
 pub impl @json.ToJson for TypeHierarchySupertypesParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("item", self.item.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -3080,21 +4097,42 @@ pub impl @json.FromJson for TypeHierarchySupertypesParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeHierarchySupertypesParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let item = match obj.get("item") {
     Some(v) => TypeHierarchyItem::from_json(v)
     None => raise @json.JsonError("missing item")
   }
-  TypeHierarchySupertypesParams::{ item }
+  TypeHierarchySupertypesParams::{ work_done_token, partial_result_token, item }
 }
 
 ///| The parameter of a `typeHierarchy/subtypes` request.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct TypeHierarchySubtypesParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   item : TypeHierarchyItem
 }
 
 ///|
 pub impl @json.ToJson for TypeHierarchySubtypesParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("item", self.item.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -3105,15 +4143,26 @@ pub impl @json.FromJson for TypeHierarchySubtypesParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeHierarchySubtypesParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let item = match obj.get("item") {
     Some(v) => TypeHierarchyItem::from_json(v)
     None => raise @json.JsonError("missing item")
   }
-  TypeHierarchySubtypesParams::{ item }
+  TypeHierarchySubtypesParams::{ work_done_token, partial_result_token, item }
 }
 
 ///| A parameter literal used in inline value requests.
+///| Mixins: WorkDoneProgressParams
 pub struct InlineValueParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The document range for which inline values should be computed.
@@ -3125,6 +4174,10 @@ pub struct InlineValueParams {
 ///|
 pub impl @json.ToJson for InlineValueParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("range", self.range.to_json())
   obj.set("context", self.context.to_json())
@@ -3136,6 +4189,10 @@ pub impl @json.FromJson for InlineValueParams with from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueParams")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
   }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
@@ -3149,14 +4206,61 @@ pub impl @json.FromJson for InlineValueParams with from_json(json) {
     Some(v) => InlineValueContext::from_json(v)
     None => raise @json.JsonError("missing context")
   }
-  InlineValueParams::{ text_document, range, context }
+  InlineValueParams::{ work_done_token, text_document, range, context }
 }
 
-///| TODO: InlineValueRegistrationOptions extends InlineValueOptions, TextDocumentRegistrationOptions
-pub type InlineValueRegistrationOptions = @json.JsonValue
+///| Inline value options used during static or dynamic registration.
+///| Extends: InlineValueOptions, TextDocumentRegistrationOptions
+///| Mixins: StaticRegistrationOptions
+pub struct InlineValueRegistrationOptions {
+  work_done_progress : Bool?
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for InlineValueRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("documentSelector", self.document_selector)
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for InlineValueRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for InlineValueRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  InlineValueRegistrationOptions::{ work_done_progress, document_selector, id }
+}
 
 ///| A parameter literal used in inlay hint requests.
+///| Mixins: WorkDoneProgressParams
 pub struct InlayHintParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The document range for which inlay hints should be computed.
@@ -3166,6 +4270,10 @@ pub struct InlayHintParams {
 ///|
 pub impl @json.ToJson for InlayHintParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("range", self.range.to_json())
   @json.JsonValue::Object(obj)
@@ -3177,6 +4285,10 @@ pub impl @json.FromJson for InlayHintParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlayHintParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
@@ -3185,7 +4297,7 @@ pub impl @json.FromJson for InlayHintParams with from_json(json) {
     Some(v) => Range::from_json(v)
     None => raise @json.JsonError("missing range")
   }
-  InlayHintParams::{ text_document, range }
+  InlayHintParams::{ work_done_token, text_document, range }
 }
 
 ///| Inlay hint information.
@@ -3278,11 +4390,70 @@ pub impl @json.FromJson for InlayHint with from_json(json) {
   InlayHint::{ position, label, kind, text_edits, tooltip, padding_left, padding_right, data }
 }
 
-///| TODO: InlayHintRegistrationOptions extends InlayHintOptions, TextDocumentRegistrationOptions
-pub type InlayHintRegistrationOptions = @json.JsonValue
+///| Inlay hint options used during static or dynamic registration.
+///| Extends: InlayHintOptions, TextDocumentRegistrationOptions
+///| Mixins: StaticRegistrationOptions
+pub struct InlayHintRegistrationOptions {
+  work_done_progress : Bool?
+  ///| The server provides support to resolve additional
+  resolve_provider : Bool?
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for InlayHintRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.resolve_provider {
+    Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("documentSelector", self.document_selector)
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for InlayHintRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for InlayHintRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let resolve_provider : Bool? = match obj.get("resolveProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  InlayHintRegistrationOptions::{ work_done_progress, resolve_provider, document_selector, id }
+}
 
 ///| Parameters of the document diagnostic request.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct DocumentDiagnosticParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
   ///| The additional identifier  provided during registration.
@@ -3294,6 +4465,14 @@ pub struct DocumentDiagnosticParams {
 ///|
 pub impl @json.ToJson for DocumentDiagnosticParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   match self.identifier {
     Some(v) => obj.set("identifier", @json.JsonValue::String(v))
@@ -3312,6 +4491,14 @@ pub impl @json.FromJson for DocumentDiagnosticParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentDiagnosticParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
@@ -3324,7 +4511,7 @@ pub impl @json.FromJson for DocumentDiagnosticParams with from_json(json) {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
     _ => None
   }
-  DocumentDiagnosticParams::{ text_document, identifier, previous_result_id }
+  DocumentDiagnosticParams::{ work_done_token, partial_result_token, text_document, identifier, previous_result_id }
 }
 
 ///| A partial result for a document diagnostic report.
@@ -3377,11 +4564,84 @@ pub impl @json.FromJson for DiagnosticServerCancellationData with from_json(json
   DiagnosticServerCancellationData::{ retrigger_request }
 }
 
-///| TODO: DiagnosticRegistrationOptions extends TextDocumentRegistrationOptions, DiagnosticOptions
-pub type DiagnosticRegistrationOptions = @json.JsonValue
+///| Diagnostic registration options.
+///| Extends: TextDocumentRegistrationOptions, DiagnosticOptions
+///| Mixins: StaticRegistrationOptions
+pub struct DiagnosticRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| An optional identifier under which the diagnostics are
+  identifier : String?
+  ///| Whether the language has inter file dependencies meaning that
+  inter_file_dependencies : Bool
+  ///| The server provides support for workspace diagnostics as well.
+  workspace_diagnostics : Bool
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for DiagnosticRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.identifier {
+    Some(v) => obj.set("identifier", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("interFileDependencies", @json.JsonValue::Bool(self.inter_file_dependencies))
+  obj.set("workspaceDiagnostics", @json.JsonValue::Bool(self.workspace_diagnostics))
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DiagnosticRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DiagnosticRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let identifier : String? = match obj.get("identifier") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let inter_file_dependencies = match obj.get("interFileDependencies") {
+    Some(v) => match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") }
+    None => raise @json.JsonError("missing interFileDependencies")
+  }
+  let workspace_diagnostics = match obj.get("workspaceDiagnostics") {
+    Some(v) => match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") }
+    None => raise @json.JsonError("missing workspaceDiagnostics")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  DiagnosticRegistrationOptions::{ document_selector, work_done_progress, identifier, inter_file_dependencies, workspace_diagnostics, id }
+}
 
 ///| Parameters of the workspace diagnostic request.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct WorkspaceDiagnosticParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The additional identifier provided during registration.
   identifier : String?
   ///| The currently known diagnostic reports with their
@@ -3391,6 +4651,14 @@ pub struct WorkspaceDiagnosticParams {
 ///|
 pub impl @json.ToJson for WorkspaceDiagnosticParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   match self.identifier {
     Some(v) => obj.set("identifier", @json.JsonValue::String(v))
     None => ()
@@ -3405,6 +4673,14 @@ pub impl @json.FromJson for WorkspaceDiagnosticParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceDiagnosticParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let identifier : String? = match obj.get("identifier") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
     _ => None
@@ -3413,7 +4689,7 @@ pub impl @json.FromJson for WorkspaceDiagnosticParams with from_json(json) {
     Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { PreviousResultId::from_json(item) }); _ => [] }
     None => raise @json.JsonError("missing previousResultIds")
   }
-  WorkspaceDiagnosticParams::{ identifier, previous_result_ids }
+  WorkspaceDiagnosticParams::{ work_done_token, partial_result_token, identifier, previous_result_ids }
 }
 
 ///| A workspace diagnostic report.
@@ -3499,8 +4775,53 @@ pub impl @json.FromJson for DidOpenNotebookDocumentParams with from_json(json) {
   DidOpenNotebookDocumentParams::{ notebook_document, cell_text_documents }
 }
 
-///| TODO: NotebookDocumentSyncRegistrationOptions extends NotebookDocumentSyncOptions
-pub type NotebookDocumentSyncRegistrationOptions = @json.JsonValue
+///| Registration options specific to a notebook.
+///| Extends: NotebookDocumentSyncOptions
+///| Mixins: StaticRegistrationOptions
+pub struct NotebookDocumentSyncRegistrationOptions {
+  ///| The notebooks to be synced
+  notebook_selector : Array[@json.JsonValue]
+  ///| Whether save notification should be forwarded to
+  save : Bool?
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for NotebookDocumentSyncRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("notebookSelector", @json.JsonValue::Array(self.notebook_selector.map(fn(item) { item.to_json() })))
+  match self.save {
+    Some(v) => obj.set("save", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for NotebookDocumentSyncRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for NotebookDocumentSyncRegistrationOptions")
+  }
+  let notebook_selector = match obj.get("notebookSelector") {
+    Some(v) => match v { @json.JsonValue::Array(items) => items; _ => [] }
+    None => raise @json.JsonError("missing notebookSelector")
+  }
+  let save : Bool? = match obj.get("save") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  NotebookDocumentSyncRegistrationOptions::{ notebook_selector, save, id }
+}
 
 ///| The params sent in a change notebook document notification.
 pub struct DidChangeNotebookDocumentParams {
@@ -3594,8 +4915,57 @@ pub impl @json.FromJson for DidCloseNotebookDocumentParams with from_json(json) 
   DidCloseNotebookDocumentParams::{ notebook_document, cell_text_documents }
 }
 
-///| TODO: InlineCompletionParams extends TextDocumentPositionParams
-pub type InlineCompletionParams = @json.JsonValue
+///| A parameter literal used in inline completion requests.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct InlineCompletionParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| Additional information about the context in which inline completions were
+  context : InlineCompletionContext
+}
+
+///|
+pub impl @json.ToJson for InlineCompletionParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  obj.set("context", self.context.to_json())
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for InlineCompletionParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for InlineCompletionParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let context = match obj.get("context") {
+    Some(v) => InlineCompletionContext::from_json(v)
+    None => raise @json.JsonError("missing context")
+  }
+  InlineCompletionParams::{ text_document, position, work_done_token, context }
+}
 
 ///| Represents a collection of {@link InlineCompletionItem inline completion items} to be presented in t
 pub struct InlineCompletionList {
@@ -3679,8 +5049,52 @@ pub impl @json.FromJson for InlineCompletionItem with from_json(json) {
   InlineCompletionItem::{ insert_text, filter_text, range, command }
 }
 
-///| TODO: InlineCompletionRegistrationOptions extends InlineCompletionOptions, TextDocumentRegistrationOptions
-pub type InlineCompletionRegistrationOptions = @json.JsonValue
+///| Inline completion options used during static or dynamic registration.
+///| Extends: InlineCompletionOptions, TextDocumentRegistrationOptions
+///| Mixins: StaticRegistrationOptions
+pub struct InlineCompletionRegistrationOptions {
+  work_done_progress : Bool?
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for InlineCompletionRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("documentSelector", self.document_selector)
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for InlineCompletionRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for InlineCompletionRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  InlineCompletionRegistrationOptions::{ work_done_progress, document_selector, id }
+}
 
 ///| Parameters for the `workspace/textDocumentContent` request.
 pub struct TextDocumentContentParams {
@@ -3734,8 +5148,43 @@ pub impl @json.FromJson for TextDocumentContentResult with from_json(json) {
   TextDocumentContentResult::{ text }
 }
 
-///| TODO: TextDocumentContentRegistrationOptions extends TextDocumentContentOptions
-pub type TextDocumentContentRegistrationOptions = @json.JsonValue
+///| Text document content provider registration options.
+///| Extends: TextDocumentContentOptions
+///| Mixins: StaticRegistrationOptions
+pub struct TextDocumentContentRegistrationOptions {
+  ///| The schemes for which the server provides content.
+  schemes : Array[String]
+  ///| The id used to register the request. The id can be used to deregister
+  id : String?
+}
+
+///|
+pub impl @json.ToJson for TextDocumentContentRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("schemes", @json.JsonValue::Array(self.schemes.map(fn(item) { @json.JsonValue::String(item) })))
+  match self.id {
+    Some(v) => obj.set("id", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TextDocumentContentRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TextDocumentContentRegistrationOptions")
+  }
+  let schemes = match obj.get("schemes") {
+    Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] }
+    None => raise @json.JsonError("missing schemes")
+  }
+  let id : String? = match obj.get("id") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  TextDocumentContentRegistrationOptions::{ schemes, id }
+}
 
 ///| Parameters for the `workspace/textDocumentContent/refresh` request.
 pub struct TextDocumentContentRefreshParams {
@@ -3811,8 +5260,109 @@ pub impl @json.FromJson for UnregistrationParams with from_json(json) {
   UnregistrationParams::{ unregisterations }
 }
 
-///| TODO: InitializeParams extends InitializeParams, WorkspaceFoldersInitializeParams
-pub type InitializeParams = @json.JsonValue
+///| Extends: InitializeParams, WorkspaceFoldersInitializeParams
+pub struct InitializeParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| The process Id of the parent process that started
+  process_id : @json.JsonValue
+  ///| Information about the client
+  client_info : ClientInfo?
+  ///| The locale the client is currently showing the user interface
+  locale : String?
+  ///| The rootPath of the workspace. Is null
+  root_path : @json.JsonValue?
+  ///| The rootUri of the workspace. Is null if no
+  root_uri : @json.JsonValue
+  ///| The capabilities provided by the client (editor or tool)
+  capabilities : ClientCapabilities
+  ///| User provided initialization options.
+  initialization_options : LSPAny?
+  ///| The initial trace setting. If omitted trace is disabled ('off').
+  trace : TraceValue?
+  ///| The workspace folders configured in the client when the server starts.
+  workspace_folders : @json.JsonValue?
+}
+
+///|
+pub impl @json.ToJson for InitializeParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  obj.set("processId", self.process_id)
+  match self.client_info {
+    Some(v) => obj.set("clientInfo", v.to_json())
+    None => ()
+  }
+  match self.locale {
+    Some(v) => obj.set("locale", @json.JsonValue::String(v))
+    None => ()
+  }
+  match self.root_path {
+    Some(v) => obj.set("rootPath", v)
+    None => ()
+  }
+  obj.set("rootUri", self.root_uri)
+  obj.set("capabilities", self.capabilities.to_json())
+  match self.initialization_options {
+    Some(v) => obj.set("initializationOptions", v.to_json())
+    None => ()
+  }
+  match self.trace {
+    Some(v) => obj.set("trace", v.to_json())
+    None => ()
+  }
+  match self.workspace_folders {
+    Some(v) => obj.set("workspaceFolders", v)
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for InitializeParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for InitializeParams")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let process_id = match obj.get("processId") {
+    Some(v) => v
+    None => raise @json.JsonError("missing processId")
+  }
+  let client_info : ClientInfo? = match obj.get("clientInfo") {
+    Some(v) if not(v.is_null()) => Some(ClientInfo::from_json(v))
+    _ => None
+  }
+  let locale : String? = match obj.get("locale") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let root_path : @json.JsonValue? = obj.get("rootPath")
+  let root_uri = match obj.get("rootUri") {
+    Some(v) => v
+    None => raise @json.JsonError("missing rootUri")
+  }
+  let capabilities = match obj.get("capabilities") {
+    Some(v) => ClientCapabilities::from_json(v)
+    None => raise @json.JsonError("missing capabilities")
+  }
+  let initialization_options : LSPAny? = match obj.get("initializationOptions") {
+    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    _ => None
+  }
+  let trace : TraceValue? = match obj.get("trace") {
+    Some(v) if not(v.is_null()) => Some(TraceValue::from_json(v))
+    _ => None
+  }
+  let workspace_folders : @json.JsonValue? = obj.get("workspaceFolders")
+  InitializeParams::{ work_done_token, process_id, client_info, locale, root_path, root_uri, capabilities, initialization_options, trace, workspace_folders }
+}
 
 ///| The result returned from an initialize request.
 pub struct InitializeResult {
@@ -4136,8 +5686,39 @@ pub impl @json.FromJson for DidChangeTextDocumentParams with from_json(json) {
   DidChangeTextDocumentParams::{ text_document, content_changes }
 }
 
-///| TODO: TextDocumentChangeRegistrationOptions extends TextDocumentRegistrationOptions
-pub type TextDocumentChangeRegistrationOptions = @json.JsonValue
+///| Describe options to be used when registered for text document change events.
+///| Extends: TextDocumentRegistrationOptions
+pub struct TextDocumentChangeRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| How documents are synced to the server.
+  sync_kind : TextDocumentSyncKind
+}
+
+///|
+pub impl @json.ToJson for TextDocumentChangeRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  obj.set("syncKind", self.sync_kind.to_json())
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TextDocumentChangeRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TextDocumentChangeRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let sync_kind = match obj.get("syncKind") {
+    Some(v) => TextDocumentSyncKind::from_json(v)
+    None => raise @json.JsonError("missing syncKind")
+  }
+  TextDocumentChangeRegistrationOptions::{ document_selector, sync_kind }
+}
 
 ///| The parameters sent in a close text document notification
 pub struct DidCloseTextDocumentParams {
@@ -4201,8 +5782,42 @@ pub impl @json.FromJson for DidSaveTextDocumentParams with from_json(json) {
   DidSaveTextDocumentParams::{ text_document, text }
 }
 
-///| TODO: TextDocumentSaveRegistrationOptions extends TextDocumentRegistrationOptions, SaveOptions
-pub type TextDocumentSaveRegistrationOptions = @json.JsonValue
+///| Save registration options.
+///| Extends: TextDocumentRegistrationOptions, SaveOptions
+pub struct TextDocumentSaveRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| The client is supposed to include the content on save.
+  include_text : Bool?
+}
+
+///|
+pub impl @json.ToJson for TextDocumentSaveRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.include_text {
+    Some(v) => obj.set("includeText", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for TextDocumentSaveRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for TextDocumentSaveRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let include_text : Bool? = match obj.get("includeText") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  TextDocumentSaveRegistrationOptions::{ document_selector, include_text }
+}
 
 ///| The parameters sent in a will save text document notification.
 pub struct WillSaveTextDocumentParams {
@@ -4322,8 +5937,70 @@ pub impl @json.FromJson for DidChangeWatchedFilesRegistrationOptions with from_j
   DidChangeWatchedFilesRegistrationOptions::{ watchers }
 }
 
-///| TODO: CompletionParams extends TextDocumentPositionParams
-pub type CompletionParams = @json.JsonValue
+///| Completion parameters
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct CompletionParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+  ///| The completion context. This is only available it the client specifies
+  context : CompletionContext?
+}
+
+///|
+pub impl @json.ToJson for CompletionParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  match self.context {
+    Some(v) => obj.set("context", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for CompletionParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CompletionParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let context : CompletionContext? = match obj.get("context") {
+    Some(v) if not(v.is_null()) => Some(CompletionContext::from_json(v))
+    _ => None
+  }
+  CompletionParams::{ text_document, position, work_done_token, partial_result_token, context }
+}
 
 ///| A completion item represents a text snippet that is
 pub struct CompletionItem {
@@ -4578,11 +6255,126 @@ pub impl @json.FromJson for CompletionList with from_json(json) {
   CompletionList::{ is_incomplete, item_defaults, apply_kind, items }
 }
 
-///| TODO: CompletionRegistrationOptions extends TextDocumentRegistrationOptions, CompletionOptions
-pub type CompletionRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link CompletionRequest}.
+///| Extends: TextDocumentRegistrationOptions, CompletionOptions
+pub struct CompletionRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| Most tools trigger completion request automatically without explicitly requesting
+  trigger_characters : Array[String]?
+  ///| The list of all possible characters that commit a completion. This field can be used
+  all_commit_characters : Array[String]?
+  ///| The server provides support to resolve additional
+  resolve_provider : Bool?
+  ///| The server supports the following `CompletionItem` specific
+  completion_item : ServerCompletionItemOptions?
+}
 
-///| TODO: HoverParams extends TextDocumentPositionParams
-pub type HoverParams = @json.JsonValue
+///|
+pub impl @json.ToJson for CompletionRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.trigger_characters {
+    Some(v) => obj.set("triggerCharacters", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
+    None => ()
+  }
+  match self.all_commit_characters {
+    Some(v) => obj.set("allCommitCharacters", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
+    None => ()
+  }
+  match self.resolve_provider {
+    Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.completion_item {
+    Some(v) => obj.set("completionItem", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CompletionRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
+    _ => None
+  }
+  let all_commit_characters : Array[String]? = match obj.get("allCommitCharacters") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
+    _ => None
+  }
+  let resolve_provider : Bool? = match obj.get("resolveProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let completion_item : ServerCompletionItemOptions? = match obj.get("completionItem") {
+    Some(v) if not(v.is_null()) => Some(ServerCompletionItemOptions::from_json(v))
+    _ => None
+  }
+  CompletionRegistrationOptions::{ document_selector, work_done_progress, trigger_characters, all_commit_characters, resolve_provider, completion_item }
+}
+
+///| Parameters for a {@link HoverRequest}.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct HoverParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for HoverParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for HoverParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for HoverParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  HoverParams::{ text_document, position, work_done_token }
+}
 
 ///| The result of a hover request.
 pub struct Hover {
@@ -4620,11 +6412,96 @@ pub impl @json.FromJson for Hover with from_json(json) {
   Hover::{ contents, range }
 }
 
-///| TODO: HoverRegistrationOptions extends TextDocumentRegistrationOptions, HoverOptions
-pub type HoverRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link HoverRequest}.
+///| Extends: TextDocumentRegistrationOptions, HoverOptions
+pub struct HoverRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
 
-///| TODO: SignatureHelpParams extends TextDocumentPositionParams
-pub type SignatureHelpParams = @json.JsonValue
+///|
+pub impl @json.ToJson for HoverRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for HoverRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for HoverRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  HoverRegistrationOptions::{ document_selector, work_done_progress }
+}
+
+///| Parameters for a {@link SignatureHelpRequest}.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct SignatureHelpParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| The signature help context. This is only available if the client specifies
+  context : SignatureHelpContext?
+}
+
+///|
+pub impl @json.ToJson for SignatureHelpParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.context {
+    Some(v) => obj.set("context", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for SignatureHelpParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for SignatureHelpParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let context : SignatureHelpContext? = match obj.get("context") {
+    Some(v) if not(v.is_null()) => Some(SignatureHelpContext::from_json(v))
+    _ => None
+  }
+  SignatureHelpParams::{ text_document, position, work_done_token, context }
+}
 
 ///| Signature help represents the signature of something
 pub struct SignatureHelp {
@@ -4669,23 +6546,304 @@ pub impl @json.FromJson for SignatureHelp with from_json(json) {
   SignatureHelp::{ signatures, active_signature, active_parameter }
 }
 
-///| TODO: SignatureHelpRegistrationOptions extends TextDocumentRegistrationOptions, SignatureHelpOptions
-pub type SignatureHelpRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link SignatureHelpRequest}.
+///| Extends: TextDocumentRegistrationOptions, SignatureHelpOptions
+pub struct SignatureHelpRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| List of characters that trigger signature help automatically.
+  trigger_characters : Array[String]?
+  ///| List of characters that re-trigger signature help.
+  retrigger_characters : Array[String]?
+}
 
-///| TODO: DefinitionParams extends TextDocumentPositionParams
-pub type DefinitionParams = @json.JsonValue
+///|
+pub impl @json.ToJson for SignatureHelpRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.trigger_characters {
+    Some(v) => obj.set("triggerCharacters", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
+    None => ()
+  }
+  match self.retrigger_characters {
+    Some(v) => obj.set("retriggerCharacters", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
 
-///| TODO: DefinitionRegistrationOptions extends TextDocumentRegistrationOptions, DefinitionOptions
-pub type DefinitionRegistrationOptions = @json.JsonValue
+///|
+pub impl @json.FromJson for SignatureHelpRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for SignatureHelpRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
+    _ => None
+  }
+  let retrigger_characters : Array[String]? = match obj.get("retriggerCharacters") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
+    _ => None
+  }
+  SignatureHelpRegistrationOptions::{ document_selector, work_done_progress, trigger_characters, retrigger_characters }
+}
 
-///| TODO: ReferenceParams extends TextDocumentPositionParams
-pub type ReferenceParams = @json.JsonValue
+///| Parameters for a {@link DefinitionRequest}.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct DefinitionParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+}
 
-///| TODO: ReferenceRegistrationOptions extends TextDocumentRegistrationOptions, ReferenceOptions
-pub type ReferenceRegistrationOptions = @json.JsonValue
+///|
+pub impl @json.ToJson for DefinitionParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
 
-///| TODO: DocumentHighlightParams extends TextDocumentPositionParams
-pub type DocumentHighlightParams = @json.JsonValue
+///|
+pub impl @json.FromJson for DefinitionParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DefinitionParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  DefinitionParams::{ text_document, position, work_done_token, partial_result_token }
+}
+
+///| Registration options for a {@link DefinitionRequest}.
+///| Extends: TextDocumentRegistrationOptions, DefinitionOptions
+pub struct DefinitionRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+
+///|
+pub impl @json.ToJson for DefinitionRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DefinitionRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DefinitionRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DefinitionRegistrationOptions::{ document_selector, work_done_progress }
+}
+
+///| Parameters for a {@link ReferencesRequest}.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct ReferenceParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+  context : ReferenceContext
+}
+
+///|
+pub impl @json.ToJson for ReferenceParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  obj.set("context", self.context.to_json())
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for ReferenceParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for ReferenceParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let context = match obj.get("context") {
+    Some(v) => ReferenceContext::from_json(v)
+    None => raise @json.JsonError("missing context")
+  }
+  ReferenceParams::{ text_document, position, work_done_token, partial_result_token, context }
+}
+
+///| Registration options for a {@link ReferencesRequest}.
+///| Extends: TextDocumentRegistrationOptions, ReferenceOptions
+pub struct ReferenceRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+
+///|
+pub impl @json.ToJson for ReferenceRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for ReferenceRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for ReferenceRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  ReferenceRegistrationOptions::{ document_selector, work_done_progress }
+}
+
+///| Parameters for a {@link DocumentHighlightRequest}.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams, PartialResultParams
+pub struct DocumentHighlightParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for DocumentHighlightParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentHighlightParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentHighlightParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  DocumentHighlightParams::{ text_document, position, work_done_token, partial_result_token }
+}
 
 ///| A document highlight is a range inside a text document which deserves
 pub struct DocumentHighlight {
@@ -4723,11 +6881,49 @@ pub impl @json.FromJson for DocumentHighlight with from_json(json) {
   DocumentHighlight::{ range, kind }
 }
 
-///| TODO: DocumentHighlightRegistrationOptions extends TextDocumentRegistrationOptions, DocumentHighlightOptions
-pub type DocumentHighlightRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link DocumentHighlightRequest}.
+///| Extends: TextDocumentRegistrationOptions, DocumentHighlightOptions
+pub struct DocumentHighlightRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+
+///|
+pub impl @json.ToJson for DocumentHighlightRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentHighlightRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentHighlightRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentHighlightRegistrationOptions::{ document_selector, work_done_progress }
+}
 
 ///| Parameters for a {@link DocumentSymbolRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct DocumentSymbolParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The text document.
   text_document : TextDocumentIdentifier
 }
@@ -4735,6 +6931,14 @@ pub struct DocumentSymbolParams {
 ///|
 pub impl @json.ToJson for DocumentSymbolParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -4745,15 +6949,91 @@ pub impl @json.FromJson for DocumentSymbolParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentSymbolParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
-  DocumentSymbolParams::{ text_document }
+  DocumentSymbolParams::{ work_done_token, partial_result_token, text_document }
 }
 
-///| TODO: SymbolInformation extends BaseSymbolInformation
-pub type SymbolInformation = @json.JsonValue
+///| Represents information about programming constructs like variables, classes,
+///| Extends: BaseSymbolInformation
+pub struct SymbolInformation {
+  ///| The name of this symbol.
+  name : String
+  ///| The kind of this symbol.
+  kind : SymbolKind
+  ///| Tags for this symbol.
+  tags : Array[SymbolTag]?
+  ///| The name of the symbol containing this symbol. This information is for
+  container_name : String?
+  ///| Indicates if this symbol is deprecated.
+  deprecated : Bool?
+  ///| The location of this symbol. The location's range is used by a tool
+  location : Location
+}
+
+///|
+pub impl @json.ToJson for SymbolInformation with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("name", @json.JsonValue::String(self.name))
+  obj.set("kind", self.kind.to_json())
+  match self.tags {
+    Some(v) => obj.set("tags", @json.JsonValue::Array(v.map(fn(item) { item.to_json() })))
+    None => ()
+  }
+  match self.container_name {
+    Some(v) => obj.set("containerName", @json.JsonValue::String(v))
+    None => ()
+  }
+  match self.deprecated {
+    Some(v) => obj.set("deprecated", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("location", self.location.to_json())
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for SymbolInformation with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for SymbolInformation")
+  }
+  let name = match obj.get("name") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing name")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => SymbolKind::from_json(v)
+    None => raise @json.JsonError("missing kind")
+  }
+  let tags : Array[SymbolTag]? = match obj.get("tags") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { SymbolTag::from_json(item) }); _ => [] })
+    _ => None
+  }
+  let container_name : String? = match obj.get("containerName") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let deprecated : Bool? = match obj.get("deprecated") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let location = match obj.get("location") {
+    Some(v) => Location::from_json(v)
+    None => raise @json.JsonError("missing location")
+  }
+  SymbolInformation::{ name, kind, tags, container_name, deprecated, location }
+}
 
 ///| Represents programming constructs like variables, classes, interfaces etc.
 pub struct DocumentSymbol {
@@ -4842,11 +7122,59 @@ pub impl @json.FromJson for DocumentSymbol with from_json(json) {
   DocumentSymbol::{ name, detail, kind, tags, deprecated, range, selection_range, children }
 }
 
-///| TODO: DocumentSymbolRegistrationOptions extends TextDocumentRegistrationOptions, DocumentSymbolOptions
-pub type DocumentSymbolRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link DocumentSymbolRequest}.
+///| Extends: TextDocumentRegistrationOptions, DocumentSymbolOptions
+pub struct DocumentSymbolRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| A human-readable string that is shown when multiple outlines trees
+  label : String?
+}
+
+///|
+pub impl @json.ToJson for DocumentSymbolRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.label {
+    Some(v) => obj.set("label", @json.JsonValue::String(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentSymbolRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentSymbolRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let label : String? = match obj.get("label") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  DocumentSymbolRegistrationOptions::{ document_selector, work_done_progress, label }
+}
 
 ///| The parameters of a {@link CodeActionRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct CodeActionParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The document in which the command was invoked.
   text_document : TextDocumentIdentifier
   ///| The range for which the command was invoked.
@@ -4858,6 +7186,14 @@ pub struct CodeActionParams {
 ///|
 pub impl @json.ToJson for CodeActionParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("range", self.range.to_json())
   obj.set("context", self.context.to_json())
@@ -4869,6 +7205,14 @@ pub impl @json.FromJson for CodeActionParams with from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionParams")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
   }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
@@ -4882,7 +7226,7 @@ pub impl @json.FromJson for CodeActionParams with from_json(json) {
     Some(v) => CodeActionContext::from_json(v)
     None => raise @json.JsonError("missing context")
   }
-  CodeActionParams::{ text_document, range, context }
+  CodeActionParams::{ work_done_token, partial_result_token, text_document, range, context }
 }
 
 ///| Represents a reference to a command. Provides a title which
@@ -5044,11 +7388,79 @@ pub impl @json.FromJson for CodeAction with from_json(json) {
   CodeAction::{ title, kind, diagnostics, is_preferred, disabled, edit, command, data, tags }
 }
 
-///| TODO: CodeActionRegistrationOptions extends TextDocumentRegistrationOptions, CodeActionOptions
-pub type CodeActionRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link CodeActionRequest}.
+///| Extends: TextDocumentRegistrationOptions, CodeActionOptions
+pub struct CodeActionRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| CodeActionKinds that this server may return.
+  code_action_kinds : Array[CodeActionKind]?
+  ///| Static documentation for a class of code actions.
+  documentation : Array[CodeActionKindDocumentation]?
+  ///| The server provides support to resolve additional
+  resolve_provider : Bool?
+}
+
+///|
+pub impl @json.ToJson for CodeActionRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.code_action_kinds {
+    Some(v) => obj.set("codeActionKinds", @json.JsonValue::Array(v.map(fn(item) { item.to_json() })))
+    None => ()
+  }
+  match self.documentation {
+    Some(v) => obj.set("documentation", @json.JsonValue::Array(v.map(fn(item) { item.to_json() })))
+    None => ()
+  }
+  match self.resolve_provider {
+    Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for CodeActionRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CodeActionRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let code_action_kinds : Array[CodeActionKind]? = match obj.get("codeActionKinds") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { CodeActionKind::from_json(item) }); _ => [] })
+    _ => None
+  }
+  let documentation : Array[CodeActionKindDocumentation]? = match obj.get("documentation") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { CodeActionKindDocumentation::from_json(item) }); _ => [] })
+    _ => None
+  }
+  let resolve_provider : Bool? = match obj.get("resolveProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  CodeActionRegistrationOptions::{ document_selector, work_done_progress, code_action_kinds, documentation, resolve_provider }
+}
 
 ///| The parameters of a {@link WorkspaceSymbolRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct WorkspaceSymbolParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| A query string to filter symbols by. Clients may send an empty
   query : String
 }
@@ -5056,6 +7468,14 @@ pub struct WorkspaceSymbolParams {
 ///|
 pub impl @json.ToJson for WorkspaceSymbolParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("query", @json.JsonValue::String(self.query))
   @json.JsonValue::Object(obj)
 }
@@ -5066,21 +7486,138 @@ pub impl @json.FromJson for WorkspaceSymbolParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceSymbolParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let query = match obj.get("query") {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing query")
   }
-  WorkspaceSymbolParams::{ query }
+  WorkspaceSymbolParams::{ work_done_token, partial_result_token, query }
 }
 
-///| TODO: WorkspaceSymbol extends BaseSymbolInformation
-pub type WorkspaceSymbol = @json.JsonValue
+///| A special workspace symbol that supports locations without a range.
+///| Extends: BaseSymbolInformation
+pub struct WorkspaceSymbol {
+  ///| The name of this symbol.
+  name : String
+  ///| The kind of this symbol.
+  kind : SymbolKind
+  ///| Tags for this symbol.
+  tags : Array[SymbolTag]?
+  ///| The name of the symbol containing this symbol. This information is for
+  container_name : String?
+  ///| The location of the symbol. Whether a server is allowed to
+  location : @json.JsonValue
+  ///| A data entry field that is preserved on a workspace symbol between a
+  data : LSPAny?
+}
 
-///| TODO: WorkspaceSymbolRegistrationOptions extends WorkspaceSymbolOptions
-pub type WorkspaceSymbolRegistrationOptions = @json.JsonValue
+///|
+pub impl @json.ToJson for WorkspaceSymbol with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("name", @json.JsonValue::String(self.name))
+  obj.set("kind", self.kind.to_json())
+  match self.tags {
+    Some(v) => obj.set("tags", @json.JsonValue::Array(v.map(fn(item) { item.to_json() })))
+    None => ()
+  }
+  match self.container_name {
+    Some(v) => obj.set("containerName", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("location", self.location)
+  match self.data {
+    Some(v) => obj.set("data", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for WorkspaceSymbol with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for WorkspaceSymbol")
+  }
+  let name = match obj.get("name") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing name")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => SymbolKind::from_json(v)
+    None => raise @json.JsonError("missing kind")
+  }
+  let tags : Array[SymbolTag]? = match obj.get("tags") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { SymbolTag::from_json(item) }); _ => [] })
+    _ => None
+  }
+  let container_name : String? = match obj.get("containerName") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let location = match obj.get("location") {
+    Some(v) => v
+    None => raise @json.JsonError("missing location")
+  }
+  let data : LSPAny? = match obj.get("data") {
+    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    _ => None
+  }
+  WorkspaceSymbol::{ name, kind, tags, container_name, location, data }
+}
+
+///| Registration options for a {@link WorkspaceSymbolRequest}.
+///| Extends: WorkspaceSymbolOptions
+pub struct WorkspaceSymbolRegistrationOptions {
+  work_done_progress : Bool?
+  ///| The server provides support to resolve additional
+  resolve_provider : Bool?
+}
+
+///|
+pub impl @json.ToJson for WorkspaceSymbolRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.resolve_provider {
+    Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for WorkspaceSymbolRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for WorkspaceSymbolRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let resolve_provider : Bool? = match obj.get("resolveProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  WorkspaceSymbolRegistrationOptions::{ work_done_progress, resolve_provider }
+}
 
 ///| The parameters of a {@link CodeLensRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct CodeLensParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The document to request code lens for.
   text_document : TextDocumentIdentifier
 }
@@ -5088,6 +7625,14 @@ pub struct CodeLensParams {
 ///|
 pub impl @json.ToJson for CodeLensParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -5098,11 +7643,19 @@ pub impl @json.FromJson for CodeLensParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeLensParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
-  CodeLensParams::{ text_document }
+  CodeLensParams::{ work_done_token, partial_result_token, text_document }
 }
 
 ///| A code lens represents a {@link Command command} that should be shown along with
@@ -5151,11 +7704,59 @@ pub impl @json.FromJson for CodeLens with from_json(json) {
   CodeLens::{ range, command, data }
 }
 
-///| TODO: CodeLensRegistrationOptions extends TextDocumentRegistrationOptions, CodeLensOptions
-pub type CodeLensRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link CodeLensRequest}.
+///| Extends: TextDocumentRegistrationOptions, CodeLensOptions
+pub struct CodeLensRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| Code lens has a resolve provider as well.
+  resolve_provider : Bool?
+}
+
+///|
+pub impl @json.ToJson for CodeLensRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.resolve_provider {
+    Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for CodeLensRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CodeLensRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let resolve_provider : Bool? = match obj.get("resolveProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  CodeLensRegistrationOptions::{ document_selector, work_done_progress, resolve_provider }
+}
 
 ///| The parameters of a {@link DocumentLinkRequest}.
+///| Mixins: WorkDoneProgressParams, PartialResultParams
 pub struct DocumentLinkParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| An optional token that a server can use to report partial results (e.g. streaming) to
+  partial_result_token : ProgressToken?
   ///| The document to provide document links for.
   text_document : TextDocumentIdentifier
 }
@@ -5163,6 +7764,14 @@ pub struct DocumentLinkParams {
 ///|
 pub impl @json.ToJson for DocumentLinkParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  match self.partial_result_token {
+    Some(v) => obj.set("partialResultToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
@@ -5173,11 +7782,19 @@ pub impl @json.FromJson for DocumentLinkParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentLinkParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let partial_result_token : ProgressToken? = match obj.get("partialResultToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
   }
-  DocumentLinkParams::{ text_document }
+  DocumentLinkParams::{ work_done_token, partial_result_token, text_document }
 }
 
 ///| A document link is a range in a text document that links to an internal or external resource, like a
@@ -5236,11 +7853,57 @@ pub impl @json.FromJson for DocumentLink with from_json(json) {
   DocumentLink::{ range, target, tooltip, data }
 }
 
-///| TODO: DocumentLinkRegistrationOptions extends TextDocumentRegistrationOptions, DocumentLinkOptions
-pub type DocumentLinkRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link DocumentLinkRequest}.
+///| Extends: TextDocumentRegistrationOptions, DocumentLinkOptions
+pub struct DocumentLinkRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| Document links have a resolve provider as well.
+  resolve_provider : Bool?
+}
+
+///|
+pub impl @json.ToJson for DocumentLinkRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.resolve_provider {
+    Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentLinkRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentLinkRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let resolve_provider : Bool? = match obj.get("resolveProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentLinkRegistrationOptions::{ document_selector, work_done_progress, resolve_provider }
+}
 
 ///| The parameters of a {@link DocumentFormattingRequest}.
+///| Mixins: WorkDoneProgressParams
 pub struct DocumentFormattingParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
   ///| The document to format.
   text_document : TextDocumentIdentifier
   ///| The format options.
@@ -5250,6 +7913,10 @@ pub struct DocumentFormattingParams {
 ///|
 pub impl @json.ToJson for DocumentFormattingParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("options", self.options.to_json())
   @json.JsonValue::Object(obj)
@@ -5261,6 +7928,10 @@ pub impl @json.FromJson for DocumentFormattingParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentFormattingParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
     None => raise @json.JsonError("missing textDocument")
@@ -5269,14 +7940,50 @@ pub impl @json.FromJson for DocumentFormattingParams with from_json(json) {
     Some(v) => FormattingOptions::from_json(v)
     None => raise @json.JsonError("missing options")
   }
-  DocumentFormattingParams::{ text_document, options }
+  DocumentFormattingParams::{ work_done_token, text_document, options }
 }
 
-///| TODO: DocumentFormattingRegistrationOptions extends TextDocumentRegistrationOptions, DocumentFormattingOptions
-pub type DocumentFormattingRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link DocumentFormattingRequest}.
+///| Extends: TextDocumentRegistrationOptions, DocumentFormattingOptions
+pub struct DocumentFormattingRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+}
+
+///|
+pub impl @json.ToJson for DocumentFormattingRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentFormattingRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentFormattingRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentFormattingRegistrationOptions::{ document_selector, work_done_progress }
+}
 
 ///| The parameters of a {@link DocumentRangeFormattingRequest}.
+///| Mixins: WorkDoneProgressParams
 pub struct DocumentRangeFormattingParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
   ///| The document to format.
   text_document : TextDocumentIdentifier
   ///| The range to format
@@ -5288,6 +7995,10 @@ pub struct DocumentRangeFormattingParams {
 ///|
 pub impl @json.ToJson for DocumentRangeFormattingParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("range", self.range.to_json())
   obj.set("options", self.options.to_json())
@@ -5299,6 +8010,10 @@ pub impl @json.FromJson for DocumentRangeFormattingParams with from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentRangeFormattingParams")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
   }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
@@ -5312,14 +8027,60 @@ pub impl @json.FromJson for DocumentRangeFormattingParams with from_json(json) {
     Some(v) => FormattingOptions::from_json(v)
     None => raise @json.JsonError("missing options")
   }
-  DocumentRangeFormattingParams::{ text_document, range, options }
+  DocumentRangeFormattingParams::{ work_done_token, text_document, range, options }
 }
 
-///| TODO: DocumentRangeFormattingRegistrationOptions extends TextDocumentRegistrationOptions, DocumentRangeFormattingOptions
-pub type DocumentRangeFormattingRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link DocumentRangeFormattingRequest}.
+///| Extends: TextDocumentRegistrationOptions, DocumentRangeFormattingOptions
+pub struct DocumentRangeFormattingRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| Whether the server supports formatting multiple ranges at once.
+  ranges_support : Bool?
+}
+
+///|
+pub impl @json.ToJson for DocumentRangeFormattingRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.ranges_support {
+    Some(v) => obj.set("rangesSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DocumentRangeFormattingRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentRangeFormattingRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let ranges_support : Bool? = match obj.get("rangesSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentRangeFormattingRegistrationOptions::{ document_selector, work_done_progress, ranges_support }
+}
 
 ///| The parameters of a {@link DocumentRangesFormattingRequest}.
+///| Mixins: WorkDoneProgressParams
 pub struct DocumentRangesFormattingParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
   ///| The document to format.
   text_document : TextDocumentIdentifier
   ///| The ranges to format
@@ -5331,6 +8092,10 @@ pub struct DocumentRangesFormattingParams {
 ///|
 pub impl @json.ToJson for DocumentRangesFormattingParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
   obj.set("textDocument", self.text_document.to_json())
   obj.set("ranges", @json.JsonValue::Array(self.ranges.map(fn(item) { item.to_json() })))
   obj.set("options", self.options.to_json())
@@ -5342,6 +8107,10 @@ pub impl @json.FromJson for DocumentRangesFormattingParams with from_json(json) 
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentRangesFormattingParams")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
   }
   let text_document = match obj.get("textDocument") {
     Some(v) => TextDocumentIdentifier::from_json(v)
@@ -5355,7 +8124,7 @@ pub impl @json.FromJson for DocumentRangesFormattingParams with from_json(json) 
     Some(v) => FormattingOptions::from_json(v)
     None => raise @json.JsonError("missing options")
   }
-  DocumentRangesFormattingParams::{ text_document, ranges, options }
+  DocumentRangesFormattingParams::{ work_done_token, text_document, ranges, options }
 }
 
 ///| The parameters of a {@link DocumentOnTypeFormattingRequest}.
@@ -5405,20 +8174,197 @@ pub impl @json.FromJson for DocumentOnTypeFormattingParams with from_json(json) 
   DocumentOnTypeFormattingParams::{ text_document, position, ch, options }
 }
 
-///| TODO: DocumentOnTypeFormattingRegistrationOptions extends TextDocumentRegistrationOptions, DocumentOnTypeFormattingOptions
-pub type DocumentOnTypeFormattingRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link DocumentOnTypeFormattingRequest}.
+///| Extends: TextDocumentRegistrationOptions, DocumentOnTypeFormattingOptions
+pub struct DocumentOnTypeFormattingRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  ///| A character on which formatting should be triggered, like `{`.
+  first_trigger_character : String
+  ///| More trigger characters.
+  more_trigger_character : Array[String]?
+}
 
-///| TODO: RenameParams extends TextDocumentPositionParams
-pub type RenameParams = @json.JsonValue
+///|
+pub impl @json.ToJson for DocumentOnTypeFormattingRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  obj.set("firstTriggerCharacter", @json.JsonValue::String(self.first_trigger_character))
+  match self.more_trigger_character {
+    Some(v) => obj.set("moreTriggerCharacter", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
 
-///| TODO: RenameRegistrationOptions extends TextDocumentRegistrationOptions, RenameOptions
-pub type RenameRegistrationOptions = @json.JsonValue
+///|
+pub impl @json.FromJson for DocumentOnTypeFormattingRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DocumentOnTypeFormattingRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let first_trigger_character = match obj.get("firstTriggerCharacter") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing firstTriggerCharacter")
+  }
+  let more_trigger_character : Array[String]? = match obj.get("moreTriggerCharacter") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
+    _ => None
+  }
+  DocumentOnTypeFormattingRegistrationOptions::{ document_selector, first_trigger_character, more_trigger_character }
+}
 
-///| TODO: PrepareRenameParams extends TextDocumentPositionParams
-pub type PrepareRenameParams = @json.JsonValue
+///| The parameters of a {@link RenameRequest}.
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct RenameParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+  ///| The new name of the symbol. If the given name is not valid the
+  new_name : String
+}
+
+///|
+pub impl @json.ToJson for RenameParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  obj.set("newName", @json.JsonValue::String(self.new_name))
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for RenameParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for RenameParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  let new_name = match obj.get("newName") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing newName")
+  }
+  RenameParams::{ text_document, position, work_done_token, new_name }
+}
+
+///| Registration options for a {@link RenameRequest}.
+///| Extends: TextDocumentRegistrationOptions, RenameOptions
+pub struct RenameRegistrationOptions {
+  ///| A document selector to identify the scope of the registration. If set to null
+  document_selector : @json.JsonValue
+  work_done_progress : Bool?
+  ///| Renames should be checked and tested before being executed.
+  prepare_provider : Bool?
+}
+
+///|
+pub impl @json.ToJson for RenameRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("documentSelector", self.document_selector)
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.prepare_provider {
+    Some(v) => obj.set("prepareProvider", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for RenameRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for RenameRegistrationOptions")
+  }
+  let document_selector = match obj.get("documentSelector") {
+    Some(v) => v
+    None => raise @json.JsonError("missing documentSelector")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let prepare_provider : Bool? = match obj.get("prepareProvider") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  RenameRegistrationOptions::{ document_selector, work_done_progress, prepare_provider }
+}
+
+///| Extends: TextDocumentPositionParams
+///| Mixins: WorkDoneProgressParams
+pub struct PrepareRenameParams {
+  ///| The text document.
+  text_document : TextDocumentIdentifier
+  ///| The position inside the text document.
+  position : Position
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
+}
+
+///|
+pub impl @json.ToJson for PrepareRenameParams with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("textDocument", self.text_document.to_json())
+  obj.set("position", self.position.to_json())
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for PrepareRenameParams with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for PrepareRenameParams")
+  }
+  let text_document = match obj.get("textDocument") {
+    Some(v) => TextDocumentIdentifier::from_json(v)
+    None => raise @json.JsonError("missing textDocument")
+  }
+  let position = match obj.get("position") {
+    Some(v) => Position::from_json(v)
+    None => raise @json.JsonError("missing position")
+  }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
+  PrepareRenameParams::{ text_document, position, work_done_token }
+}
 
 ///| The parameters of a {@link ExecuteCommandRequest}.
+///| Mixins: WorkDoneProgressParams
 pub struct ExecuteCommandParams {
+  ///| An optional token that a server can use to report work done progress.
+  work_done_token : ProgressToken?
   ///| The identifier of the actual command handler.
   command : String
   ///| Arguments that the command should be invoked with.
@@ -5428,6 +8374,10 @@ pub struct ExecuteCommandParams {
 ///|
 pub impl @json.ToJson for ExecuteCommandParams with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_token {
+    Some(v) => obj.set("workDoneToken", v.to_json())
+    None => ()
+  }
   obj.set("command", @json.JsonValue::String(self.command))
   match self.arguments {
     Some(v) => obj.set("arguments", @json.JsonValue::Array(v.map(fn(item) { item.to_json() })))
@@ -5442,6 +8392,10 @@ pub impl @json.FromJson for ExecuteCommandParams with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ExecuteCommandParams")
   }
+  let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
+    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    _ => None
+  }
   let command = match obj.get("command") {
     Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
     None => raise @json.JsonError("missing command")
@@ -5450,11 +8404,44 @@ pub impl @json.FromJson for ExecuteCommandParams with from_json(json) {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { LSPAny::from_json(item) }); _ => [] })
     _ => None
   }
-  ExecuteCommandParams::{ command, arguments }
+  ExecuteCommandParams::{ work_done_token, command, arguments }
 }
 
-///| TODO: ExecuteCommandRegistrationOptions extends ExecuteCommandOptions
-pub type ExecuteCommandRegistrationOptions = @json.JsonValue
+///| Registration options for a {@link ExecuteCommandRequest}.
+///| Extends: ExecuteCommandOptions
+pub struct ExecuteCommandRegistrationOptions {
+  work_done_progress : Bool?
+  ///| The commands to be executed on the server
+  commands : Array[String]
+}
+
+///|
+pub impl @json.ToJson for ExecuteCommandRegistrationOptions with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  obj.set("commands", @json.JsonValue::Array(self.commands.map(fn(item) { @json.JsonValue::String(item) })))
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for ExecuteCommandRegistrationOptions with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for ExecuteCommandRegistrationOptions")
+  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let commands = match obj.get("commands") {
+    Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] }
+    None => raise @json.JsonError("missing commands")
+  }
+  ExecuteCommandRegistrationOptions::{ work_done_progress, commands }
+}
 
 ///| The parameters passed via an apply workspace edit request.
 pub struct ApplyWorkspaceEditParams {
@@ -5917,12 +8904,18 @@ pub impl @json.FromJson for LocationLink with from_json(json) {
   LocationLink::{ origin_selection_range, target_uri, target_range, target_selection_range }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct ImplementationOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for ImplementationOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -5932,7 +8925,11 @@ pub impl @json.FromJson for ImplementationOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ImplementationOptions")
   }
-  ImplementationOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  ImplementationOptions::{ work_done_progress }
 }
 
 ///| Static registration options to be returned in the initialize
@@ -5964,12 +8961,18 @@ pub impl @json.FromJson for StaticRegistrationOptions with from_json(json) {
   StaticRegistrationOptions::{ id }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct TypeDefinitionOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for TypeDefinitionOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -5979,7 +8982,11 @@ pub impl @json.FromJson for TypeDefinitionOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeDefinitionOptions")
   }
-  TypeDefinitionOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  TypeDefinitionOptions::{ work_done_progress }
 }
 
 ///| The workspace folder change event.
@@ -6100,12 +9107,18 @@ pub impl @json.FromJson for Color with from_json(json) {
   Color::{ red, green, blue, alpha }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct DocumentColorOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for DocumentColorOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6115,15 +9128,25 @@ pub impl @json.FromJson for DocumentColorOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentColorOptions")
   }
-  DocumentColorOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentColorOptions::{ work_done_progress }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct FoldingRangeOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for FoldingRangeOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6133,15 +9156,25 @@ pub impl @json.FromJson for FoldingRangeOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FoldingRangeOptions")
   }
-  FoldingRangeOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  FoldingRangeOptions::{ work_done_progress }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct DeclarationOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for DeclarationOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6151,15 +9184,25 @@ pub impl @json.FromJson for DeclarationOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DeclarationOptions")
   }
-  DeclarationOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DeclarationOptions::{ work_done_progress }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct SelectionRangeOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for SelectionRangeOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6169,16 +9212,26 @@ pub impl @json.FromJson for SelectionRangeOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SelectionRangeOptions")
   }
-  SelectionRangeOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  SelectionRangeOptions::{ work_done_progress }
 }
 
 ///| Call hierarchy options used during static registration.
+///| Mixins: WorkDoneProgressOptions
 pub struct CallHierarchyOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for CallHierarchyOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6188,11 +9241,17 @@ pub impl @json.FromJson for CallHierarchyOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyOptions")
   }
-  CallHierarchyOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  CallHierarchyOptions::{ work_done_progress }
 }
 
 ///| @since 3.16.0
+///| Mixins: WorkDoneProgressOptions
 pub struct SemanticTokensOptions {
+  work_done_progress : Bool?
   ///| The legend used by the server
   legend : SemanticTokensLegend
   ///| Server supports providing semantic tokens for a specific range
@@ -6204,6 +9263,10 @@ pub struct SemanticTokensOptions {
 ///|
 pub impl @json.ToJson for SemanticTokensOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   obj.set("legend", self.legend.to_json())
   match self.range {
     Some(v) => obj.set("range", v)
@@ -6222,13 +9285,17 @@ pub impl @json.FromJson for SemanticTokensOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let legend = match obj.get("legend") {
     Some(v) => SemanticTokensLegend::from_json(v)
     None => raise @json.JsonError("missing legend")
   }
   let range : @json.JsonValue? = obj.get("range")
   let full : @json.JsonValue? = obj.get("full")
-  SemanticTokensOptions::{ legend, range, full }
+  SemanticTokensOptions::{ work_done_progress, legend, range, full }
 }
 
 ///| @since 3.16.0
@@ -6274,12 +9341,18 @@ pub impl @json.FromJson for SemanticTokensEdit with from_json(json) {
   SemanticTokensEdit::{ start, delete_count, data }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct LinkedEditingRangeOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for LinkedEditingRangeOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6289,7 +9362,11 @@ pub impl @json.FromJson for LinkedEditingRangeOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LinkedEditingRangeOptions")
   }
-  LinkedEditingRangeOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  LinkedEditingRangeOptions::{ work_done_progress }
 }
 
 ///| Represents information on a file/folder create.
@@ -6351,14 +9428,174 @@ pub impl @json.FromJson for TextDocumentEdit with from_json(json) {
   TextDocumentEdit::{ text_document, edits }
 }
 
-///| TODO: CreateFile extends ResourceOperation
-pub type CreateFile = @json.JsonValue
+///| Create file operation.
+///| Extends: ResourceOperation
+pub struct CreateFile {
+  ///| The resource operation kind.
+  kind : String
+  ///| An optional annotation identifier describing the operation.
+  annotation_id : ChangeAnnotationIdentifier?
+  ///| The resource to create.
+  uri : String
+  ///| Additional options
+  options : CreateFileOptions?
+}
 
-///| TODO: RenameFile extends ResourceOperation
-pub type RenameFile = @json.JsonValue
+///|
+pub impl @json.ToJson for CreateFile with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  match self.annotation_id {
+    Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("uri", @json.JsonValue::String(self.uri))
+  match self.options {
+    Some(v) => obj.set("options", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
 
-///| TODO: DeleteFile extends ResourceOperation
-pub type DeleteFile = @json.JsonValue
+///|
+pub impl @json.FromJson for CreateFile with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for CreateFile")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let annotation_id : ChangeAnnotationIdentifier? = match obj.get("annotationId") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let uri = match obj.get("uri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing uri")
+  }
+  let options : CreateFileOptions? = match obj.get("options") {
+    Some(v) if not(v.is_null()) => Some(CreateFileOptions::from_json(v))
+    _ => None
+  }
+  CreateFile::{ kind, annotation_id, uri, options }
+}
+
+///| Rename file operation
+///| Extends: ResourceOperation
+pub struct RenameFile {
+  ///| The resource operation kind.
+  kind : String
+  ///| An optional annotation identifier describing the operation.
+  annotation_id : ChangeAnnotationIdentifier?
+  ///| The old (existing) location.
+  old_uri : String
+  ///| The new location.
+  new_uri : String
+  ///| Rename options.
+  options : RenameFileOptions?
+}
+
+///|
+pub impl @json.ToJson for RenameFile with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  match self.annotation_id {
+    Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("oldUri", @json.JsonValue::String(self.old_uri))
+  obj.set("newUri", @json.JsonValue::String(self.new_uri))
+  match self.options {
+    Some(v) => obj.set("options", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for RenameFile with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for RenameFile")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let annotation_id : ChangeAnnotationIdentifier? = match obj.get("annotationId") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let old_uri = match obj.get("oldUri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing oldUri")
+  }
+  let new_uri = match obj.get("newUri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing newUri")
+  }
+  let options : RenameFileOptions? = match obj.get("options") {
+    Some(v) if not(v.is_null()) => Some(RenameFileOptions::from_json(v))
+    _ => None
+  }
+  RenameFile::{ kind, annotation_id, old_uri, new_uri, options }
+}
+
+///| Delete file operation
+///| Extends: ResourceOperation
+pub struct DeleteFile {
+  ///| The resource operation kind.
+  kind : String
+  ///| An optional annotation identifier describing the operation.
+  annotation_id : ChangeAnnotationIdentifier?
+  ///| The file to delete.
+  uri : String
+  ///| Delete options.
+  options : DeleteFileOptions?
+}
+
+///|
+pub impl @json.ToJson for DeleteFile with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  match self.annotation_id {
+    Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("uri", @json.JsonValue::String(self.uri))
+  match self.options {
+    Some(v) => obj.set("options", v.to_json())
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DeleteFile with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DeleteFile")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let annotation_id : ChangeAnnotationIdentifier? = match obj.get("annotationId") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let uri = match obj.get("uri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing uri")
+  }
+  let options : DeleteFileOptions? = match obj.get("options") {
+    Some(v) if not(v.is_null()) => Some(DeleteFileOptions::from_json(v))
+    _ => None
+  }
+  DeleteFile::{ kind, annotation_id, uri, options }
+}
 
 ///| Additional information that describes document changes.
 pub struct ChangeAnnotation {
@@ -6501,12 +9738,18 @@ pub impl @json.FromJson for FileDelete with from_json(json) {
   FileDelete::{ uri }
 }
 
+///| Mixins: WorkDoneProgressOptions
 pub struct MonikerOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for MonikerOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6516,16 +9759,26 @@ pub impl @json.FromJson for MonikerOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MonikerOptions")
   }
-  MonikerOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  MonikerOptions::{ work_done_progress }
 }
 
 ///| Type hierarchy options used during static registration.
+///| Mixins: WorkDoneProgressOptions
 pub struct TypeHierarchyOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for TypeHierarchyOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6535,7 +9788,11 @@ pub impl @json.FromJson for TypeHierarchyOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeHierarchyOptions")
   }
-  TypeHierarchyOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  TypeHierarchyOptions::{ work_done_progress }
 }
 
 ///| @since 3.17.0
@@ -6684,12 +9941,18 @@ pub impl @json.FromJson for InlineValueEvaluatableExpression with from_json(json
 }
 
 ///| Inline value options used during static registration.
+///| Mixins: WorkDoneProgressOptions
 pub struct InlineValueOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for InlineValueOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -6699,7 +9962,11 @@ pub impl @json.FromJson for InlineValueOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueOptions")
   }
-  InlineValueOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  InlineValueOptions::{ work_done_progress }
 }
 
 ///| An inlay hint label part allows for interactive and composite labels
@@ -6789,7 +10056,9 @@ pub impl @json.FromJson for MarkupContent with from_json(json) {
 }
 
 ///| Inlay hint options used during static registration.
+///| Mixins: WorkDoneProgressOptions
 pub struct InlayHintOptions {
+  work_done_progress : Bool?
   ///| The server provides support to resolve additional
   resolve_provider : Bool?
 }
@@ -6797,6 +10066,10 @@ pub struct InlayHintOptions {
 ///|
 pub impl @json.ToJson for InlayHintOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.resolve_provider {
     Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
     None => ()
@@ -6810,18 +10083,108 @@ pub impl @json.FromJson for InlayHintOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlayHintOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  InlayHintOptions::{ resolve_provider }
+  InlayHintOptions::{ work_done_progress, resolve_provider }
 }
 
-///| TODO: RelatedFullDocumentDiagnosticReport extends FullDocumentDiagnosticReport
-pub type RelatedFullDocumentDiagnosticReport = @json.JsonValue
+///| A full diagnostic report with a set of related documents.
+///| Extends: FullDocumentDiagnosticReport
+pub struct RelatedFullDocumentDiagnosticReport {
+  ///| A full document diagnostic report.
+  kind : String
+  ///| An optional result id. If provided it will
+  result_id : String?
+  ///| The actual items.
+  items : Array[Diagnostic]
+  ///| Diagnostics of related documents. This information is useful
+  related_documents : @json.JsonValue?
+}
 
-///| TODO: RelatedUnchangedDocumentDiagnosticReport extends UnchangedDocumentDiagnosticReport
-pub type RelatedUnchangedDocumentDiagnosticReport = @json.JsonValue
+///|
+pub impl @json.ToJson for RelatedFullDocumentDiagnosticReport with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  match self.result_id {
+    Some(v) => obj.set("resultId", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("items", @json.JsonValue::Array(self.items.map(fn(item) { item.to_json() })))
+  match self.related_documents {
+    Some(v) => obj.set("relatedDocuments", v)
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for RelatedFullDocumentDiagnosticReport with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for RelatedFullDocumentDiagnosticReport")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let result_id : String? = match obj.get("resultId") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let items = match obj.get("items") {
+    Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { Diagnostic::from_json(item) }); _ => [] }
+    None => raise @json.JsonError("missing items")
+  }
+  let related_documents : @json.JsonValue? = obj.get("relatedDocuments")
+  RelatedFullDocumentDiagnosticReport::{ kind, result_id, items, related_documents }
+}
+
+///| An unchanged diagnostic report with a set of related documents.
+///| Extends: UnchangedDocumentDiagnosticReport
+pub struct RelatedUnchangedDocumentDiagnosticReport {
+  ///| A document diagnostic report indicating
+  kind : String
+  ///| A result id which will be sent on the next
+  result_id : String
+  ///| Diagnostics of related documents. This information is useful
+  related_documents : @json.JsonValue?
+}
+
+///|
+pub impl @json.ToJson for RelatedUnchangedDocumentDiagnosticReport with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  obj.set("resultId", @json.JsonValue::String(self.result_id))
+  match self.related_documents {
+    Some(v) => obj.set("relatedDocuments", v)
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for RelatedUnchangedDocumentDiagnosticReport with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for RelatedUnchangedDocumentDiagnosticReport")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let result_id = match obj.get("resultId") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing resultId")
+  }
+  let related_documents : @json.JsonValue? = obj.get("relatedDocuments")
+  RelatedUnchangedDocumentDiagnosticReport::{ kind, result_id, related_documents }
+}
 
 ///| A diagnostic report with a full set of problems.
 pub struct FullDocumentDiagnosticReport {
@@ -6900,7 +10263,9 @@ pub impl @json.FromJson for UnchangedDocumentDiagnosticReport with from_json(jso
 }
 
 ///| Diagnostic options.
+///| Mixins: WorkDoneProgressOptions
 pub struct DiagnosticOptions {
+  work_done_progress : Bool?
   ///| An optional identifier under which the diagnostics are
   identifier : String?
   ///| Whether the language has inter file dependencies meaning that
@@ -6912,6 +10277,10 @@ pub struct DiagnosticOptions {
 ///|
 pub impl @json.ToJson for DiagnosticOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.identifier {
     Some(v) => obj.set("identifier", @json.JsonValue::String(v))
     None => ()
@@ -6927,6 +10296,10 @@ pub impl @json.FromJson for DiagnosticOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DiagnosticOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let identifier : String? = match obj.get("identifier") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
     _ => None
@@ -6939,7 +10312,7 @@ pub impl @json.FromJson for DiagnosticOptions with from_json(json) {
     Some(v) => match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") }
     None => raise @json.JsonError("missing workspaceDiagnostics")
   }
-  DiagnosticOptions::{ identifier, inter_file_dependencies, workspace_diagnostics }
+  DiagnosticOptions::{ work_done_progress, identifier, inter_file_dependencies, workspace_diagnostics }
 }
 
 ///| A previous result id in a workspace pull request.
@@ -7236,12 +10609,18 @@ pub impl @json.FromJson for StringValue with from_json(json) {
 }
 
 ///| Inline completion options used during static registration.
+///| Mixins: WorkDoneProgressOptions
 pub struct InlineCompletionOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for InlineCompletionOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -7251,7 +10630,11 @@ pub impl @json.FromJson for InlineCompletionOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineCompletionOptions")
   }
-  InlineCompletionOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  InlineCompletionOptions::{ work_done_progress }
 }
 
 ///| Text document content provider options.
@@ -8033,7 +11416,9 @@ pub impl @json.FromJson for CompletionItemApplyKinds with from_json(json) {
 }
 
 ///| Completion options.
+///| Mixins: WorkDoneProgressOptions
 pub struct CompletionOptions {
+  work_done_progress : Bool?
   ///| Most tools trigger completion request automatically without explicitly requesting
   trigger_characters : Array[String]?
   ///| The list of all possible characters that commit a completion. This field can be used
@@ -8047,6 +11432,10 @@ pub struct CompletionOptions {
 ///|
 pub impl @json.ToJson for CompletionOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.trigger_characters {
     Some(v) => obj.set("triggerCharacters", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
     None => ()
@@ -8072,6 +11461,10 @@ pub impl @json.FromJson for CompletionOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
     _ => None
@@ -8088,16 +11481,22 @@ pub impl @json.FromJson for CompletionOptions with from_json(json) {
     Some(v) if not(v.is_null()) => Some(ServerCompletionItemOptions::from_json(v))
     _ => None
   }
-  CompletionOptions::{ trigger_characters, all_commit_characters, resolve_provider, completion_item }
+  CompletionOptions::{ work_done_progress, trigger_characters, all_commit_characters, resolve_provider, completion_item }
 }
 
 ///| Hover options.
+///| Mixins: WorkDoneProgressOptions
 pub struct HoverOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for HoverOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -8107,7 +11506,11 @@ pub impl @json.FromJson for HoverOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for HoverOptions")
   }
-  HoverOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  HoverOptions::{ work_done_progress }
 }
 
 ///| Additional information about the context in which a signature help request was triggered.
@@ -8214,7 +11617,9 @@ pub impl @json.FromJson for SignatureInformation with from_json(json) {
 }
 
 ///| Server Capabilities for a {@link SignatureHelpRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct SignatureHelpOptions {
+  work_done_progress : Bool?
   ///| List of characters that trigger signature help automatically.
   trigger_characters : Array[String]?
   ///| List of characters that re-trigger signature help.
@@ -8224,6 +11629,10 @@ pub struct SignatureHelpOptions {
 ///|
 pub impl @json.ToJson for SignatureHelpOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.trigger_characters {
     Some(v) => obj.set("triggerCharacters", @json.JsonValue::Array(v.map(fn(item) { @json.JsonValue::String(item) })))
     None => ()
@@ -8241,6 +11650,10 @@ pub impl @json.FromJson for SignatureHelpOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SignatureHelpOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
     _ => None
@@ -8249,16 +11662,22 @@ pub impl @json.FromJson for SignatureHelpOptions with from_json(json) {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] })
     _ => None
   }
-  SignatureHelpOptions::{ trigger_characters, retrigger_characters }
+  SignatureHelpOptions::{ work_done_progress, trigger_characters, retrigger_characters }
 }
 
 ///| Server Capabilities for a {@link DefinitionRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct DefinitionOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for DefinitionOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -8268,7 +11687,11 @@ pub impl @json.FromJson for DefinitionOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DefinitionOptions")
   }
-  DefinitionOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DefinitionOptions::{ work_done_progress }
 }
 
 ///| Value-object that contains additional information when
@@ -8298,12 +11721,18 @@ pub impl @json.FromJson for ReferenceContext with from_json(json) {
 }
 
 ///| Reference options.
+///| Mixins: WorkDoneProgressOptions
 pub struct ReferenceOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for ReferenceOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -8313,16 +11742,26 @@ pub impl @json.FromJson for ReferenceOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ReferenceOptions")
   }
-  ReferenceOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  ReferenceOptions::{ work_done_progress }
 }
 
 ///| Provider options for a {@link DocumentHighlightRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct DocumentHighlightOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for DocumentHighlightOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -8332,7 +11771,11 @@ pub impl @json.FromJson for DocumentHighlightOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentHighlightOptions")
   }
-  DocumentHighlightOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentHighlightOptions::{ work_done_progress }
 }
 
 ///| A base for all symbol information.
@@ -8389,7 +11832,9 @@ pub impl @json.FromJson for BaseSymbolInformation with from_json(json) {
 }
 
 ///| Provider options for a {@link DocumentSymbolRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct DocumentSymbolOptions {
+  work_done_progress : Bool?
   ///| A human-readable string that is shown when multiple outlines trees
   label : String?
 }
@@ -8397,6 +11842,10 @@ pub struct DocumentSymbolOptions {
 ///|
 pub impl @json.ToJson for DocumentSymbolOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.label {
     Some(v) => obj.set("label", @json.JsonValue::String(v))
     None => ()
@@ -8410,11 +11859,15 @@ pub impl @json.FromJson for DocumentSymbolOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentSymbolOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let label : String? = match obj.get("label") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
     _ => None
   }
-  DocumentSymbolOptions::{ label }
+  DocumentSymbolOptions::{ work_done_progress, label }
 }
 
 ///| Contains additional diagnostic information about the context in which
@@ -8490,7 +11943,9 @@ pub impl @json.FromJson for CodeActionDisabled with from_json(json) {
 }
 
 ///| Provider options for a {@link CodeActionRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct CodeActionOptions {
+  work_done_progress : Bool?
   ///| CodeActionKinds that this server may return.
   code_action_kinds : Array[CodeActionKind]?
   ///| Static documentation for a class of code actions.
@@ -8502,6 +11957,10 @@ pub struct CodeActionOptions {
 ///|
 pub impl @json.ToJson for CodeActionOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.code_action_kinds {
     Some(v) => obj.set("codeActionKinds", @json.JsonValue::Array(v.map(fn(item) { item.to_json() })))
     None => ()
@@ -8523,6 +11982,10 @@ pub impl @json.FromJson for CodeActionOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let code_action_kinds : Array[CodeActionKind]? = match obj.get("codeActionKinds") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Array(items) => items.map(fn(item) { CodeActionKind::from_json(item) }); _ => [] })
     _ => None
@@ -8535,7 +11998,7 @@ pub impl @json.FromJson for CodeActionOptions with from_json(json) {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  CodeActionOptions::{ code_action_kinds, documentation, resolve_provider }
+  CodeActionOptions::{ work_done_progress, code_action_kinds, documentation, resolve_provider }
 }
 
 ///| Location with only uri and does not include range.
@@ -8564,7 +12027,9 @@ pub impl @json.FromJson for LocationUriOnly with from_json(json) {
 }
 
 ///| Server capabilities for a {@link WorkspaceSymbolRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct WorkspaceSymbolOptions {
+  work_done_progress : Bool?
   ///| The server provides support to resolve additional
   resolve_provider : Bool?
 }
@@ -8572,6 +12037,10 @@ pub struct WorkspaceSymbolOptions {
 ///|
 pub impl @json.ToJson for WorkspaceSymbolOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.resolve_provider {
     Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
     None => ()
@@ -8585,15 +12054,21 @@ pub impl @json.FromJson for WorkspaceSymbolOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceSymbolOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  WorkspaceSymbolOptions::{ resolve_provider }
+  WorkspaceSymbolOptions::{ work_done_progress, resolve_provider }
 }
 
 ///| Code Lens provider options of a {@link CodeLensRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct CodeLensOptions {
+  work_done_progress : Bool?
   ///| Code lens has a resolve provider as well.
   resolve_provider : Bool?
 }
@@ -8601,6 +12076,10 @@ pub struct CodeLensOptions {
 ///|
 pub impl @json.ToJson for CodeLensOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.resolve_provider {
     Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
     None => ()
@@ -8614,15 +12093,21 @@ pub impl @json.FromJson for CodeLensOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeLensOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  CodeLensOptions::{ resolve_provider }
+  CodeLensOptions::{ work_done_progress, resolve_provider }
 }
 
 ///| Provider options for a {@link DocumentLinkRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct DocumentLinkOptions {
+  work_done_progress : Bool?
   ///| Document links have a resolve provider as well.
   resolve_provider : Bool?
 }
@@ -8630,6 +12115,10 @@ pub struct DocumentLinkOptions {
 ///|
 pub impl @json.ToJson for DocumentLinkOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.resolve_provider {
     Some(v) => obj.set("resolveProvider", @json.JsonValue::Bool(v))
     None => ()
@@ -8643,11 +12132,15 @@ pub impl @json.FromJson for DocumentLinkOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentLinkOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  DocumentLinkOptions::{ resolve_provider }
+  DocumentLinkOptions::{ work_done_progress, resolve_provider }
 }
 
 ///| Value-object describing what options formatting should use.
@@ -8714,12 +12207,18 @@ pub impl @json.FromJson for FormattingOptions with from_json(json) {
 }
 
 ///| Provider options for a {@link DocumentFormattingRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct DocumentFormattingOptions {
+  work_done_progress : Bool?
 }
 
 ///|
 pub impl @json.ToJson for DocumentFormattingOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   @json.JsonValue::Object(obj)
 }
 
@@ -8729,11 +12228,17 @@ pub impl @json.FromJson for DocumentFormattingOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentFormattingOptions")
   }
-  DocumentFormattingOptions::{  }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DocumentFormattingOptions::{ work_done_progress }
 }
 
 ///| Provider options for a {@link DocumentRangeFormattingRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct DocumentRangeFormattingOptions {
+  work_done_progress : Bool?
   ///| Whether the server supports formatting multiple ranges at once.
   ranges_support : Bool?
 }
@@ -8741,6 +12246,10 @@ pub struct DocumentRangeFormattingOptions {
 ///|
 pub impl @json.ToJson for DocumentRangeFormattingOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.ranges_support {
     Some(v) => obj.set("rangesSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -8754,11 +12263,15 @@ pub impl @json.FromJson for DocumentRangeFormattingOptions with from_json(json) 
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentRangeFormattingOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let ranges_support : Bool? = match obj.get("rangesSupport") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  DocumentRangeFormattingOptions::{ ranges_support }
+  DocumentRangeFormattingOptions::{ work_done_progress, ranges_support }
 }
 
 ///| Provider options for a {@link DocumentOnTypeFormattingRequest}.
@@ -8798,7 +12311,9 @@ pub impl @json.FromJson for DocumentOnTypeFormattingOptions with from_json(json)
 }
 
 ///| Provider options for a {@link RenameRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct RenameOptions {
+  work_done_progress : Bool?
   ///| Renames should be checked and tested before being executed.
   prepare_provider : Bool?
 }
@@ -8806,6 +12321,10 @@ pub struct RenameOptions {
 ///|
 pub impl @json.ToJson for RenameOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   match self.prepare_provider {
     Some(v) => obj.set("prepareProvider", @json.JsonValue::Bool(v))
     None => ()
@@ -8819,11 +12338,15 @@ pub impl @json.FromJson for RenameOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let prepare_provider : Bool? = match obj.get("prepareProvider") {
     Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
     _ => None
   }
-  RenameOptions::{ prepare_provider }
+  RenameOptions::{ work_done_progress, prepare_provider }
 }
 
 ///| @since 3.18.0
@@ -8883,7 +12406,9 @@ pub impl @json.FromJson for PrepareRenameDefaultBehavior with from_json(json) {
 }
 
 ///| The server capabilities of a {@link ExecuteCommandRequest}.
+///| Mixins: WorkDoneProgressOptions
 pub struct ExecuteCommandOptions {
+  work_done_progress : Bool?
   ///| The commands to be executed on the server
   commands : Array[String]
 }
@@ -8891,6 +12416,10 @@ pub struct ExecuteCommandOptions {
 ///|
 pub impl @json.ToJson for ExecuteCommandOptions with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
+  match self.work_done_progress {
+    Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
+    None => ()
+  }
   obj.set("commands", @json.JsonValue::Array(self.commands.map(fn(item) { @json.JsonValue::String(item) })))
   @json.JsonValue::Object(obj)
 }
@@ -8901,11 +12430,15 @@ pub impl @json.FromJson for ExecuteCommandOptions with from_json(json) {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ExecuteCommandOptions")
   }
+  let work_done_progress : Bool? = match obj.get("workDoneProgress") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
   let commands = match obj.get("commands") {
     Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] }
     None => raise @json.JsonError("missing commands")
   }
-  ExecuteCommandOptions::{ commands }
+  ExecuteCommandOptions::{ work_done_progress, commands }
 }
 
 ///| Additional data about a workspace edit.
@@ -8999,11 +12532,80 @@ pub impl @json.FromJson for SemanticTokensFullDelta with from_json(json) {
   SemanticTokensFullDelta::{ delta }
 }
 
-///| TODO: OptionalVersionedTextDocumentIdentifier extends TextDocumentIdentifier
-pub type OptionalVersionedTextDocumentIdentifier = @json.JsonValue
+///| A text document identifier to optionally denote a specific version of a text document.
+///| Extends: TextDocumentIdentifier
+pub struct OptionalVersionedTextDocumentIdentifier {
+  ///| The text document's uri.
+  uri : String
+  ///| The version number of this document. If a versioned text document identifier
+  version : @json.JsonValue
+}
 
-///| TODO: AnnotatedTextEdit extends TextEdit
-pub type AnnotatedTextEdit = @json.JsonValue
+///|
+pub impl @json.ToJson for OptionalVersionedTextDocumentIdentifier with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("uri", @json.JsonValue::String(self.uri))
+  obj.set("version", self.version)
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for OptionalVersionedTextDocumentIdentifier with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for OptionalVersionedTextDocumentIdentifier")
+  }
+  let uri = match obj.get("uri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing uri")
+  }
+  let version = match obj.get("version") {
+    Some(v) => v
+    None => raise @json.JsonError("missing version")
+  }
+  OptionalVersionedTextDocumentIdentifier::{ uri, version }
+}
+
+///| A special text edit with an additional change annotation.
+///| Extends: TextEdit
+pub struct AnnotatedTextEdit {
+  ///| The range of the text document to be manipulated. To insert
+  range : Range
+  ///| The string to be inserted. For delete operations use an
+  new_text : String
+  ///| The actual identifier of the change annotation
+  annotation_id : ChangeAnnotationIdentifier
+}
+
+///|
+pub impl @json.ToJson for AnnotatedTextEdit with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("range", self.range.to_json())
+  obj.set("newText", @json.JsonValue::String(self.new_text))
+  obj.set("annotationId", @json.JsonValue::String(self.annotation_id))
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for AnnotatedTextEdit with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for AnnotatedTextEdit")
+  }
+  let range = match obj.get("range") {
+    Some(v) => Range::from_json(v)
+    None => raise @json.JsonError("missing range")
+  }
+  let new_text = match obj.get("newText") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing newText")
+  }
+  let annotation_id = match obj.get("annotationId") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing annotationId")
+  }
+  AnnotatedTextEdit::{ range, new_text, annotation_id }
+}
 
 ///| An interactive text edit.
 pub struct SnippetTextEdit {
@@ -9247,11 +12849,111 @@ pub impl @json.FromJson for FileOperationPattern with from_json(json) {
   FileOperationPattern::{ glob, matches, options }
 }
 
-///| TODO: WorkspaceFullDocumentDiagnosticReport extends FullDocumentDiagnosticReport
-pub type WorkspaceFullDocumentDiagnosticReport = @json.JsonValue
+///| A full document diagnostic report for a workspace diagnostic result.
+///| Extends: FullDocumentDiagnosticReport
+pub struct WorkspaceFullDocumentDiagnosticReport {
+  ///| A full document diagnostic report.
+  kind : String
+  ///| An optional result id. If provided it will
+  result_id : String?
+  ///| The actual items.
+  items : Array[Diagnostic]
+  ///| The URI for which diagnostic information is reported.
+  uri : String
+  ///| The version number for which the diagnostics are reported.
+  version : @json.JsonValue
+}
 
-///| TODO: WorkspaceUnchangedDocumentDiagnosticReport extends UnchangedDocumentDiagnosticReport
-pub type WorkspaceUnchangedDocumentDiagnosticReport = @json.JsonValue
+///|
+pub impl @json.ToJson for WorkspaceFullDocumentDiagnosticReport with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  match self.result_id {
+    Some(v) => obj.set("resultId", @json.JsonValue::String(v))
+    None => ()
+  }
+  obj.set("items", @json.JsonValue::Array(self.items.map(fn(item) { item.to_json() })))
+  obj.set("uri", @json.JsonValue::String(self.uri))
+  obj.set("version", self.version)
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for WorkspaceFullDocumentDiagnosticReport with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for WorkspaceFullDocumentDiagnosticReport")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let result_id : String? = match obj.get("resultId") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })
+    _ => None
+  }
+  let items = match obj.get("items") {
+    Some(v) => match v { @json.JsonValue::Array(items) => items.map(fn(item) { Diagnostic::from_json(item) }); _ => [] }
+    None => raise @json.JsonError("missing items")
+  }
+  let uri = match obj.get("uri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing uri")
+  }
+  let version = match obj.get("version") {
+    Some(v) => v
+    None => raise @json.JsonError("missing version")
+  }
+  WorkspaceFullDocumentDiagnosticReport::{ kind, result_id, items, uri, version }
+}
+
+///| An unchanged document diagnostic report for a workspace diagnostic result.
+///| Extends: UnchangedDocumentDiagnosticReport
+pub struct WorkspaceUnchangedDocumentDiagnosticReport {
+  ///| A document diagnostic report indicating
+  kind : String
+  ///| A result id which will be sent on the next
+  result_id : String
+  ///| The URI for which diagnostic information is reported.
+  uri : String
+  ///| The version number for which the diagnostics are reported.
+  version : @json.JsonValue
+}
+
+///|
+pub impl @json.ToJson for WorkspaceUnchangedDocumentDiagnosticReport with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  obj.set("kind", @json.JsonValue::String(self.kind))
+  obj.set("resultId", @json.JsonValue::String(self.result_id))
+  obj.set("uri", @json.JsonValue::String(self.uri))
+  obj.set("version", self.version)
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for WorkspaceUnchangedDocumentDiagnosticReport with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for WorkspaceUnchangedDocumentDiagnosticReport")
+  }
+  let kind = match obj.get("kind") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing kind")
+  }
+  let result_id = match obj.get("resultId") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing resultId")
+  }
+  let uri = match obj.get("uri") {
+    Some(v) => match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") }
+    None => raise @json.JsonError("missing uri")
+  }
+  let version = match obj.get("version") {
+    Some(v) => v
+    None => raise @json.JsonError("missing version")
+  }
+  WorkspaceUnchangedDocumentDiagnosticReport::{ kind, result_id, uri, version }
+}
 
 ///| A notebook cell.
 pub struct NotebookCell {
@@ -12788,8 +16490,75 @@ pub impl @json.FromJson for SelectionRangeClientCapabilities with from_json(json
   SelectionRangeClientCapabilities::{ dynamic_registration }
 }
 
-///| TODO: PublishDiagnosticsClientCapabilities extends DiagnosticsCapabilities
-pub type PublishDiagnosticsClientCapabilities = @json.JsonValue
+///| The publish diagnostic client capabilities.
+///| Extends: DiagnosticsCapabilities
+pub struct PublishDiagnosticsClientCapabilities {
+  ///| Whether the clients accepts diagnostics with related information.
+  related_information : Bool?
+  ///| Client supports the tag property to provide meta data about a diagnostic.
+  tag_support : ClientDiagnosticsTagOptions?
+  ///| Client supports a codeDescription property
+  code_description_support : Bool?
+  ///| Whether code action supports the `data` property which is
+  data_support : Bool?
+  ///| Whether the client interprets the version property of the
+  version_support : Bool?
+}
+
+///|
+pub impl @json.ToJson for PublishDiagnosticsClientCapabilities with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.related_information {
+    Some(v) => obj.set("relatedInformation", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.tag_support {
+    Some(v) => obj.set("tagSupport", v.to_json())
+    None => ()
+  }
+  match self.code_description_support {
+    Some(v) => obj.set("codeDescriptionSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.data_support {
+    Some(v) => obj.set("dataSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.version_support {
+    Some(v) => obj.set("versionSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for PublishDiagnosticsClientCapabilities")
+  }
+  let related_information : Bool? = match obj.get("relatedInformation") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let tag_support : ClientDiagnosticsTagOptions? = match obj.get("tagSupport") {
+    Some(v) if not(v.is_null()) => Some(ClientDiagnosticsTagOptions::from_json(v))
+    _ => None
+  }
+  let code_description_support : Bool? = match obj.get("codeDescriptionSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let data_support : Bool? = match obj.get("dataSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let version_support : Bool? = match obj.get("versionSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  PublishDiagnosticsClientCapabilities::{ related_information, tag_support, code_description_support, data_support, version_support }
+}
 
 ///| @since 3.16.0
 pub struct CallHierarchyClientCapabilities {
@@ -13072,8 +16841,85 @@ pub impl @json.FromJson for InlayHintClientCapabilities with from_json(json) {
   InlayHintClientCapabilities::{ dynamic_registration, resolve_support }
 }
 
-///| TODO: DiagnosticClientCapabilities extends DiagnosticsCapabilities
-pub type DiagnosticClientCapabilities = @json.JsonValue
+///| Client capabilities specific to diagnostic pull requests.
+///| Extends: DiagnosticsCapabilities
+pub struct DiagnosticClientCapabilities {
+  ///| Whether the clients accepts diagnostics with related information.
+  related_information : Bool?
+  ///| Client supports the tag property to provide meta data about a diagnostic.
+  tag_support : ClientDiagnosticsTagOptions?
+  ///| Client supports a codeDescription property
+  code_description_support : Bool?
+  ///| Whether code action supports the `data` property which is
+  data_support : Bool?
+  ///| Whether implementation supports dynamic registration. If this is set to `true`
+  dynamic_registration : Bool?
+  ///| Whether the clients supports related documents for document diagnostic pulls.
+  related_document_support : Bool?
+}
+
+///|
+pub impl @json.ToJson for DiagnosticClientCapabilities with to_json(self) {
+  let obj : Map[String, @json.JsonValue] = {}
+  match self.related_information {
+    Some(v) => obj.set("relatedInformation", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.tag_support {
+    Some(v) => obj.set("tagSupport", v.to_json())
+    None => ()
+  }
+  match self.code_description_support {
+    Some(v) => obj.set("codeDescriptionSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.data_support {
+    Some(v) => obj.set("dataSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.dynamic_registration {
+    Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  match self.related_document_support {
+    Some(v) => obj.set("relatedDocumentSupport", @json.JsonValue::Bool(v))
+    None => ()
+  }
+  @json.JsonValue::Object(obj)
+}
+
+///|
+pub impl @json.FromJson for DiagnosticClientCapabilities with from_json(json) {
+  let obj = match json {
+    @json.JsonValue::Object(o) => o
+    _ => raise @json.JsonError("expected object for DiagnosticClientCapabilities")
+  }
+  let related_information : Bool? = match obj.get("relatedInformation") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let tag_support : ClientDiagnosticsTagOptions? = match obj.get("tagSupport") {
+    Some(v) if not(v.is_null()) => Some(ClientDiagnosticsTagOptions::from_json(v))
+    _ => None
+  }
+  let code_description_support : Bool? = match obj.get("codeDescriptionSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let data_support : Bool? = match obj.get("dataSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  let related_document_support : Bool? = match obj.get("relatedDocumentSupport") {
+    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::Bool(b) => b; _ => raise @json.JsonError("expected boolean") })
+    _ => None
+  }
+  DiagnosticClientCapabilities::{ related_information, tag_support, code_description_support, data_support, dynamic_registration, related_document_support }
+}
 
 ///| Client capabilities specific to inline completions.
 pub struct InlineCompletionClientCapabilities {
