@@ -1,7 +1,7 @@
 ///| JSON-RPC 2.0 protocol types
 
 ///| Request ID - can be string or number
-pub enum RequestId {
+pub(all) enum RequestId {
   Number(Int)
   String(String)
 } derive(Eq, Show)
@@ -205,7 +205,7 @@ pub impl @json.FromJson for Response with from_json(json) {
 }
 
 ///| JSON-RPC Message - either request or response
-pub enum Message {
+pub(all) enum Message {
   Request(Request)
   Response(Response)
 } derive(Show)
