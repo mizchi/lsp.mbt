@@ -1,5 +1,5 @@
-///| FileSystem tests
-
+///|
+/// FileSystem tests
 test "MemoryFs basic file operations" {
   let fs = MemoryFs::new()
 
@@ -19,6 +19,7 @@ test "MemoryFs basic file operations" {
   assert_eq(fs.read_file("/test.txt"), FsResult::Ok("world"))
 }
 
+///|
 test "MemoryFs directory operations" {
   let fs = MemoryFs::new()
 
@@ -37,6 +38,7 @@ test "MemoryFs directory operations" {
   assert_eq(fs.read_file("/src/main.mbt"), FsResult::Ok("fn main {}"))
 }
 
+///|
 test "MemoryFs read_dir" {
   let fs = MemoryFs::new()
 
@@ -57,6 +59,7 @@ test "MemoryFs read_dir" {
   }
 }
 
+///|
 test "MemoryFs remove operations" {
   let fs = MemoryFs::new()
 
@@ -75,11 +78,12 @@ test "MemoryFs remove operations" {
   fs.create_dir("/nonempty") |> ignore
   fs.write_file("/nonempty/file.txt", "x") |> ignore
   match fs.remove_dir("/nonempty") {
-    FsResult::IoError(_) => ()  // Expected
+    FsResult::IoError(_) => () // Expected
     _ => fail("expected IoError for non-empty directory")
   }
 }
 
+///|
 test "MemoryFs error cases" {
   let fs = MemoryFs::new()
 
@@ -103,6 +107,7 @@ test "MemoryFs error cases" {
   }
 }
 
+///|
 test "MemoryFs auto-create parent directories" {
   let fs = MemoryFs::new()
 
@@ -114,6 +119,7 @@ test "MemoryFs auto-create parent directories" {
   assert_eq(fs.read_file("/a/b/c/file.txt"), FsResult::Ok("deep"))
 }
 
+///|
 test "MemoryFs path parsing" {
   let fs = MemoryFs::new()
 
@@ -127,17 +133,13 @@ test "MemoryFs path parsing" {
   assert_true(fs.exists("/dir/nested.txt"))
 }
 
+///|
 test "DocumentStore basic operations" {
   let fs = MemoryFs::new()
   let store : DocumentStore[MemoryFs] = DocumentStore::new(fs)
 
   // Open document with content
-  let doc = store.open(
-    "file:///test.mbt",
-    "moonbit",
-    1,
-    Some("fn main {}"),
-  )
+  let doc = store.open("file:///test.mbt", "moonbit", 1, Some("fn main {}"))
   assert_true(doc is Some(_))
 
   // Get document
@@ -150,7 +152,9 @@ test "DocumentStore basic operations" {
   }
 
   // Update document
-  assert_true(store.update("file:///test.mbt", 2, "fn main { println(\"hello\") }"))
+  assert_true(
+    store.update("file:///test.mbt", 2, "fn main { println(\"hello\") }"),
+  )
   match store.get("file:///test.mbt") {
     Some(d) => {
       assert_eq(d.get_version(), 2)
@@ -164,6 +168,7 @@ test "DocumentStore basic operations" {
   assert_true(store.get("file:///test.mbt") is None)
 }
 
+///|
 test "DocumentStore with filesystem" {
   let fs = MemoryFs::new()
   fs.write_file("/project/main.mbt", "fn main {}") |> ignore
@@ -183,9 +188,13 @@ test "DocumentStore with filesystem" {
   assert_true(store.save("file:///project/main.mbt").is_ok())
 
   // Verify filesystem was updated
-  assert_eq(fs.read_file("/project/main.mbt"), FsResult::Ok("fn main { let x = 1 }"))
+  assert_eq(
+    fs.read_file("/project/main.mbt"),
+    FsResult::Ok("fn main { let x = 1 }"),
+  )
 }
 
+///|
 test "DocumentStore list_open" {
   let fs = MemoryFs::new()
   let store : DocumentStore[MemoryFs] = DocumentStore::new(fs)
@@ -198,6 +207,7 @@ test "DocumentStore list_open" {
   assert_eq(open.length(), 3)
 }
 
+///|
 test "path_to_uri conversion" {
   assert_eq(path_to_uri("/project/main.mbt"), "file:///project/main.mbt")
   assert_eq(path_to_uri("file:///already/uri"), "file:///already/uri")

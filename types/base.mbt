@@ -1,6 +1,7 @@
 ///| LSP Base Types
 
-///| Document URI (typically file:// URL)
+///|
+/// Document URI (typically file:// URL)
 pub struct DocumentUri(String) derive(Eq)
 
 ///|
@@ -21,7 +22,8 @@ pub impl @json.FromJson for DocumentUri with from_json(json) {
   }
 }
 
-///| Position in a text document (0-based line and character)
+///|
+/// Position in a text document (0-based line and character)
 pub struct Position {
   line : UInt
   character : UInt
@@ -36,7 +38,10 @@ pub fn Position::new(line : UInt, character : UInt) -> Position {
 pub impl @json.ToJson for Position with to_json(self) {
   let obj : Map[String, @json.JsonValue] = {}
   obj.set("line", @json.JsonValue::int(self.line.reinterpret_as_int()))
-  obj.set("character", @json.JsonValue::int(self.character.reinterpret_as_int()))
+  obj.set(
+    "character",
+    @json.JsonValue::int(self.character.reinterpret_as_int()),
+  )
   @json.JsonValue::Object(obj)
 }
 
@@ -57,7 +62,8 @@ pub impl @json.FromJson for Position with from_json(json) {
   Position::{ line, character }
 }
 
-///| A range in a text document
+///|
+/// A range in a text document
 pub struct Range {
   start : Position
   end : Position
@@ -93,7 +99,8 @@ pub impl @json.FromJson for Range with from_json(json) {
   Range::{ start, end }
 }
 
-///| Represents a location inside a resource
+///|
+/// Represents a location inside a resource
 pub struct Location {
   uri : DocumentUri
   range : Range
@@ -129,7 +136,8 @@ pub impl @json.FromJson for Location with from_json(json) {
   Location::{ uri, range }
 }
 
-///| Text document identifier
+///|
+/// Text document identifier
 pub struct TextDocumentIdentifier {
   uri : DocumentUri
 } derive(Eq, Show)
@@ -151,10 +159,11 @@ pub impl @json.FromJson for TextDocumentIdentifier with from_json(json) {
     Some(v) => DocumentUri::from_json(v)
     None => raise @json.JsonError("missing uri")
   }
-  TextDocumentIdentifier::{ uri }
+  TextDocumentIdentifier::{ uri, }
 }
 
-///| Text document item (with content)
+///|
+/// Text document item (with content)
 pub struct TextDocumentItem {
   uri : DocumentUri
   language_id : String
@@ -197,7 +206,8 @@ pub impl @json.FromJson for TextDocumentItem with from_json(json) {
   TextDocumentItem::{ uri, language_id, version, text }
 }
 
-///| Versioned text document identifier
+///|
+/// Versioned text document identifier
 pub struct VersionedTextDocumentIdentifier {
   uri : DocumentUri
   version : Int
@@ -215,7 +225,10 @@ pub impl @json.ToJson for VersionedTextDocumentIdentifier with to_json(self) {
 pub impl @json.FromJson for VersionedTextDocumentIdentifier with from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
-    _ => raise @json.JsonError("expected object for VersionedTextDocumentIdentifier")
+    _ =>
+      raise @json.JsonError(
+        "expected object for VersionedTextDocumentIdentifier",
+      )
   }
   let uri = match obj.get("uri") {
     Some(v) => DocumentUri::from_json(v)
@@ -228,7 +241,8 @@ pub impl @json.FromJson for VersionedTextDocumentIdentifier with from_json(json)
   VersionedTextDocumentIdentifier::{ uri, version }
 }
 
-///| Text document position params
+///|
+/// Text document position params
 pub struct TextDocumentPositionParams {
   text_document : TextDocumentIdentifier
   position : Position

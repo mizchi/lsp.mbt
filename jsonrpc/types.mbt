@@ -1,6 +1,7 @@
 ///| JSON-RPC 2.0 protocol types
 
-///| Request ID - can be string or number
+///|
+/// Request ID - can be string or number
 pub(all) enum RequestId {
   Number(Int)
   String(String)
@@ -23,7 +24,8 @@ pub impl @json.FromJson for RequestId with from_json(json) {
   }
 }
 
-///| JSON-RPC Request
+///|
+/// JSON-RPC Request
 pub struct Request {
   id : RequestId?
   method_name : String
@@ -33,8 +35,8 @@ pub struct Request {
 ///|
 pub fn Request::new(
   method_name : String,
-  params~ : @json.JsonValue? = None,
-  id~ : RequestId? = None
+  params? : @json.JsonValue? = None,
+  id? : RequestId? = None,
 ) -> Request {
   Request::{ id, method_name, params }
 }
@@ -78,30 +80,36 @@ pub impl @json.FromJson for Request with from_json(json) {
   Request::{ id, method_name, params }
 }
 
-///| JSON-RPC Error
+///|
+/// JSON-RPC Error
 pub struct ResponseError {
   code : Int
   message : String
   data : @json.JsonValue?
 } derive(Show)
 
-///| Standard error codes
+///|
+/// Standard error codes
 pub fn error_parse_error() -> Int {
   -32700
 }
 
+///|
 pub fn error_invalid_request() -> Int {
   -32600
 }
 
+///|
 pub fn error_method_not_found() -> Int {
   -32601
 }
 
+///|
 pub fn error_invalid_params() -> Int {
   -32602
 }
 
+///|
 pub fn error_internal_error() -> Int {
   -32603
 }
@@ -110,7 +118,7 @@ pub fn error_internal_error() -> Int {
 pub fn ResponseError::new(
   code : Int,
   message : String,
-  data~ : @json.JsonValue? = None
+  data? : @json.JsonValue? = None,
 ) -> ResponseError {
   ResponseError::{ code, message, data }
 }
@@ -145,7 +153,8 @@ pub impl @json.FromJson for ResponseError with from_json(json) {
   ResponseError::{ code, message, data }
 }
 
-///| JSON-RPC Response
+///|
+/// JSON-RPC Response
 pub struct Response {
   id : RequestId?
   result : @json.JsonValue?
@@ -204,7 +213,8 @@ pub impl @json.FromJson for Response with from_json(json) {
   Response::{ id, result, error }
 }
 
-///| JSON-RPC Message - either request or response
+///|
+/// JSON-RPC Message - either request or response
 pub(all) enum Message {
   Request(Request)
   Response(Response)

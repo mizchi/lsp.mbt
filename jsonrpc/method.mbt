@@ -1,6 +1,7 @@
 ///| Type-safe method definitions
 
-///| Method definition with typed params and result
+///|
+/// Method definition with typed params and result
 pub struct MethodDef[Params, Result] {
   name : String
   phantom_params : Params?
@@ -8,11 +9,14 @@ pub struct MethodDef[Params, Result] {
 }
 
 ///|
-pub fn[Params, Result] MethodDef::new(name : String) -> MethodDef[Params, Result] {
+pub fn[Params, Result] MethodDef::new(
+  name : String,
+) -> MethodDef[Params, Result] {
   MethodDef::{ name, phantom_params: None, phantom_result: None }
 }
 
-///| Common LSP method definitions
+///|
+/// Common LSP method definitions
 pub fn method_initialize() -> MethodDef[@json.JsonValue, @json.JsonValue] {
   MethodDef::new("initialize")
 }
@@ -38,43 +42,56 @@ pub fn method_text_document_did_close() -> MethodDef[@json.JsonValue, Unit] {
 }
 
 ///|
-pub fn method_text_document_hover() -> MethodDef[@json.JsonValue, @json.JsonValue?] {
+pub fn method_text_document_hover() -> MethodDef[
+  @json.JsonValue,
+  @json.JsonValue?,
+] {
   MethodDef::new("textDocument/hover")
 }
 
 ///|
-pub fn method_text_document_completion() -> MethodDef[@json.JsonValue, @json.JsonValue] {
+pub fn method_text_document_completion() -> MethodDef[
+  @json.JsonValue,
+  @json.JsonValue,
+] {
   MethodDef::new("textDocument/completion")
 }
 
 ///|
-pub fn method_text_document_definition() -> MethodDef[@json.JsonValue, @json.JsonValue?] {
+pub fn method_text_document_definition() -> MethodDef[
+  @json.JsonValue,
+  @json.JsonValue?,
+] {
   MethodDef::new("textDocument/definition")
 }
 
 ///|
-pub fn method_text_document_references() -> MethodDef[@json.JsonValue, @json.JsonValue] {
+pub fn method_text_document_references() -> MethodDef[
+  @json.JsonValue,
+  @json.JsonValue,
+] {
   MethodDef::new("textDocument/references")
 }
 
 ///|
-pub fn method_text_document_formatting() -> MethodDef[@json.JsonValue, @json.JsonValue] {
+pub fn method_text_document_formatting() -> MethodDef[
+  @json.JsonValue,
+  @json.JsonValue,
+] {
   MethodDef::new("textDocument/formatting")
 }
 
-///| Helper to create a typed request handler
+///|
+/// Helper to create a typed request handler
 pub fn[Params : @json.FromJson, Result : @json.ToJson] make_handler(
-  f : (Params) -> Result raise RpcError
+  f : (Params) -> Result raise RpcError,
 ) -> Handler {
   Handler(fn(req : Request) -> Response raise RpcError {
     let params : Params = match req.params {
-      Some(p) => {
-        try {
-          Params::from_json(p)
-        } catch {
+      Some(p) =>
+        Params::from_json(p) catch {
           _ => raise InvalidParams("failed to parse params")
         }
-      }
       None => raise InvalidParams("missing params")
     }
     let result = f(params)
@@ -82,20 +99,20 @@ pub fn[Params : @json.FromJson, Result : @json.ToJson] make_handler(
   })
 }
 
-///| Helper to create a typed notification handler
+///|
+/// Helper to create a typed notification handler
 pub fn[Params : @json.FromJson] make_notification_handler(
-  f : (Params) -> Unit
+  f : (Params) -> Unit,
 ) -> (Request) -> Unit {
   fn(req : Request) {
     match req.params {
-      Some(p) => {
+      Some(p) =>
         try {
           let params : Params = Params::from_json(p)
           f(params)
         } catch {
           _ => () // Ignore parse errors for notifications
         }
-      }
       None => ()
     }
   }

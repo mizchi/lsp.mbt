@@ -1,21 +1,25 @@
 ///| Platform-independent IO interface
+
 ///| For actual IO, use platform-specific server implementations
 
-///| Read result from stdin
+///|
+/// Read result from stdin
 pub(all) enum ReadResult {
   Data(String)
   Eof
   Error(String)
 } derive(Eq, Show)
 
-///| IO handler trait - implement this for platform-specific IO
+///|
+/// IO handler trait - implement this for platform-specific IO
 pub(open) trait IoHandler {
   read(Self) -> ReadResult
   write(Self, String) -> Unit
   write_error(Self, String) -> Unit
 }
 
-///| Stub IO handler for WASM/testing
+///|
+/// Stub IO handler for WASM/testing
 pub struct StubIoHandler {
   input_buffer : Array[String]
   output_buffer : Array[String]
@@ -24,24 +28,23 @@ pub struct StubIoHandler {
 
 ///|
 pub fn StubIoHandler::new() -> StubIoHandler {
-  StubIoHandler::{
-    input_buffer: [],
-    output_buffer: [],
-    error_buffer: [],
-  }
+  StubIoHandler::{ input_buffer: [], output_buffer: [], error_buffer: [] }
 }
 
-///| Add input data for testing
+///|
+/// Add input data for testing
 pub fn StubIoHandler::push_input(self : StubIoHandler, data : String) -> Unit {
   self.input_buffer.push(data)
 }
 
-///| Get all output for testing
+///|
+/// Get all output for testing
 pub fn StubIoHandler::get_output(self : StubIoHandler) -> Array[String] {
   self.output_buffer
 }
 
-///| Get all error output for testing
+///|
+/// Get all error output for testing
 pub fn StubIoHandler::get_errors(self : StubIoHandler) -> Array[String] {
   self.error_buffer
 }

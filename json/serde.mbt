@@ -1,21 +1,25 @@
 ///| JSON serialization/deserialization traits
 
-///| Error type for JSON operations
+///|
+/// Error type for JSON operations
 pub(all) suberror JsonError {
   JsonError(String)
 }
 
-///| Create a JSON error
+///|
+/// Create a JSON error
 pub fn json_error(msg : String) -> JsonError {
   JsonError(msg)
 }
 
-///| Trait for types that can be converted to JSON
+///|
+/// Trait for types that can be converted to JSON
 pub(open) trait ToJson {
   to_json(Self) -> JsonValue
 }
 
-///| Trait for types that can be parsed from JSON
+///|
+/// Trait for types that can be parsed from JSON
 pub(open) trait FromJson {
   from_json(JsonValue) -> Self raise JsonError
 }

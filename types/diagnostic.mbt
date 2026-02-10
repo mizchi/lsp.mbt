@@ -1,11 +1,12 @@
 ///| LSP Diagnostic Types
 
-///| Diagnostic severity
+///|
+/// Diagnostic severity
 pub enum DiagnosticSeverity {
-  Error       // 1
-  Warning     // 2
+  Error // 1
+  Warning // 2
   Information // 3
-  Hint        // 4
+  Hint // 4
 } derive(Eq, Show)
 
 ///|
@@ -34,10 +35,11 @@ pub impl @json.FromJson for DiagnosticSeverity with from_json(json) {
   }
 }
 
-///| Diagnostic tag
+///|
+/// Diagnostic tag
 pub enum DiagnosticTag {
   Unnecessary // 1
-  Deprecated  // 2
+  Deprecated // 2
 } derive(Eq, Show)
 
 ///|
@@ -62,7 +64,8 @@ pub impl @json.FromJson for DiagnosticTag with from_json(json) {
   }
 }
 
-///| Related diagnostic information
+///|
+/// Related diagnostic information
 pub struct DiagnosticRelatedInformation {
   location : Location
   message : String
@@ -80,7 +83,8 @@ pub impl @json.ToJson for DiagnosticRelatedInformation with to_json(self) {
 pub impl @json.FromJson for DiagnosticRelatedInformation with from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
-    _ => raise @json.JsonError("expected object for DiagnosticRelatedInformation")
+    _ =>
+      raise @json.JsonError("expected object for DiagnosticRelatedInformation")
   }
   let location = match obj.get("location") {
     Some(v) => Location::from_json(v)
@@ -93,7 +97,8 @@ pub impl @json.FromJson for DiagnosticRelatedInformation with from_json(json) {
   DiagnosticRelatedInformation::{ location, message }
 }
 
-///| Diagnostic code (can be string or number)
+///|
+/// Diagnostic code (can be string or number)
 pub enum DiagnosticCode {
   Number(Int)
   String(String)
@@ -116,7 +121,8 @@ pub impl @json.FromJson for DiagnosticCode with from_json(json) {
   }
 }
 
-///| A diagnostic message
+///|
+/// A diagnostic message
 pub struct Diagnostic {
   range : Range
   severity : DiagnosticSeverity?
@@ -131,13 +137,21 @@ pub struct Diagnostic {
 pub fn Diagnostic::new(
   range : Range,
   message : String,
-  severity~ : DiagnosticSeverity? = None,
-  code~ : DiagnosticCode? = None,
-  source~ : String? = None,
-  tags~ : Array[DiagnosticTag]? = None,
-  related_information~ : Array[DiagnosticRelatedInformation]? = None
+  severity? : DiagnosticSeverity? = None,
+  code? : DiagnosticCode? = None,
+  source? : String? = None,
+  tags? : Array[DiagnosticTag]? = None,
+  related_information? : Array[DiagnosticRelatedInformation]? = None,
 ) -> Diagnostic {
-  Diagnostic::{ range, severity, code, source, message, tags, related_information }
+  Diagnostic::{
+    range,
+    severity,
+    code,
+    source,
+    message,
+    tags,
+    related_information,
+  }
 }
 
 ///|
@@ -216,9 +230,8 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     }
     _ => None
   }
-  let related_information : Array[DiagnosticRelatedInformation]? = match obj.get(
-    "relatedInformation"
-  ) {
+  let related_information : Array[DiagnosticRelatedInformation]? = match
+    obj.get("relatedInformation") {
     Some(@json.JsonValue::Array(arr)) => {
       let result : Array[DiagnosticRelatedInformation] = []
       for item in arr {
@@ -228,10 +241,19 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     }
     _ => None
   }
-  Diagnostic::{ range, severity, code, source, message, tags, related_information }
+  Diagnostic::{
+    range,
+    severity,
+    code,
+    source,
+    message,
+    tags,
+    related_information,
+  }
 }
 
-///| Publish diagnostics params
+///|
+/// Publish diagnostics params
 pub struct PublishDiagnosticsParams {
   uri : DocumentUri
   version : Int?

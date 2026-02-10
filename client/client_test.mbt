@@ -1,5 +1,5 @@
-///| Client module tests
-
+///|
+/// Client module tests
 test "Client creation" {
   let config = ClientConfig::{ root_uri: "file:///test", process_id: 1234 }
   let client = Client::new(config)
@@ -8,6 +8,7 @@ test "Client creation" {
   assert_false(client.is_initialized())
 }
 
+///|
 test "Client initialize request" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -19,6 +20,7 @@ test "Client initialize request" {
   assert_true(encoded.contains("rootUri"))
 }
 
+///|
 test "Client initialized notification" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -27,20 +29,19 @@ test "Client initialized notification" {
   assert_false(encoded.contains("\"id\""))
 }
 
+///|
 test "Client didOpen notification" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
   let encoded = client.create_did_open_notification(
-    "file:///project/test.mbt",
-    "moonbit",
-    1,
-    "fn main { }",
+    "file:///project/test.mbt", "moonbit", 1, "fn main { }",
   )
   assert_true(encoded.contains("textDocument/didOpen"))
   assert_true(encoded.contains("test.mbt"))
   assert_true(encoded.contains("moonbit"))
 }
 
+///|
 test "Client shutdown request" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -50,6 +51,7 @@ test "Client shutdown request" {
   assert_true(encoded.contains("\"id\":1"))
 }
 
+///|
 test "Client notification handler" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -57,12 +59,11 @@ test "Client notification handler" {
 
   client.on_notification("textDocument/publishDiagnostics", fn(params) {
     match params {
-      Some(@json.JsonValue::Object(obj)) => {
+      Some(@json.JsonValue::Object(obj)) =>
         match obj.get("uri") {
           Some(@json.JsonValue::String(uri)) => received_uri.val = uri
           _ => ()
         }
-      }
       _ => ()
     }
   })
@@ -75,15 +76,14 @@ test "Client notification handler" {
   assert_eq(received_uri.val, "file:///test.mbt")
 }
 
+///|
 test "Client response handler" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
   let response_received : Ref[Bool] = { val: false }
 
   // Register pending request
-  client.register_pending(1, fn(_resp) {
-    response_received.val = true
-  })
+  client.register_pending(1, fn(_resp) { response_received.val = true })
 
   // Simulate receiving a response
   let message = "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"capabilities\":{}}}"
@@ -93,6 +93,7 @@ test "Client response handler" {
   assert_true(response_received.val)
 }
 
+///|
 test "Client request ID increment" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -104,6 +105,7 @@ test "Client request ID increment" {
   assert_eq(id2, 2)
 }
 
+///|
 test "StubTransport basic operations" {
   let transport = StubTransport::new()
 
@@ -124,6 +126,7 @@ test "StubTransport basic operations" {
   assert_eq(transport.get_output().length(), 2)
 }
 
+///|
 test "Client with StubTransport" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -131,9 +134,7 @@ test "Client with StubTransport" {
   let init_response_received : Ref[Bool] = { val: false }
 
   // Send initialize request
-  client.initialize(transport, fn(_resp) {
-    init_response_received.val = true
-  })
+  client.initialize(transport, fn(_resp) { init_response_received.val = true })
 
   // Check that request was sent
   let output = transport.get_output()
@@ -150,17 +151,14 @@ test "Client with StubTransport" {
   assert_true(init_response_received.val)
 }
 
+///|
 test "Client open document with transport" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
   let transport = StubTransport::new()
 
   client.open_document(
-    transport,
-    "file:///project/test.mbt",
-    "moonbit",
-    1,
-    "fn main { }",
+    transport, "file:///project/test.mbt", "moonbit", 1, "fn main { }",
   )
 
   let output = transport.get_output()
@@ -169,6 +167,7 @@ test "Client open document with transport" {
   assert_true(output[0].contains("test.mbt"))
 }
 
+///|
 test "Client close document" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -181,19 +180,20 @@ test "Client close document" {
   assert_true(output[0].contains("textDocument/didClose"))
 }
 
+///|
 test "Client shutdown and exit" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
   let transport = StubTransport::new()
   let shutdown_received : Ref[Bool] = { val: false }
 
-  client.shutdown(transport, fn(_resp) {
-    shutdown_received.val = true
-  })
+  client.shutdown(transport, fn(_resp) { shutdown_received.val = true })
 
   // Simulate shutdown response
   let response = "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":null}"
-  transport.push_input("Content-Length: \{response.length()}\r\n\r\n\{response}")
+  transport.push_input(
+    "Content-Length: \{response.length()}\r\n\r\n\{response}",
+  )
   client.tick(transport) |> ignore
 
   assert_true(shutdown_received.val)
@@ -205,6 +205,7 @@ test "Client shutdown and exit" {
   assert_true(output[0].contains("exit"))
 }
 
+///|
 test "Client multiple notifications" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -212,12 +213,11 @@ test "Client multiple notifications" {
 
   client.on_notification("window/logMessage", fn(params) {
     match params {
-      Some(@json.JsonValue::Object(obj)) => {
+      Some(@json.JsonValue::Object(obj)) =>
         match obj.get("message") {
           Some(@json.JsonValue::String(msg)) => notifications.push(msg)
           _ => ()
         }
-      }
       _ => ()
     }
   })
@@ -233,6 +233,7 @@ test "Client multiple notifications" {
   assert_eq(notifications[1], "log2")
 }
 
+///|
 test "Client initialized state" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -245,6 +246,7 @@ test "Client initialized state" {
   assert_true(client.is_initialized())
 }
 
+///|
 test "Client tick returns false on eof" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)
@@ -255,6 +257,7 @@ test "Client tick returns false on eof" {
   assert_false(result)
 }
 
+///|
 test "Client tick returns true on data" {
   let config = ClientConfig::{ root_uri: "file:///project", process_id: 42 }
   let client = Client::new(config)

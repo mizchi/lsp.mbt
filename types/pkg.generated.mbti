@@ -2349,7 +2349,7 @@ pub impl @json.ToJson for ReferenceRegistrationOptions
 
 pub struct Registration {
   id : String
-  method : String
+  method_ : String
   register_options : @json.JsonValue?
 }
 pub impl @json.FromJson for Registration
@@ -3249,7 +3249,7 @@ pub impl @json.ToJson for UniquenessLevel
 
 pub struct Unregistration {
   id : String
-  method : String
+  method_ : String
 }
 pub impl @json.FromJson for Unregistration
 pub impl @json.ToJson for Unregistration

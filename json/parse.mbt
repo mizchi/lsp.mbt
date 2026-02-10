@@ -1,6 +1,7 @@
 ///| JSON parser implementation
 
-///| Parser state
+///|
+/// Parser state
 priv struct Parser {
   input : String
   mut pos : Int
@@ -33,12 +34,10 @@ fn Parser::advance(self : Parser) -> Char? {
 
 ///|
 fn Parser::skip_whitespace(self : Parser) -> Unit {
-  while {
-    match self.peek() {
-      Some(' ') | Some('\t') | Some('\n') | Some('\r') => true
-      _ => false
-    }
-  } {
+  while (match self.peek() {
+          Some(' ') | Some('\t') | Some('\n') | Some('\r') => true
+          _ => false
+        }) {
     let _ = self.advance()
   }
 }
@@ -51,7 +50,8 @@ fn Parser::expect(self : Parser, c : Char) -> Unit raise JsonError {
   }
 }
 
-///| Parse a JSON value from string
+///|
+/// Parse a JSON value from string
 pub fn parse(input : String) -> JsonValue raise JsonError {
   let parser = Parser::new(input)
   let value = parser.parse_value()
@@ -114,13 +114,11 @@ fn Parser::parse_false(self : Parser) -> JsonValue raise JsonError {
 fn Parser::parse_string(self : Parser) -> JsonValue raise JsonError {
   self.expect('"')
   let buf = StringBuilder::new()
-  while {
-    match self.peek() {
-      Some('"') => false
-      Some(_) => true
-      None => raise JsonError("unterminated string")
-    }
-  } {
+  while (match self.peek() {
+          Some('"') => false
+          Some(_) => true
+          None => raise JsonError("unterminated string")
+        }) {
     match self.advance() {
       Some('\\') =>
         match self.advance() {
@@ -183,12 +181,10 @@ fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
     }
     Some(c) if c >= '1' && c <= '9' => {
       let _ = self.advance()
-      while {
-        match self.peek() {
-          Some(c) => c >= '0' && c <= '9'
-          None => false
-        }
-      } {
+      while (match self.peek() {
+              Some(c) => c >= '0' && c <= '9'
+              None => false
+            }) {
         let _ = self.advance()
       }
     }
@@ -198,12 +194,10 @@ fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
   if self.peek() == Some('.') {
     let _ = self.advance()
     let mut has_digit = false
-    while {
-      match self.peek() {
-        Some(c) => c >= '0' && c <= '9'
-        None => false
-      }
-    } {
+    while (match self.peek() {
+            Some(c) => c >= '0' && c <= '9'
+            None => false
+          }) {
       let _ = self.advance()
       has_digit = true
     }
@@ -222,12 +216,10 @@ fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
         _ => ()
       }
       let mut has_digit = false
-      while {
-        match self.peek() {
-          Some(c) => c >= '0' && c <= '9'
-          None => false
-        }
-      } {
+      while (match self.peek() {
+              Some(c) => c >= '0' && c <= '9'
+              None => false
+            }) {
         let _ = self.advance()
         has_digit = true
       }
@@ -237,9 +229,7 @@ fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
     }
     _ => ()
   }
-  let text = try {
-    self.input[start:self.pos].to_string()
-  } catch {
+  let text = self.input[start:self.pos].to_string() catch {
     _ => raise JsonError("invalid number substring")
   }
   try {
@@ -260,10 +250,10 @@ fn Parser::parse_array(self : Parser) -> JsonValue raise JsonError {
     return JsonValue::Array(arr)
   }
   arr.push(self.parse_value())
-  while {
-    self.skip_whitespace()
-    self.peek() == Some(',')
-  } {
+  while ({
+          self.skip_whitespace()
+          self.peek() == Some(',')
+        }) {
     let _ = self.advance()
     arr.push(self.parse_value())
   }
@@ -284,10 +274,10 @@ fn Parser::parse_object(self : Parser) -> JsonValue raise JsonError {
   // First key-value
   let (key, value) = self.parse_key_value()
   obj.set(key, value)
-  while {
-    self.skip_whitespace()
-    self.peek() == Some(',')
-  } {
+  while ({
+          self.skip_whitespace()
+          self.peek() == Some(',')
+        }) {
     let _ = self.advance()
     let (key, value) = self.parse_key_value()
     obj.set(key, value)
@@ -298,7 +288,9 @@ fn Parser::parse_object(self : Parser) -> JsonValue raise JsonError {
 }
 
 ///|
-fn Parser::parse_key_value(self : Parser) -> (String, JsonValue) raise JsonError {
+fn Parser::parse_key_value(
+  self : Parser,
+) -> (String, JsonValue) raise JsonError {
   self.skip_whitespace()
   let key = match self.parse_string() {
     JsonValue::String(s) => s

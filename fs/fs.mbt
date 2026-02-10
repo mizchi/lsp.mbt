@@ -1,19 +1,23 @@
 ///| Platform-independent filesystem interface
+
 ///| Supports real filesystem, in-memory filesystem, and virtual filesystem
 
-///| File entry type
+///|
+/// File entry type
 pub(all) enum EntryKind {
   File
   Directory
 } derive(Eq, Show)
 
-///| Directory entry
+///|
+/// Directory entry
 pub(all) struct DirEntry {
   name : String
   kind : EntryKind
 } derive(Eq, Show)
 
-///| Filesystem operation result
+///|
+/// Filesystem operation result
 pub(all) enum FsResult[T] {
   Ok(T)
   NotFound(String)
@@ -34,12 +38,14 @@ pub fn[T] FsResult::unwrap(self : FsResult[T]) -> T {
   match self {
     Ok(v) => v
     NotFound(msg) => abort("FsResult::unwrap on NotFound: \{msg}")
-    PermissionDenied(msg) => abort("FsResult::unwrap on PermissionDenied: \{msg}")
+    PermissionDenied(msg) =>
+      abort("FsResult::unwrap on PermissionDenied: \{msg}")
     IoError(msg) => abort("FsResult::unwrap on IoError: \{msg}")
   }
 }
 
-///| FileSystem trait - implement for platform-specific or virtual filesystems
+///|
+/// FileSystem trait - implement for platform-specific or virtual filesystems
 pub(open) trait FileSystem {
   /// Read file content as string
   read_file(Self, String) -> FsResult[String]
@@ -69,13 +75,15 @@ pub(open) trait FileSystem {
   remove_dir(Self, String) -> FsResult[Unit]
 }
 
-///| In-memory filesystem node
+///|
+/// In-memory filesystem node
 enum FsNode {
-  FileNode(String)  // content
-  DirNode(Map[String, FsNode])  // children
+  FileNode(String) // content
+  DirNode(Map[String, FsNode]) // children
 }
 
-///| In-memory filesystem for testing and WASM
+///|
+/// In-memory filesystem for testing and WASM
 pub struct MemoryFs {
   priv root : Map[String, FsNode]
 }
@@ -85,7 +93,8 @@ pub fn MemoryFs::new() -> MemoryFs {
   MemoryFs::{ root: Map::new() }
 }
 
-///| Parse path into components
+///|
+/// Parse path into components
 fn parse_path(path : String) -> Array[String] {
   let parts : Array[String] = []
   let current = StringBuilder::new()
@@ -107,7 +116,8 @@ fn parse_path(path : String) -> Array[String] {
   parts
 }
 
-///| Get parent path
+///|
+/// Get parent path
 fn parent_path(parts : Array[String]) -> Array[String] {
   if parts.length() <= 1 {
     []
@@ -120,7 +130,8 @@ fn parent_path(parts : Array[String]) -> Array[String] {
   }
 }
 
-///| Navigate to a node
+///|
+/// Navigate to a node
 fn MemoryFs::get_node(self : MemoryFs, parts : Array[String]) -> FsNode? {
   if parts.length() == 0 {
     return Some(FsNode::DirNode(self.root))
@@ -139,7 +150,7 @@ fn MemoryFs::get_node(self : MemoryFs, parts : Array[String]) -> FsNode? {
         if i == parts.length() - 1 {
           return Some(FsNode::FileNode(content))
         }
-        return None  // Can't traverse into a file
+        return None // Can't traverse into a file
       }
       None => return None
     }
@@ -147,10 +158,11 @@ fn MemoryFs::get_node(self : MemoryFs, parts : Array[String]) -> FsNode? {
   None
 }
 
-///| Get parent directory node
+///|
+/// Get parent directory node
 fn MemoryFs::get_parent_dir(
   self : MemoryFs,
-  parts : Array[String]
+  parts : Array[String],
 ) -> Map[String, FsNode]? {
   if parts.length() == 0 {
     return Some(self.root)
@@ -170,7 +182,8 @@ pub impl FileSystem for MemoryFs with read_file(self, path) {
   let parts = parse_path(path)
   match self.get_node(parts) {
     Some(FsNode::FileNode(content)) => FsResult::Ok(content)
-    Some(FsNode::DirNode(_)) => FsResult::IoError("path is a directory: \{path}")
+    Some(FsNode::DirNode(_)) =>
+      FsResult::IoError("path is a directory: \{path}")
     None => FsResult::NotFound(path)
   }
 }
@@ -190,8 +203,7 @@ pub impl FileSystem for MemoryFs with write_file(self, path, content) {
     let part = parent_parts[i]
     match current.get(part) {
       Some(FsNode::DirNode(children)) => current = children
-      Some(FsNode::FileNode(_)) =>
-        return FsResult::IoError("parent is a file")
+      Some(FsNode::FileNode(_)) => return FsResult::IoError("parent is a file")
       None => {
         let new_dir : Map[String, FsNode] = Map::new()
         current.set(part, FsNode::DirNode(new_dir))
@@ -257,7 +269,7 @@ pub impl FileSystem for MemoryFs with read_dir(self, path) {
 pub impl FileSystem for MemoryFs with create_dir(self, path) {
   let parts = parse_path(path)
   if parts.length() == 0 {
-    return FsResult::Ok(())  // Root always exists
+    return FsResult::Ok(()) // Root always exists
   }
 
   let mut current = self.root
@@ -285,7 +297,7 @@ pub impl FileSystem for MemoryFs with remove_file(self, path) {
   let filename = parts[parts.length() - 1]
 
   match self.get_parent_dir(parts) {
-    Some(parent) => {
+    Some(parent) =>
       match parent.get(filename) {
         Some(FsNode::FileNode(_)) => {
           parent.remove(filename)
@@ -294,7 +306,6 @@ pub impl FileSystem for MemoryFs with remove_file(self, path) {
         Some(FsNode::DirNode(_)) => FsResult::IoError("path is a directory")
         None => FsResult::NotFound(path)
       }
-    }
     None => FsResult::NotFound(path)
   }
 }
@@ -308,20 +319,18 @@ pub impl FileSystem for MemoryFs with remove_dir(self, path) {
   let dirname = parts[parts.length() - 1]
 
   match self.get_parent_dir(parts) {
-    Some(parent) => {
+    Some(parent) =>
       match parent.get(dirname) {
-        Some(FsNode::DirNode(children)) => {
+        Some(FsNode::DirNode(children)) =>
           if children.length() > 0 {
             FsResult::IoError("directory not empty")
           } else {
             parent.remove(dirname)
             FsResult::Ok(())
           }
-        }
         Some(FsNode::FileNode(_)) => FsResult::IoError("path is a file")
         None => FsResult::NotFound(path)
       }
-    }
     None => FsResult::NotFound(path)
   }
 }
