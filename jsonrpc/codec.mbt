@@ -65,7 +65,7 @@ pub fn Decoder::decode(self : Decoder) -> DecodeResult? raise @json.JsonError {
   guard header_end >= 0 else { return None }
 
   // Parse Content-Length from header
-  let header = self.buffer[0:header_end].to_string() catch { _ => return None }
+  let header = self.buffer[0:header_end].to_owned()
   let content_length = parse_content_length(header)
   guard content_length > 0 else { return None }
 
@@ -75,16 +75,12 @@ pub fn Decoder::decode(self : Decoder) -> DecodeResult? raise @json.JsonError {
   guard content_end <= self.buffer.length() else { return None }
 
   // Extract and parse content
-  let content = self.buffer[content_start:content_end].to_string() catch {
-    _ => return None
-  }
+  let content = self.buffer[content_start:content_end].to_owned()
   let json = @json.parse(content)
   let message = Message::from_json(json)
 
   // Remove consumed data from buffer
-  self.buffer = self.buffer[content_end:self.buffer.length()].to_string() catch {
-    _ => ""
-  }
+  self.buffer = self.buffer[content_end:self.buffer.length()].to_owned()
 
   Some(DecodeResult::{ message, consumed: content_end })
 }

@@ -8,7 +8,24 @@ pub(all) enum ReadResult {
   Data(String)
   Eof
   Error(String)
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for ReadResult with fn output(self, logger) {
+  match self {
+    Data(s) => {
+      logger.write_string("Data(")
+      write_show_value(s, logger)
+      logger.write_string(")")
+    }
+    Eof => logger.write_string("Eof")
+    Error(s) => {
+      logger.write_string("Error(")
+      write_show_value(s, logger)
+      logger.write_string(")")
+    }
+  }
+}
 
 ///| Transport trait - implement this for platform-specific communication
 
@@ -16,9 +33,9 @@ pub(all) enum ReadResult {
 /// This abstracts the bidirectional communication with an LSP server process
 pub(open) trait Transport {
   /// Read data from the LSP server
-  read(Self) -> ReadResult
+  fn read(Self) -> ReadResult
   /// Write data to the LSP server
-  write(Self, String) -> Unit
+  fn write(Self, String) -> Unit
 }
 
 ///|
@@ -52,7 +69,7 @@ pub fn StubTransport::clear_output(self : StubTransport) -> Unit {
 }
 
 ///|
-pub impl Transport for StubTransport with read(self) {
+pub impl Transport for StubTransport with fn read(self) {
   if self.input_buffer.length() > 0 {
     let data = self.input_buffer[0]
     let new_buffer : Array[String] = []
@@ -70,6 +87,11 @@ pub impl Transport for StubTransport with read(self) {
 }
 
 ///|
-pub impl Transport for StubTransport with write(self, data) {
+pub impl Transport for StubTransport with fn write(self, data) {
   self.output_buffer.push(data)
+}
+
+///|
+fn[T : Show] write_show_value(value : T, logger : &Logger) -> Unit {
+  value.output(logger)
 }

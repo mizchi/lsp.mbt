@@ -3,6 +3,7 @@ package "mizchi/lsp/server"
 
 import {
   "mizchi/lsp/jsonrpc",
+  "moonbitlang/core/debug",
 }
 
 // Values
@@ -14,8 +15,7 @@ pub(all) enum ReadResult {
   Data(String)
   Eof
   Error(String)
-}
-pub impl Eq for ReadResult
+} derive(Eq, @debug.Debug)
 pub impl Show for ReadResult
 
 pub struct Server {
@@ -50,8 +50,7 @@ pub impl IoHandler for StubIoHandler
 
 // Traits
 pub(open) trait IoHandler {
-  read(Self) -> ReadResult
-  write(Self, String) -> Unit
-  write_error(Self, String) -> Unit
+  fn read(Self) -> ReadResult
+  fn write(Self, String) -> Unit
+  fn write_error(Self, String) -> Unit
 }
-

@@ -7,14 +7,31 @@
 pub(all) enum EntryKind {
   File
   Directory
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for EntryKind with fn output(self, logger) {
+  match self {
+    File => logger.write_string("File")
+    Directory => logger.write_string("Directory")
+  }
+}
 
 ///|
 /// Directory entry
 pub(all) struct DirEntry {
   name : String
   kind : EntryKind
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for DirEntry with fn output(self, logger) {
+  logger.write_string("{name: ")
+  logger.write_string(self.name)
+  logger.write_string(", kind: ")
+  self.kind.output(logger)
+  logger.write_string("}")
+}
 
 ///|
 /// Filesystem operation result
@@ -23,7 +40,33 @@ pub(all) enum FsResult[T] {
   NotFound(String)
   PermissionDenied(String)
   IoError(String)
-} derive(Show, Eq)
+} derive(Eq, Debug)
+
+///|
+pub impl[T : Show] Show for FsResult[T] with fn output(self, logger) {
+  match self {
+    Ok(v) => {
+      logger.write_string("Ok(")
+      v.output(logger)
+      logger.write_string(")")
+    }
+    NotFound(s) => {
+      logger.write_string("NotFound(")
+      logger.write_string(s)
+      logger.write_string(")")
+    }
+    PermissionDenied(s) => {
+      logger.write_string("PermissionDenied(")
+      logger.write_string(s)
+      logger.write_string(")")
+    }
+    IoError(s) => {
+      logger.write_string("IoError(")
+      logger.write_string(s)
+      logger.write_string(")")
+    }
+  }
+}
 
 ///|
 pub fn[T] FsResult::is_ok(self : FsResult[T]) -> Bool {
@@ -48,31 +91,31 @@ pub fn[T] FsResult::unwrap(self : FsResult[T]) -> T {
 /// FileSystem trait - implement for platform-specific or virtual filesystems
 pub(open) trait FileSystem {
   /// Read file content as string
-  read_file(Self, String) -> FsResult[String]
+  fn read_file(Self, String) -> FsResult[String]
 
   /// Write content to file
-  write_file(Self, String, String) -> FsResult[Unit]
+  fn write_file(Self, String, String) -> FsResult[Unit]
 
   /// Check if path exists
-  exists(Self, String) -> Bool
+  fn exists(Self, String) -> Bool
 
   /// Check if path is a file
-  is_file(Self, String) -> Bool
+  fn is_file(Self, String) -> Bool
 
   /// Check if path is a directory
-  is_directory(Self, String) -> Bool
+  fn is_directory(Self, String) -> Bool
 
   /// List directory contents
-  read_dir(Self, String) -> FsResult[Array[DirEntry]]
+  fn read_dir(Self, String) -> FsResult[Array[DirEntry]]
 
   /// Create directory (and parents if needed)
-  create_dir(Self, String) -> FsResult[Unit]
+  fn create_dir(Self, String) -> FsResult[Unit]
 
   /// Remove file
-  remove_file(Self, String) -> FsResult[Unit]
+  fn remove_file(Self, String) -> FsResult[Unit]
 
   /// Remove directory
-  remove_dir(Self, String) -> FsResult[Unit]
+  fn remove_dir(Self, String) -> FsResult[Unit]
 }
 
 ///|
@@ -90,7 +133,7 @@ pub struct MemoryFs {
 
 ///|
 pub fn MemoryFs::new() -> MemoryFs {
-  MemoryFs::{ root: Map::new() }
+  MemoryFs::{ root: Map([]) }
 }
 
 ///|
@@ -178,7 +221,7 @@ fn MemoryFs::get_parent_dir(
 }
 
 ///|
-pub impl FileSystem for MemoryFs with read_file(self, path) {
+pub impl FileSystem for MemoryFs with fn read_file(self, path) {
   let parts = parse_path(path)
   match self.get_node(parts) {
     Some(FsNode::FileNode(content)) => FsResult::Ok(content)
@@ -189,7 +232,7 @@ pub impl FileSystem for MemoryFs with read_file(self, path) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with write_file(self, path, content) {
+pub impl FileSystem for MemoryFs with fn write_file(self, path, content) {
   let parts = parse_path(path)
   if parts.length() == 0 {
     return FsResult::IoError("invalid path")
@@ -205,7 +248,7 @@ pub impl FileSystem for MemoryFs with write_file(self, path, content) {
       Some(FsNode::DirNode(children)) => current = children
       Some(FsNode::FileNode(_)) => return FsResult::IoError("parent is a file")
       None => {
-        let new_dir : Map[String, FsNode] = Map::new()
+        let new_dir : Map[String, FsNode] = Map([])
         current.set(part, FsNode::DirNode(new_dir))
         current = new_dir
       }
@@ -217,13 +260,13 @@ pub impl FileSystem for MemoryFs with write_file(self, path, content) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with exists(self, path) {
+pub impl FileSystem for MemoryFs with fn exists(self, path) {
   let parts = parse_path(path)
   self.get_node(parts) is Some(_)
 }
 
 ///|
-pub impl FileSystem for MemoryFs with is_file(self, path) {
+pub impl FileSystem for MemoryFs with fn is_file(self, path) {
   let parts = parse_path(path)
   match self.get_node(parts) {
     Some(FsNode::FileNode(_)) => true
@@ -232,7 +275,7 @@ pub impl FileSystem for MemoryFs with is_file(self, path) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with is_directory(self, path) {
+pub impl FileSystem for MemoryFs with fn is_directory(self, path) {
   let parts = parse_path(path)
   match self.get_node(parts) {
     Some(FsNode::DirNode(_)) => true
@@ -241,7 +284,7 @@ pub impl FileSystem for MemoryFs with is_directory(self, path) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with read_dir(self, path) {
+pub impl FileSystem for MemoryFs with fn read_dir(self, path) {
   let parts = parse_path(path)
   let node = if parts.length() == 0 {
     Some(FsNode::DirNode(self.root))
@@ -266,7 +309,7 @@ pub impl FileSystem for MemoryFs with read_dir(self, path) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with create_dir(self, path) {
+pub impl FileSystem for MemoryFs with fn create_dir(self, path) {
   let parts = parse_path(path)
   if parts.length() == 0 {
     return FsResult::Ok(()) // Root always exists
@@ -279,7 +322,7 @@ pub impl FileSystem for MemoryFs with create_dir(self, path) {
       Some(FsNode::FileNode(_)) =>
         return FsResult::IoError("path exists as file")
       None => {
-        let new_dir : Map[String, FsNode] = Map::new()
+        let new_dir : Map[String, FsNode] = Map([])
         current.set(part, FsNode::DirNode(new_dir))
         current = new_dir
       }
@@ -289,7 +332,7 @@ pub impl FileSystem for MemoryFs with create_dir(self, path) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with remove_file(self, path) {
+pub impl FileSystem for MemoryFs with fn remove_file(self, path) {
   let parts = parse_path(path)
   if parts.length() == 0 {
     return FsResult::IoError("cannot remove root")
@@ -311,7 +354,7 @@ pub impl FileSystem for MemoryFs with remove_file(self, path) {
 }
 
 ///|
-pub impl FileSystem for MemoryFs with remove_dir(self, path) {
+pub impl FileSystem for MemoryFs with fn remove_dir(self, path) {
   let parts = parse_path(path)
   if parts.length() == 0 {
     return FsResult::IoError("cannot remove root")

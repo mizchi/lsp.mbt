@@ -201,7 +201,7 @@ fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
       let _ = self.advance()
       has_digit = true
     }
-    if not(has_digit) {
+    if !has_digit {
       raise JsonError("invalid number: no digits after decimal point")
     }
   }
@@ -223,17 +223,15 @@ fn Parser::parse_number(self : Parser) -> JsonValue raise JsonError {
         let _ = self.advance()
         has_digit = true
       }
-      if not(has_digit) {
+      if !has_digit {
         raise JsonError("invalid number: no digits in exponent")
       }
     }
     _ => ()
   }
-  let text = self.input[start:self.pos].to_string() catch {
-    _ => raise JsonError("invalid number substring")
-  }
+  let text = self.input[start:self.pos].to_owned()
   try {
-    let n = @strconv.parse_double(text)
+    let n = @string.parse_double(text)
     JsonValue::Number(n)
   } catch {
     _ => raise JsonError("invalid number: \{text}")
@@ -265,7 +263,7 @@ fn Parser::parse_array(self : Parser) -> JsonValue raise JsonError {
 ///|
 fn Parser::parse_object(self : Parser) -> JsonValue raise JsonError {
   self.expect('{')
-  let obj : Map[String, JsonValue] = {}
+  let obj : Map[String, JsonValue] = Map([])
   self.skip_whitespace()
   if self.peek() == Some('}') {
     let _ = self.advance()

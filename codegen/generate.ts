@@ -359,7 +359,7 @@ class MoonBitGenerator {
     // Use _self if no properties to avoid unused variable warning
     const selfParam = allProperties.length === 0 ? '_self' : 'self';
     this.emit(`pub impl @json.ToJson for ${name} with to_json(${selfParam}) {`);
-    this.emit(`  let obj : Map[String, @json.JsonValue] = {}`);
+    this.emit(`  let obj : Map[String, @json.JsonValue] = Map([])`);
     for (const prop of allProperties) {
       const propName = this.sanitizeFieldName(prop.name);
       const jsonKey = prop.name;
@@ -394,7 +394,7 @@ class MoonBitGenerator {
       if (prop.optional) {
         if (this.isBaseType(prop.type)) {
           this.emit(`  let ${propName} : ${propType}? = match obj.get("${jsonKey}") {`);
-          this.emit(`    Some(v) if not(v.is_null()) => Some(${this.generateFromJsonExpr(prop.type, 'v')})`);
+          this.emit(`    Some(v) if !v.is_null() => Some(${this.generateFromJsonExpr(prop.type, 'v')})`);
           this.emit(`    _ => None`);
           this.emit(`  }`);
         } else if (prop.type.kind === 'or' || prop.type.kind === 'and' || prop.type.kind === 'literal' || prop.type.kind === 'map') {
@@ -403,26 +403,26 @@ class MoonBitGenerator {
         } else if (prop.type.kind === 'array') {
           // Handle optional arrays
           this.emit(`  let ${propName} : ${propType}? = match obj.get("${jsonKey}") {`);
-          this.emit(`    Some(v) if not(v.is_null()) => Some(${this.generateFromJsonExpr(prop.type, 'v')})`);
+          this.emit(`    Some(v) if !v.is_null() => Some(${this.generateFromJsonExpr(prop.type, 'v')})`);
           this.emit(`    _ => None`);
           this.emit(`  }`);
         } else if (prop.type.kind === 'reference') {
           // Check if it's a string alias type
           if (STRING_ALIAS_TYPES.has(prop.type.name)) {
             this.emit(`  let ${propName} : ${propType}? = match obj.get("${jsonKey}") {`);
-            this.emit(`    Some(v) if not(v.is_null()) => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })`);
+            this.emit(`    Some(v) if !v.is_null() => Some(match v { @json.JsonValue::String(s) => s; _ => raise @json.JsonError("expected string") })`);
             this.emit(`    _ => None`);
             this.emit(`  }`);
           } else {
             this.emit(`  let ${propName} : ${propType}? = match obj.get("${jsonKey}") {`);
-            this.emit(`    Some(v) if not(v.is_null()) => Some(${propType}::from_json(v))`);
+            this.emit(`    Some(v) if !v.is_null() => Some(${propType}::from_json(v))`);
             this.emit(`    _ => None`);
             this.emit(`  }`);
           }
         } else {
           // Other types - just use as-is
           this.emit(`  let ${propName} : ${propType}? = match obj.get("${jsonKey}") {`);
-          this.emit(`    Some(v) if not(v.is_null()) => Some(${this.generateFromJsonExpr(prop.type, 'v')})`);
+          this.emit(`    Some(v) if !v.is_null() => Some(${this.generateFromJsonExpr(prop.type, 'v')})`);
           this.emit(`    _ => None`);
           this.emit(`  }`);
         }
@@ -586,9 +586,9 @@ class MoonBitGenerator {
         // Arrays need special handling for primitive element types
         if (this.isBaseType(typeRef.element)) {
           const elemExpr = this.generateBaseToJson(typeRef.element as any, 'item');
-          return `@json.JsonValue::Array(${varName}.map(fn(item) { ${elemExpr} }))`;
+          return `@json.JsonValue::Array(${varName}.map((item) => ${elemExpr}))`;
         }
-        return `@json.JsonValue::Array(${varName}.map(fn(item) { item.to_json() }))`;
+        return `@json.JsonValue::Array(${varName}.map((item) => item.to_json()))`;
       case 'or':
       case 'and':
       case 'literal':
@@ -668,17 +668,17 @@ class MoonBitGenerator {
     if (typeRef.element.kind === 'base') {
       switch ((typeRef.element as { kind: 'base'; name: string }).name) {
         case 'string':
-          return `match ${varName} { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::String(s) => s; _ => "" } }); _ => [] }`;
+          return `match ${varName} { @json.JsonValue::Array(items) => items.map((item) => match item { @json.JsonValue::String(s) => s; _ => "" }); _ => [] }`;
         case 'integer':
         case 'uinteger':
-          return `match ${varName} { @json.JsonValue::Array(items) => items.map(fn(item) { match item { @json.JsonValue::Number(n) => n.to_int(); _ => 0 } }); _ => [] }`;
+          return `match ${varName} { @json.JsonValue::Array(items) => items.map((item) => match item { @json.JsonValue::Number(n) => n.to_int(); _ => 0 }); _ => [] }`;
         default:
           return varName;
       }
     }
     // For reference types, call from_json on each element
     if (typeRef.element.kind === 'reference') {
-      return `match ${varName} { @json.JsonValue::Array(items) => items.map(fn(item) { ${elemType}::from_json(item) }); _ => [] }`;
+      return `match ${varName} { @json.JsonValue::Array(items) => items.map((item) => ${elemType}::from_json(item)); _ => [] }`;
     }
     // For complex/union types that resolve to JsonValue, extract array items
     if (elemType === '@json.JsonValue') {

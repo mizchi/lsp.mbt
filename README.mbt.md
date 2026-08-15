@@ -38,13 +38,13 @@ pub struct MyTransport {
 }
 
 ///|
-pub impl @client.Transport for MyTransport with read(self) {
+pub impl @client.Transport for MyTransport with fn read(self) {
   // Read from LSP server stdout
   // Return @client.ReadResult::Data(data) or ::Eof or ::Error(msg)
 }
 
 ///|
-pub impl @client.Transport for MyTransport with write(self, data) {
+pub impl @client.Transport for MyTransport with fn write(self, data) {
   // Write to LSP server stdin
 }
 
@@ -112,18 +112,18 @@ pub struct MyIoHandler {
 }
 
 ///|
-pub impl @server.IoHandler for MyIoHandler with read(self) {
+pub impl @server.IoHandler for MyIoHandler with fn read(self) {
   // Read from client
   // Return @server.ReadResult::Data(data) or ::Eof or ::Error(msg)
 }
 
 ///|
-pub impl @server.IoHandler for MyIoHandler with write(self, data) {
+pub impl @server.IoHandler for MyIoHandler with fn write(self, data) {
   // Write to client stdout
 }
 
 ///|
-pub impl @server.IoHandler for MyIoHandler with write_error(self, data) {
+pub impl @server.IoHandler for MyIoHandler with fn write_error(self, data) {
   // Write to client stderr
 }
 

@@ -1,21 +1,31 @@
 ///| LSP Base Types
 
 ///|
-/// Document URI (typically file:// URL)
-pub struct DocumentUri(String) derive(Eq)
+fn[T : Show] write_show_value(value : T, logger : &Logger) -> Unit {
+  value.output(logger)
+}
 
 ///|
-pub impl Show for DocumentUri with output(self, logger) {
+fn[T : Debug] write_debug_value(value : T, logger : &Logger) -> Unit {
+  logger.write_string(Debug::to_repr(value).to_string())
+}
+
+///|
+/// Document URI (typically file:// URL)
+pub struct DocumentUri(String) derive(Eq, Debug)
+
+///|
+pub impl Show for DocumentUri with fn output(self, logger) {
   logger.write_string(self.0)
 }
 
 ///|
-pub impl @json.ToJson for DocumentUri with to_json(self) {
+pub impl @json.ToJson for DocumentUri with fn to_json(self) {
   @json.JsonValue::string(self.0)
 }
 
 ///|
-pub impl @json.FromJson for DocumentUri with from_json(json) {
+pub impl @json.FromJson for DocumentUri with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) => DocumentUri(s)
     _ => raise @json.JsonError("expected string for DocumentUri")
@@ -27,7 +37,16 @@ pub impl @json.FromJson for DocumentUri with from_json(json) {
 pub struct Position {
   line : UInt
   character : UInt
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for Position with fn output(self, logger) {
+  logger.write_string("{line: ")
+  write_show_value(self.line, logger)
+  logger.write_string(", character: ")
+  write_show_value(self.character, logger)
+  logger.write_string("}")
+}
 
 ///|
 pub fn Position::new(line : UInt, character : UInt) -> Position {
@@ -35,8 +54,8 @@ pub fn Position::new(line : UInt, character : UInt) -> Position {
 }
 
 ///|
-pub impl @json.ToJson for Position with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Position with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("line", @json.JsonValue::int(self.line.reinterpret_as_int()))
   obj.set(
     "character",
@@ -46,7 +65,7 @@ pub impl @json.ToJson for Position with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Position with from_json(json) {
+pub impl @json.FromJson for Position with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Position")
@@ -67,7 +86,16 @@ pub impl @json.FromJson for Position with from_json(json) {
 pub struct Range {
   start : Position
   end : Position
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for Range with fn output(self, logger) {
+  logger.write_string("{start: ")
+  write_show_value(self.start, logger)
+  logger.write_string(", end: ")
+  write_show_value(self.end, logger)
+  logger.write_string("}")
+}
 
 ///|
 pub fn Range::new(start : Position, end : Position) -> Range {
@@ -75,15 +103,15 @@ pub fn Range::new(start : Position, end : Position) -> Range {
 }
 
 ///|
-pub impl @json.ToJson for Range with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Range with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("start", self.start.to_json())
   obj.set("end", self.end.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for Range with from_json(json) {
+pub impl @json.FromJson for Range with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Range")
@@ -104,7 +132,16 @@ pub impl @json.FromJson for Range with from_json(json) {
 pub struct Location {
   uri : DocumentUri
   range : Range
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for Location with fn output(self, logger) {
+  logger.write_string("{uri: ")
+  write_show_value(self.uri, logger)
+  logger.write_string(", range: ")
+  write_show_value(self.range, logger)
+  logger.write_string("}")
+}
 
 ///|
 pub fn Location::new(uri : DocumentUri, range : Range) -> Location {
@@ -112,15 +149,15 @@ pub fn Location::new(uri : DocumentUri, range : Range) -> Location {
 }
 
 ///|
-pub impl @json.ToJson for Location with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Location with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", self.uri.to_json())
   obj.set("range", self.range.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for Location with from_json(json) {
+pub impl @json.FromJson for Location with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Location")
@@ -140,17 +177,24 @@ pub impl @json.FromJson for Location with from_json(json) {
 /// Text document identifier
 pub struct TextDocumentIdentifier {
   uri : DocumentUri
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for TextDocumentIdentifier with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl Show for TextDocumentIdentifier with fn output(self, logger) {
+  logger.write_string("{uri: ")
+  write_show_value(self.uri, logger)
+  logger.write_string("}")
+}
+
+///|
+pub impl @json.ToJson for TextDocumentIdentifier with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", self.uri.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentIdentifier with from_json(json) {
+pub impl @json.FromJson for TextDocumentIdentifier with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentIdentifier")
@@ -169,11 +213,24 @@ pub struct TextDocumentItem {
   language_id : String
   version : Int
   text : String
-} derive(Show)
+}
 
 ///|
-pub impl @json.ToJson for TextDocumentItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl Show for TextDocumentItem with fn output(self, logger) {
+  logger.write_string("{uri: ")
+  write_show_value(self.uri, logger)
+  logger.write_string(", language_id: ")
+  write_show_value(self.language_id, logger)
+  logger.write_string(", version: ")
+  write_show_value(self.version, logger)
+  logger.write_string(", text: ")
+  write_show_value(self.text, logger)
+  logger.write_string("}")
+}
+
+///|
+pub impl @json.ToJson for TextDocumentItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", self.uri.to_json())
   obj.set("languageId", @json.JsonValue::string(self.language_id))
   obj.set("version", @json.JsonValue::int(self.version))
@@ -182,7 +239,7 @@ pub impl @json.ToJson for TextDocumentItem with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentItem with from_json(json) {
+pub impl @json.FromJson for TextDocumentItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentItem")
@@ -211,18 +268,29 @@ pub impl @json.FromJson for TextDocumentItem with from_json(json) {
 pub struct VersionedTextDocumentIdentifier {
   uri : DocumentUri
   version : Int
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for VersionedTextDocumentIdentifier with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl Show for VersionedTextDocumentIdentifier with fn output(self, logger) {
+  logger.write_string("{uri: ")
+  write_show_value(self.uri, logger)
+  logger.write_string(", version: ")
+  write_show_value(self.version, logger)
+  logger.write_string("}")
+}
+
+///|
+pub impl @json.ToJson for VersionedTextDocumentIdentifier with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", self.uri.to_json())
   obj.set("version", @json.JsonValue::int(self.version))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for VersionedTextDocumentIdentifier with from_json(json) {
+pub impl @json.FromJson for VersionedTextDocumentIdentifier with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -246,18 +314,27 @@ pub impl @json.FromJson for VersionedTextDocumentIdentifier with from_json(json)
 pub struct TextDocumentPositionParams {
   text_document : TextDocumentIdentifier
   position : Position
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for TextDocumentPositionParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl Show for TextDocumentPositionParams with fn output(self, logger) {
+  logger.write_string("{text_document: ")
+  write_show_value(self.text_document, logger)
+  logger.write_string(", position: ")
+  write_show_value(self.position, logger)
+  logger.write_string("}")
+}
+
+///|
+pub impl @json.ToJson for TextDocumentPositionParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentPositionParams with from_json(json) {
+pub impl @json.FromJson for TextDocumentPositionParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentPositionParams")

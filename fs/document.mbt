@@ -62,7 +62,7 @@ pub struct DocumentStore[F] {
 
 ///|
 pub fn[F] DocumentStore::new(fs : F) -> DocumentStore[F] {
-  DocumentStore::{ fs, documents: Map::new() }
+  DocumentStore::{ fs, documents: Map([]) }
 }
 
 ///|

@@ -3,6 +3,7 @@ package "mizchi/lsp/types"
 
 import {
   "mizchi/lsp/json",
+  "moonbitlang/core/debug",
 }
 
 // Values
@@ -785,7 +786,7 @@ pub struct Diagnostic {
   message : String
   tags : Array[DiagnosticTag]?
   related_information : Array[DiagnosticRelatedInformation]?
-}
+} derive(@debug.Debug)
 pub fn Diagnostic::new(Range, String, severity? : DiagnosticSeverity?, code? : DiagnosticCode?, source? : String?, tags? : Array[DiagnosticTag]?, related_information? : Array[DiagnosticRelatedInformation]?) -> Self
 pub impl @json.FromJson for Diagnostic
 pub impl @json.ToJson for Diagnostic
@@ -805,10 +806,9 @@ pub impl @json.ToJson for DiagnosticClientCapabilities
 pub enum DiagnosticCode {
   Number(Int)
   String(String)
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for DiagnosticCode
 pub impl @json.ToJson for DiagnosticCode
-pub impl Eq for DiagnosticCode
 pub impl Show for DiagnosticCode
 
 pub struct DiagnosticOptions {
@@ -834,10 +834,9 @@ pub impl @json.ToJson for DiagnosticRegistrationOptions
 pub struct DiagnosticRelatedInformation {
   location : Location
   message : String
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for DiagnosticRelatedInformation
 pub impl @json.ToJson for DiagnosticRelatedInformation
-pub impl Eq for DiagnosticRelatedInformation
 pub impl Show for DiagnosticRelatedInformation
 
 pub struct DiagnosticServerCancellationData {
@@ -851,19 +850,17 @@ pub enum DiagnosticSeverity {
   Warning
   Information
   Hint
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for DiagnosticSeverity
 pub impl @json.ToJson for DiagnosticSeverity
-pub impl Eq for DiagnosticSeverity
 pub impl Show for DiagnosticSeverity
 
 pub enum DiagnosticTag {
   Unnecessary
   Deprecated
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for DiagnosticTag
 pub impl @json.ToJson for DiagnosticTag
-pub impl Eq for DiagnosticTag
 pub impl Show for DiagnosticTag
 
 pub struct DiagnosticWorkspaceClientCapabilities {
@@ -1253,12 +1250,9 @@ pub struct DocumentSymbolRegistrationOptions {
 pub impl @json.FromJson for DocumentSymbolRegistrationOptions
 pub impl @json.ToJson for DocumentSymbolRegistrationOptions
 
-pub struct DocumentUri(String)
-#deprecated
-pub fn DocumentUri::inner(Self) -> String
+pub struct DocumentUri(String) derive(Eq, @debug.Debug)
 pub impl @json.FromJson for DocumentUri
 pub impl @json.ToJson for DocumentUri
-pub impl Eq for DocumentUri
 pub impl Show for DocumentUri
 
 pub struct EditRangeWithInsertReplace {
@@ -1927,11 +1921,10 @@ pub impl @json.ToJson for LinkedEditingRanges
 pub struct Location {
   uri : DocumentUri
   range : Range
-}
+} derive(Eq, @debug.Debug)
 pub fn Location::new(DocumentUri, Range) -> Self
 pub impl @json.FromJson for Location
 pub impl @json.ToJson for Location
-pub impl Eq for Location
 pub impl Show for Location
 
 #alias(DeclarationLink)
@@ -2227,11 +2220,10 @@ pub impl @json.ToJson for PartialResultParams
 pub struct Position {
   line : UInt
   character : UInt
-}
+} derive(Eq, @debug.Debug)
 pub fn Position::new(UInt, UInt) -> Self
 pub impl @json.FromJson for Position
 pub impl @json.ToJson for Position
-pub impl Eq for Position
 pub impl Show for Position
 
 pub(all) enum PositionEncodingKind {
@@ -2297,7 +2289,7 @@ pub struct PublishDiagnosticsParams {
   uri : DocumentUri
   version : Int?
   diagnostics : Array[Diagnostic]
-}
+} derive(@debug.Debug)
 pub impl @json.FromJson for PublishDiagnosticsParams
 pub impl @json.ToJson for PublishDiagnosticsParams
 pub impl Show for PublishDiagnosticsParams
@@ -2305,11 +2297,10 @@ pub impl Show for PublishDiagnosticsParams
 pub struct Range {
   start : Position
   end : Position
-}
+} derive(Eq, @debug.Debug)
 pub fn Range::new(Position, Position) -> Self
 pub impl @json.FromJson for Range
 pub impl @json.ToJson for Range
-pub impl Eq for Range
 pub impl Show for Range
 
 pub struct ReferenceClientCapabilities {
@@ -3049,10 +3040,9 @@ pub impl @json.ToJson for TextDocumentFilterScheme
 
 pub struct TextDocumentIdentifier {
   uri : DocumentUri
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for TextDocumentIdentifier
 pub impl @json.ToJson for TextDocumentIdentifier
-pub impl Eq for TextDocumentIdentifier
 pub impl Show for TextDocumentIdentifier
 
 pub struct TextDocumentItem {
@@ -3068,10 +3058,9 @@ pub impl Show for TextDocumentItem
 pub struct TextDocumentPositionParams {
   text_document : TextDocumentIdentifier
   position : Position
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for TextDocumentPositionParams
 pub impl @json.ToJson for TextDocumentPositionParams
-pub impl Eq for TextDocumentPositionParams
 pub impl Show for TextDocumentPositionParams
 
 pub struct TextDocumentRegistrationOptions {
@@ -3270,10 +3259,9 @@ pub impl @json.ToJson for VersionedNotebookDocumentIdentifier
 pub struct VersionedTextDocumentIdentifier {
   uri : DocumentUri
   version : Int
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for VersionedTextDocumentIdentifier
 pub impl @json.ToJson for VersionedTextDocumentIdentifier
-pub impl Eq for VersionedTextDocumentIdentifier
 pub impl Show for VersionedTextDocumentIdentifier
 
 pub(all) enum WatchKind {
@@ -3555,4 +3543,3 @@ pub using @json {type JsonValue as TextDocumentFilter}
 pub using @json {type JsonValue as WorkspaceDocumentDiagnosticReport}
 
 // Traits
-

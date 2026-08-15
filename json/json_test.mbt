@@ -133,7 +133,7 @@ test "parse whitespace handling" {
 
 ///|
 test "stringify object" {
-  let obj : Map[String, JsonValue] = {}
+  let obj : Map[String, JsonValue] = Map([])
   obj.set("name", JsonValue::String("test"))
   obj.set("value", JsonValue::Number(42.0))
   let result = stringify(JsonValue::Object(obj))

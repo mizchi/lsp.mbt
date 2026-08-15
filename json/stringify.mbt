@@ -93,7 +93,7 @@ fn write_object(obj : Map[String, JsonValue], buf : StringBuilder) -> Unit {
   buf.write_char('{')
   let mut first = true
   obj.each(fn(key, value) {
-    if not(first) {
+    if !first {
       buf.write_char(',')
     }
     first = false
@@ -176,7 +176,7 @@ fn write_object_pretty(
   buf.write_string("{\n")
   let mut first = true
   obj.each(fn(key, value) {
-    if not(first) {
+    if !first {
       buf.write_string(",\n")
     }
     first = false

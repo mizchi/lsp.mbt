@@ -9,10 +9,10 @@ pub(all) enum JsonValue {
   String(String)
   Array(Array[JsonValue])
   Object(Map[String, JsonValue])
-} derive(Eq)
+} derive(Eq, Debug)
 
 ///|
-pub impl Show for JsonValue with output(self, logger) {
+pub impl Show for JsonValue with fn output(self, logger) {
   logger.write_string(stringify(self))
 }
 

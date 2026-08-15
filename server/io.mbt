@@ -8,14 +8,31 @@ pub(all) enum ReadResult {
   Data(String)
   Eof
   Error(String)
-} derive(Eq, Show)
+} derive(Eq, Debug)
+
+///|
+pub impl Show for ReadResult with fn output(self, logger) {
+  match self {
+    Data(s) => {
+      logger.write_string("Data(")
+      write_show_value(s, logger)
+      logger.write_string(")")
+    }
+    Eof => logger.write_string("Eof")
+    Error(s) => {
+      logger.write_string("Error(")
+      write_show_value(s, logger)
+      logger.write_string(")")
+    }
+  }
+}
 
 ///|
 /// IO handler trait - implement this for platform-specific IO
 pub(open) trait IoHandler {
-  read(Self) -> ReadResult
-  write(Self, String) -> Unit
-  write_error(Self, String) -> Unit
+  fn read(Self) -> ReadResult
+  fn write(Self, String) -> Unit
+  fn write_error(Self, String) -> Unit
 }
 
 ///|
@@ -50,7 +67,7 @@ pub fn StubIoHandler::get_errors(self : StubIoHandler) -> Array[String] {
 }
 
 ///|
-pub impl IoHandler for StubIoHandler with read(self) {
+pub impl IoHandler for StubIoHandler with fn read(self) {
   if self.input_buffer.length() > 0 {
     // Remove first element
     let data = self.input_buffer[0]
@@ -69,11 +86,16 @@ pub impl IoHandler for StubIoHandler with read(self) {
 }
 
 ///|
-pub impl IoHandler for StubIoHandler with write(self, data) {
+pub impl IoHandler for StubIoHandler with fn write(self, data) {
   self.output_buffer.push(data)
 }
 
 ///|
-pub impl IoHandler for StubIoHandler with write_error(self, data) {
+pub impl IoHandler for StubIoHandler with fn write_error(self, data) {
   self.error_buffer.push(data)
+}
+
+///|
+fn[T : Show] write_show_value(value : T, logger : &Logger) -> Unit {
+  value.output(logger)
 }

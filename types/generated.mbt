@@ -37,7 +37,7 @@ pub(all) enum SemanticTokenTypes {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokenTypes with to_json(self) {
+pub impl @json.ToJson for SemanticTokenTypes with fn to_json(self) {
   let s = match self {
     Namespace => "namespace"
     Type => "type"
@@ -68,7 +68,7 @@ pub impl @json.ToJson for SemanticTokenTypes with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokenTypes with from_json(json) {
+pub impl @json.FromJson for SemanticTokenTypes with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -118,7 +118,7 @@ pub(all) enum SemanticTokenModifiers {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokenModifiers with to_json(self) {
+pub impl @json.ToJson for SemanticTokenModifiers with fn to_json(self) {
   let s = match self {
     Declaration => "declaration"
     Definition => "definition"
@@ -135,7 +135,7 @@ pub impl @json.ToJson for SemanticTokenModifiers with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokenModifiers with from_json(json) {
+pub impl @json.FromJson for SemanticTokenModifiers with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -165,7 +165,7 @@ pub(all) enum DocumentDiagnosticReportKind {
 }
 
 ///|
-pub impl @json.ToJson for DocumentDiagnosticReportKind with to_json(self) {
+pub impl @json.ToJson for DocumentDiagnosticReportKind with fn to_json(self) {
   let s = match self {
     Full => "full"
     Unchanged => "unchanged"
@@ -174,7 +174,7 @@ pub impl @json.ToJson for DocumentDiagnosticReportKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentDiagnosticReportKind with from_json(json) {
+pub impl @json.FromJson for DocumentDiagnosticReportKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -201,7 +201,7 @@ pub(all) enum ErrorCodes {
 }
 
 ///|
-pub impl @json.ToJson for ErrorCodes with to_json(self) {
+pub impl @json.ToJson for ErrorCodes with fn to_json(self) {
   let n = match self {
     ParseError => -32700
     InvalidRequest => -32600
@@ -215,7 +215,7 @@ pub impl @json.ToJson for ErrorCodes with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ErrorCodes with from_json(json) {
+pub impl @json.FromJson for ErrorCodes with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -245,7 +245,7 @@ pub(all) enum LSPErrorCodes {
 }
 
 ///|
-pub impl @json.ToJson for LSPErrorCodes with to_json(self) {
+pub impl @json.ToJson for LSPErrorCodes with fn to_json(self) {
   let n = match self {
     RequestFailed => -32803
     ServerCancelled => -32802
@@ -256,7 +256,7 @@ pub impl @json.ToJson for LSPErrorCodes with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LSPErrorCodes with from_json(json) {
+pub impl @json.FromJson for LSPErrorCodes with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -282,7 +282,7 @@ pub(all) enum FoldingRangeKind {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRangeKind with to_json(self) {
+pub impl @json.ToJson for FoldingRangeKind with fn to_json(self) {
   let s = match self {
     Comment => "comment"
     Imports => "imports"
@@ -292,7 +292,7 @@ pub impl @json.ToJson for FoldingRangeKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FoldingRangeKind with from_json(json) {
+pub impl @json.FromJson for FoldingRangeKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -337,7 +337,7 @@ pub(all) enum SymbolKind {
 }
 
 ///|
-pub impl @json.ToJson for SymbolKind with to_json(self) {
+pub impl @json.ToJson for SymbolKind with fn to_json(self) {
   let n = match self {
     File => 1
     Module => 2
@@ -370,7 +370,7 @@ pub impl @json.ToJson for SymbolKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SymbolKind with from_json(json) {
+pub impl @json.FromJson for SymbolKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -414,7 +414,7 @@ pub(all) enum SymbolTag {
 }
 
 ///|
-pub impl @json.ToJson for SymbolTag with to_json(self) {
+pub impl @json.ToJson for SymbolTag with fn to_json(self) {
   let n = match self {
     Deprecated => 1
   }
@@ -422,7 +422,7 @@ pub impl @json.ToJson for SymbolTag with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SymbolTag with from_json(json) {
+pub impl @json.FromJson for SymbolTag with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -449,7 +449,7 @@ pub(all) enum UniquenessLevel {
 }
 
 ///|
-pub impl @json.ToJson for UniquenessLevel with to_json(self) {
+pub impl @json.ToJson for UniquenessLevel with fn to_json(self) {
   let s = match self {
     Document => "document"
     Project => "project"
@@ -461,7 +461,7 @@ pub impl @json.ToJson for UniquenessLevel with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for UniquenessLevel with from_json(json) {
+pub impl @json.FromJson for UniquenessLevel with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -488,7 +488,7 @@ pub(all) enum MonikerKind {
 }
 
 ///|
-pub impl @json.ToJson for MonikerKind with to_json(self) {
+pub impl @json.ToJson for MonikerKind with fn to_json(self) {
   let s = match self {
     Import => "import"
     Export => "export"
@@ -498,7 +498,7 @@ pub impl @json.ToJson for MonikerKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MonikerKind with from_json(json) {
+pub impl @json.FromJson for MonikerKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -521,7 +521,7 @@ pub(all) enum InlayHintKind {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintKind with to_json(self) {
+pub impl @json.ToJson for InlayHintKind with fn to_json(self) {
   let n = match self {
     Type => 1
     Parameter => 2
@@ -530,7 +530,7 @@ pub impl @json.ToJson for InlayHintKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHintKind with from_json(json) {
+pub impl @json.FromJson for InlayHintKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -558,7 +558,7 @@ pub(all) enum MessageType {
 }
 
 ///|
-pub impl @json.ToJson for MessageType with to_json(self) {
+pub impl @json.ToJson for MessageType with fn to_json(self) {
   let n = match self {
     Error => 1
     Warning => 2
@@ -570,7 +570,7 @@ pub impl @json.ToJson for MessageType with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MessageType with from_json(json) {
+pub impl @json.FromJson for MessageType with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -597,7 +597,7 @@ pub(all) enum TextDocumentSyncKind {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentSyncKind with to_json(self) {
+pub impl @json.ToJson for TextDocumentSyncKind with fn to_json(self) {
   let n = match self {
     None => 0
     Full => 1
@@ -607,7 +607,7 @@ pub impl @json.ToJson for TextDocumentSyncKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentSyncKind with from_json(json) {
+pub impl @json.FromJson for TextDocumentSyncKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -632,7 +632,7 @@ pub(all) enum TextDocumentSaveReason {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentSaveReason with to_json(self) {
+pub impl @json.ToJson for TextDocumentSaveReason with fn to_json(self) {
   let n = match self {
     Manual => 1
     AfterDelay => 2
@@ -642,7 +642,7 @@ pub impl @json.ToJson for TextDocumentSaveReason with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentSaveReason with from_json(json) {
+pub impl @json.FromJson for TextDocumentSaveReason with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -686,7 +686,7 @@ pub(all) enum CompletionItemKind {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItemKind with to_json(self) {
+pub impl @json.ToJson for CompletionItemKind with fn to_json(self) {
   let n = match self {
     Text => 1
     Method => 2
@@ -718,7 +718,7 @@ pub impl @json.ToJson for CompletionItemKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItemKind with from_json(json) {
+pub impl @json.FromJson for CompletionItemKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -761,7 +761,7 @@ pub(all) enum CompletionItemTag {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItemTag with to_json(self) {
+pub impl @json.ToJson for CompletionItemTag with fn to_json(self) {
   let n = match self {
     Deprecated => 1
   }
@@ -769,7 +769,7 @@ pub impl @json.ToJson for CompletionItemTag with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItemTag with from_json(json) {
+pub impl @json.FromJson for CompletionItemTag with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -790,7 +790,7 @@ pub(all) enum InsertTextFormat {
 }
 
 ///|
-pub impl @json.ToJson for InsertTextFormat with to_json(self) {
+pub impl @json.ToJson for InsertTextFormat with fn to_json(self) {
   let n = match self {
     PlainText => 1
     Snippet => 2
@@ -799,7 +799,7 @@ pub impl @json.ToJson for InsertTextFormat with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InsertTextFormat with from_json(json) {
+pub impl @json.FromJson for InsertTextFormat with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -821,7 +821,7 @@ pub(all) enum InsertTextMode {
 }
 
 ///|
-pub impl @json.ToJson for InsertTextMode with to_json(self) {
+pub impl @json.ToJson for InsertTextMode with fn to_json(self) {
   let n = match self {
     AsIs => 1
     AdjustIndentation => 2
@@ -830,7 +830,7 @@ pub impl @json.ToJson for InsertTextMode with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InsertTextMode with from_json(json) {
+pub impl @json.FromJson for InsertTextMode with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -854,7 +854,7 @@ pub(all) enum DocumentHighlightKind {
 }
 
 ///|
-pub impl @json.ToJson for DocumentHighlightKind with to_json(self) {
+pub impl @json.ToJson for DocumentHighlightKind with fn to_json(self) {
   let n = match self {
     Text => 1
     Read => 2
@@ -864,7 +864,7 @@ pub impl @json.ToJson for DocumentHighlightKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentHighlightKind with from_json(json) {
+pub impl @json.FromJson for DocumentHighlightKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -905,7 +905,7 @@ pub(all) enum CodeActionKind {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionKind with to_json(self) {
+pub impl @json.ToJson for CodeActionKind with fn to_json(self) {
   let s = match self {
     Empty => ""
     QuickFix => "quickfix"
@@ -923,7 +923,7 @@ pub impl @json.ToJson for CodeActionKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionKind with from_json(json) {
+pub impl @json.FromJson for CodeActionKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -952,7 +952,7 @@ pub(all) enum CodeActionTag {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionTag with to_json(self) {
+pub impl @json.ToJson for CodeActionTag with fn to_json(self) {
   let n = match self {
     LLMGenerated => 1
   }
@@ -960,7 +960,7 @@ pub impl @json.ToJson for CodeActionTag with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionTag with from_json(json) {
+pub impl @json.FromJson for CodeActionTag with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -982,7 +982,7 @@ pub(all) enum TraceValue {
 }
 
 ///|
-pub impl @json.ToJson for TraceValue with to_json(self) {
+pub impl @json.ToJson for TraceValue with fn to_json(self) {
   let s = match self {
     Off => "off"
     Messages => "messages"
@@ -992,7 +992,7 @@ pub impl @json.ToJson for TraceValue with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TraceValue with from_json(json) {
+pub impl @json.FromJson for TraceValue with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1015,7 +1015,7 @@ pub(all) enum MarkupKind {
 }
 
 ///|
-pub impl @json.ToJson for MarkupKind with to_json(self) {
+pub impl @json.ToJson for MarkupKind with fn to_json(self) {
   let s = match self {
     PlainText => "plaintext"
     Markdown => "markdown"
@@ -1024,7 +1024,7 @@ pub impl @json.ToJson for MarkupKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MarkupKind with from_json(json) {
+pub impl @json.FromJson for MarkupKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1106,7 +1106,7 @@ pub(all) enum LanguageKind {
 }
 
 ///|
-pub impl @json.ToJson for LanguageKind with to_json(self) {
+pub impl @json.ToJson for LanguageKind with fn to_json(self) {
   let s = match self {
     ABAP => "abap"
     WindowsBat => "bat"
@@ -1174,7 +1174,7 @@ pub impl @json.ToJson for LanguageKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LanguageKind with from_json(json) {
+pub impl @json.FromJson for LanguageKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1254,7 +1254,7 @@ pub(all) enum InlineCompletionTriggerKind {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionTriggerKind with to_json(self) {
+pub impl @json.ToJson for InlineCompletionTriggerKind with fn to_json(self) {
   let n = match self {
     Invoked => 1
     Automatic => 2
@@ -1263,7 +1263,7 @@ pub impl @json.ToJson for InlineCompletionTriggerKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionTriggerKind with from_json(json) {
+pub impl @json.FromJson for InlineCompletionTriggerKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1288,7 +1288,7 @@ pub(all) enum PositionEncodingKind {
 }
 
 ///|
-pub impl @json.ToJson for PositionEncodingKind with to_json(self) {
+pub impl @json.ToJson for PositionEncodingKind with fn to_json(self) {
   let s = match self {
     UTF8 => "utf-8"
     UTF16 => "utf-16"
@@ -1298,7 +1298,7 @@ pub impl @json.ToJson for PositionEncodingKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for PositionEncodingKind with from_json(json) {
+pub impl @json.FromJson for PositionEncodingKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1323,7 +1323,7 @@ pub(all) enum FileChangeType {
 }
 
 ///|
-pub impl @json.ToJson for FileChangeType with to_json(self) {
+pub impl @json.ToJson for FileChangeType with fn to_json(self) {
   let n = match self {
     Created => 1
     Changed => 2
@@ -1333,7 +1333,7 @@ pub impl @json.ToJson for FileChangeType with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileChangeType with from_json(json) {
+pub impl @json.FromJson for FileChangeType with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1357,7 +1357,7 @@ pub(all) enum WatchKind {
 }
 
 ///|
-pub impl @json.ToJson for WatchKind with to_json(self) {
+pub impl @json.ToJson for WatchKind with fn to_json(self) {
   let n = match self {
     Create => 1
     Change => 2
@@ -1367,7 +1367,7 @@ pub impl @json.ToJson for WatchKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WatchKind with from_json(json) {
+pub impl @json.FromJson for WatchKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1392,7 +1392,7 @@ pub(all) enum CompletionTriggerKind {
 }
 
 ///|
-pub impl @json.ToJson for CompletionTriggerKind with to_json(self) {
+pub impl @json.ToJson for CompletionTriggerKind with fn to_json(self) {
   let n = match self {
     Invoked => 1
     TriggerCharacter => 2
@@ -1402,7 +1402,7 @@ pub impl @json.ToJson for CompletionTriggerKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionTriggerKind with from_json(json) {
+pub impl @json.FromJson for CompletionTriggerKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1425,7 +1425,7 @@ pub(all) enum ApplyKind {
 }
 
 ///|
-pub impl @json.ToJson for ApplyKind with to_json(self) {
+pub impl @json.ToJson for ApplyKind with fn to_json(self) {
   let n = match self {
     Replace => 1
     Merge => 2
@@ -1434,7 +1434,7 @@ pub impl @json.ToJson for ApplyKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ApplyKind with from_json(json) {
+pub impl @json.FromJson for ApplyKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1458,7 +1458,7 @@ pub(all) enum SignatureHelpTriggerKind {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelpTriggerKind with to_json(self) {
+pub impl @json.ToJson for SignatureHelpTriggerKind with fn to_json(self) {
   let n = match self {
     Invoked => 1
     TriggerCharacter => 2
@@ -1468,7 +1468,7 @@ pub impl @json.ToJson for SignatureHelpTriggerKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelpTriggerKind with from_json(json) {
+pub impl @json.FromJson for SignatureHelpTriggerKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1491,7 +1491,7 @@ pub(all) enum CodeActionTriggerKind {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionTriggerKind with to_json(self) {
+pub impl @json.ToJson for CodeActionTriggerKind with fn to_json(self) {
   let n = match self {
     Invoked => 1
     Automatic => 2
@@ -1500,7 +1500,7 @@ pub impl @json.ToJson for CodeActionTriggerKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionTriggerKind with from_json(json) {
+pub impl @json.FromJson for CodeActionTriggerKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1522,7 +1522,7 @@ pub(all) enum FileOperationPatternKind {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationPatternKind with to_json(self) {
+pub impl @json.ToJson for FileOperationPatternKind with fn to_json(self) {
   let s = match self {
     File => "file"
     Folder => "folder"
@@ -1531,7 +1531,7 @@ pub impl @json.ToJson for FileOperationPatternKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationPatternKind with from_json(json) {
+pub impl @json.FromJson for FileOperationPatternKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1553,7 +1553,7 @@ pub(all) enum NotebookCellKind {
 }
 
 ///|
-pub impl @json.ToJson for NotebookCellKind with to_json(self) {
+pub impl @json.ToJson for NotebookCellKind with fn to_json(self) {
   let n = match self {
     Markup => 1
     Code => 2
@@ -1562,7 +1562,7 @@ pub impl @json.ToJson for NotebookCellKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookCellKind with from_json(json) {
+pub impl @json.FromJson for NotebookCellKind with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1585,7 +1585,7 @@ pub(all) enum ResourceOperationKind {
 }
 
 ///|
-pub impl @json.ToJson for ResourceOperationKind with to_json(self) {
+pub impl @json.ToJson for ResourceOperationKind with fn to_json(self) {
   let s = match self {
     Create => "create"
     Rename => "rename"
@@ -1595,7 +1595,7 @@ pub impl @json.ToJson for ResourceOperationKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ResourceOperationKind with from_json(json) {
+pub impl @json.FromJson for ResourceOperationKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1621,7 +1621,7 @@ pub(all) enum FailureHandlingKind {
 }
 
 ///|
-pub impl @json.ToJson for FailureHandlingKind with to_json(self) {
+pub impl @json.ToJson for FailureHandlingKind with fn to_json(self) {
   let s = match self {
     Abort => "abort"
     Transactional => "transactional"
@@ -1632,7 +1632,7 @@ pub impl @json.ToJson for FailureHandlingKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FailureHandlingKind with from_json(json) {
+pub impl @json.FromJson for FailureHandlingKind with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1653,7 +1653,7 @@ pub(all) enum PrepareSupportDefaultBehavior {
 }
 
 ///|
-pub impl @json.ToJson for PrepareSupportDefaultBehavior with to_json(self) {
+pub impl @json.ToJson for PrepareSupportDefaultBehavior with fn to_json(self) {
   let n = match self {
     Identifier => 1
   }
@@ -1661,7 +1661,9 @@ pub impl @json.ToJson for PrepareSupportDefaultBehavior with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for PrepareSupportDefaultBehavior with from_json(json) {
+pub impl @json.FromJson for PrepareSupportDefaultBehavior with fn from_json(
+  json,
+) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -1679,7 +1681,7 @@ pub(all) enum TokenFormat {
 }
 
 ///|
-pub impl @json.ToJson for TokenFormat with to_json(self) {
+pub impl @json.ToJson for TokenFormat with fn to_json(self) {
   let s = match self {
     Relative => "relative"
   }
@@ -1687,7 +1689,7 @@ pub impl @json.ToJson for TokenFormat with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TokenFormat with from_json(json) {
+pub impl @json.FromJson for TokenFormat with fn from_json(json) {
   match json {
     @json.JsonValue::String(s) =>
       match s {
@@ -1716,8 +1718,8 @@ pub struct ImplementationParams {
 }
 
 ///|
-pub impl @json.ToJson for ImplementationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ImplementationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -1732,7 +1734,7 @@ pub impl @json.ToJson for ImplementationParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ImplementationParams with from_json(json) {
+pub impl @json.FromJson for ImplementationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ImplementationParams")
@@ -1746,12 +1748,12 @@ pub impl @json.FromJson for ImplementationParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   ImplementationParams::{
@@ -1775,8 +1777,10 @@ pub struct ImplementationRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for ImplementationRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ImplementationRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -1790,7 +1794,7 @@ pub impl @json.ToJson for ImplementationRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ImplementationRegistrationOptions with from_json(
+pub impl @json.FromJson for ImplementationRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -1805,7 +1809,7 @@ pub impl @json.FromJson for ImplementationRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -1815,7 +1819,7 @@ pub impl @json.FromJson for ImplementationRegistrationOptions with from_json(
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -1847,8 +1851,8 @@ pub struct TypeDefinitionParams {
 }
 
 ///|
-pub impl @json.ToJson for TypeDefinitionParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeDefinitionParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -1863,7 +1867,7 @@ pub impl @json.ToJson for TypeDefinitionParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeDefinitionParams with from_json(json) {
+pub impl @json.FromJson for TypeDefinitionParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeDefinitionParams")
@@ -1877,12 +1881,12 @@ pub impl @json.FromJson for TypeDefinitionParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   TypeDefinitionParams::{
@@ -1906,8 +1910,10 @@ pub struct TypeDefinitionRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for TypeDefinitionRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeDefinitionRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -1921,7 +1927,7 @@ pub impl @json.ToJson for TypeDefinitionRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeDefinitionRegistrationOptions with from_json(
+pub impl @json.FromJson for TypeDefinitionRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -1936,7 +1942,7 @@ pub impl @json.FromJson for TypeDefinitionRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -1946,7 +1952,7 @@ pub impl @json.FromJson for TypeDefinitionRegistrationOptions with from_json(
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -1972,15 +1978,15 @@ pub struct WorkspaceFolder {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceFolder with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceFolder with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   obj.set("name", @json.JsonValue::String(self.name))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceFolder with from_json(json) {
+pub impl @json.FromJson for WorkspaceFolder with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceFolder")
@@ -2012,14 +2018,16 @@ pub struct DidChangeWorkspaceFoldersParams {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeWorkspaceFoldersParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidChangeWorkspaceFoldersParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("event", self.event.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DidChangeWorkspaceFoldersParams with from_json(json) {
+pub impl @json.FromJson for DidChangeWorkspaceFoldersParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -2041,8 +2049,8 @@ pub struct ConfigurationParams {
 }
 
 ///|
-pub impl @json.ToJson for ConfigurationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ConfigurationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "items",
     @json.JsonValue::Array(self.items.map(item => item.to_json())),
@@ -2051,7 +2059,7 @@ pub impl @json.ToJson for ConfigurationParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ConfigurationParams with from_json(json) {
+pub impl @json.FromJson for ConfigurationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ConfigurationParams")
@@ -2082,8 +2090,8 @@ pub struct DocumentColorParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentColorParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentColorParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -2097,18 +2105,18 @@ pub impl @json.ToJson for DocumentColorParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentColorParams with from_json(json) {
+pub impl @json.FromJson for DocumentColorParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentColorParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -2128,15 +2136,15 @@ pub struct ColorInformation {
 }
 
 ///|
-pub impl @json.ToJson for ColorInformation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ColorInformation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("color", self.color.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ColorInformation with from_json(json) {
+pub impl @json.FromJson for ColorInformation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ColorInformation")
@@ -2165,8 +2173,8 @@ pub struct DocumentColorRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentColorRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentColorRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -2180,7 +2188,7 @@ pub impl @json.ToJson for DocumentColorRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentColorRegistrationOptions with from_json(
+pub impl @json.FromJson for DocumentColorRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -2195,7 +2203,7 @@ pub impl @json.FromJson for DocumentColorRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -2205,7 +2213,7 @@ pub impl @json.FromJson for DocumentColorRegistrationOptions with from_json(
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -2239,8 +2247,8 @@ pub struct ColorPresentationParams {
 }
 
 ///|
-pub impl @json.ToJson for ColorPresentationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ColorPresentationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -2256,18 +2264,18 @@ pub impl @json.ToJson for ColorPresentationParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ColorPresentationParams with from_json(json) {
+pub impl @json.FromJson for ColorPresentationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ColorPresentationParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -2302,8 +2310,8 @@ pub struct ColorPresentation {
 }
 
 ///|
-pub impl @json.ToJson for ColorPresentation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ColorPresentation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("label", @json.JsonValue::String(self.label))
   match self.text_edit {
     Some(v) => obj.set("textEdit", v.to_json())
@@ -2321,7 +2329,7 @@ pub impl @json.ToJson for ColorPresentation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ColorPresentation with from_json(json) {
+pub impl @json.FromJson for ColorPresentation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ColorPresentation")
@@ -2335,12 +2343,12 @@ pub impl @json.FromJson for ColorPresentation with from_json(json) {
     None => raise @json.JsonError("missing label")
   }
   let text_edit : TextEdit? = match obj.get("textEdit") {
-    Some(v) if not(v.is_null()) => Some(TextEdit::from_json(v))
+    Some(v) if !v.is_null() => Some(TextEdit::from_json(v))
     _ => None
   }
   let additional_text_edits : Array[TextEdit]? = match
     obj.get("additionalTextEdits") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -2359,8 +2367,8 @@ pub struct WorkDoneProgressOptions {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -2369,13 +2377,13 @@ pub impl @json.ToJson for WorkDoneProgressOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressOptions with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkDoneProgressOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -2395,14 +2403,16 @@ pub struct TextDocumentRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for TextDocumentRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -2431,8 +2441,8 @@ pub struct FoldingRangeParams {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRangeParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FoldingRangeParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -2446,18 +2456,18 @@ pub impl @json.ToJson for FoldingRangeParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FoldingRangeParams with from_json(json) {
+pub impl @json.FromJson for FoldingRangeParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FoldingRangeParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -2485,8 +2495,8 @@ pub struct FoldingRange {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRange with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FoldingRange with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("startLine", @json.JsonValue::Number(self.start_line.to_double()))
   match self.start_character {
     Some(v) => obj.set("startCharacter", @json.JsonValue::Number(v.to_double()))
@@ -2509,7 +2519,7 @@ pub impl @json.ToJson for FoldingRange with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FoldingRange with from_json(json) {
+pub impl @json.FromJson for FoldingRange with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FoldingRange")
@@ -2523,7 +2533,7 @@ pub impl @json.FromJson for FoldingRange with from_json(json) {
     None => raise @json.JsonError("missing startLine")
   }
   let start_character : Int? = match obj.get("startCharacter") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -2541,7 +2551,7 @@ pub impl @json.FromJson for FoldingRange with from_json(json) {
     None => raise @json.JsonError("missing endLine")
   }
   let end_character : Int? = match obj.get("endCharacter") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -2551,11 +2561,11 @@ pub impl @json.FromJson for FoldingRange with from_json(json) {
     _ => None
   }
   let kind : FoldingRangeKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(FoldingRangeKind::from_json(v))
+    Some(v) if !v.is_null() => Some(FoldingRangeKind::from_json(v))
     _ => None
   }
   let collapsed_text : String? = match obj.get("collapsedText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -2587,8 +2597,8 @@ pub struct FoldingRangeRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRangeRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FoldingRangeRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -2602,7 +2612,9 @@ pub impl @json.ToJson for FoldingRangeRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FoldingRangeRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for FoldingRangeRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -2615,7 +2627,7 @@ pub impl @json.FromJson for FoldingRangeRegistrationOptions with from_json(json)
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -2625,7 +2637,7 @@ pub impl @json.FromJson for FoldingRangeRegistrationOptions with from_json(json)
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -2653,8 +2665,8 @@ pub struct DeclarationParams {
 }
 
 ///|
-pub impl @json.ToJson for DeclarationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeclarationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -2669,7 +2681,7 @@ pub impl @json.ToJson for DeclarationParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeclarationParams with from_json(json) {
+pub impl @json.FromJson for DeclarationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DeclarationParams")
@@ -2683,12 +2695,12 @@ pub impl @json.FromJson for DeclarationParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   DeclarationParams::{
@@ -2712,8 +2724,8 @@ pub struct DeclarationRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DeclarationRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeclarationRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -2727,7 +2739,9 @@ pub impl @json.ToJson for DeclarationRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeclarationRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for DeclarationRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -2736,7 +2750,7 @@ pub impl @json.FromJson for DeclarationRegistrationOptions with from_json(json) 
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -2750,7 +2764,7 @@ pub impl @json.FromJson for DeclarationRegistrationOptions with from_json(json) 
     None => raise @json.JsonError("missing documentSelector")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -2778,8 +2792,8 @@ pub struct SelectionRangeParams {
 }
 
 ///|
-pub impl @json.ToJson for SelectionRangeParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SelectionRangeParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -2797,18 +2811,18 @@ pub impl @json.ToJson for SelectionRangeParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SelectionRangeParams with from_json(json) {
+pub impl @json.FromJson for SelectionRangeParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SelectionRangeParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -2842,8 +2856,8 @@ pub struct SelectionRange {
 }
 
 ///|
-pub impl @json.ToJson for SelectionRange with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SelectionRange with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.parent {
     Some(v) => obj.set("parent", v.to_json())
@@ -2853,7 +2867,7 @@ pub impl @json.ToJson for SelectionRange with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SelectionRange with from_json(json) {
+pub impl @json.FromJson for SelectionRange with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SelectionRange")
@@ -2863,7 +2877,7 @@ pub impl @json.FromJson for SelectionRange with from_json(json) {
     None => raise @json.JsonError("missing range")
   }
   let parent : SelectionRange? = match obj.get("parent") {
-    Some(v) if not(v.is_null()) => Some(SelectionRange::from_json(v))
+    Some(v) if !v.is_null() => Some(SelectionRange::from_json(v))
     _ => None
   }
   SelectionRange::{ range, parent }
@@ -2882,8 +2896,10 @@ pub struct SelectionRangeRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for SelectionRangeRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SelectionRangeRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -2897,7 +2913,7 @@ pub impl @json.ToJson for SelectionRangeRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SelectionRangeRegistrationOptions with from_json(
+pub impl @json.FromJson for SelectionRangeRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -2908,7 +2924,7 @@ pub impl @json.FromJson for SelectionRangeRegistrationOptions with from_json(
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -2922,7 +2938,7 @@ pub impl @json.FromJson for SelectionRangeRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -2945,14 +2961,14 @@ pub struct WorkDoneProgressCreateParams {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressCreateParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressCreateParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("token", self.token.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressCreateParams with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressCreateParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -2972,14 +2988,14 @@ pub struct WorkDoneProgressCancelParams {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressCancelParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressCancelParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("token", self.token.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressCancelParams with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressCancelParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -3008,8 +3024,8 @@ pub struct CallHierarchyPrepareParams {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyPrepareParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyPrepareParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -3020,7 +3036,7 @@ pub impl @json.ToJson for CallHierarchyPrepareParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyPrepareParams with from_json(json) {
+pub impl @json.FromJson for CallHierarchyPrepareParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyPrepareParams")
@@ -3034,7 +3050,7 @@ pub impl @json.FromJson for CallHierarchyPrepareParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   CallHierarchyPrepareParams::{ text_document, position, work_done_token }
@@ -3062,8 +3078,8 @@ pub struct CallHierarchyItem {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   obj.set("kind", self.kind.to_json())
   match self.tags {
@@ -3086,7 +3102,7 @@ pub impl @json.ToJson for CallHierarchyItem with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyItem with from_json(json) {
+pub impl @json.FromJson for CallHierarchyItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyItem")
@@ -3104,7 +3120,7 @@ pub impl @json.FromJson for CallHierarchyItem with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let tags : Array[SymbolTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -3115,7 +3131,7 @@ pub impl @json.FromJson for CallHierarchyItem with from_json(json) {
     _ => None
   }
   let detail : String? = match obj.get("detail") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -3141,7 +3157,7 @@ pub impl @json.FromJson for CallHierarchyItem with from_json(json) {
     None => raise @json.JsonError("missing selectionRange")
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   CallHierarchyItem::{
@@ -3171,8 +3187,8 @@ pub struct CallHierarchyRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -3186,7 +3202,7 @@ pub impl @json.ToJson for CallHierarchyRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyRegistrationOptions with from_json(
+pub impl @json.FromJson for CallHierarchyRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -3201,7 +3217,7 @@ pub impl @json.FromJson for CallHierarchyRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -3211,7 +3227,7 @@ pub impl @json.FromJson for CallHierarchyRegistrationOptions with from_json(
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -3240,8 +3256,8 @@ pub struct CallHierarchyIncomingCallsParams {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyIncomingCallsParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyIncomingCallsParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -3255,7 +3271,7 @@ pub impl @json.ToJson for CallHierarchyIncomingCallsParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyIncomingCallsParams with from_json(
+pub impl @json.FromJson for CallHierarchyIncomingCallsParams with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -3266,12 +3282,12 @@ pub impl @json.FromJson for CallHierarchyIncomingCallsParams with from_json(
       )
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let item = match obj.get("item") {
@@ -3295,8 +3311,8 @@ pub struct CallHierarchyIncomingCall {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyIncomingCall with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyIncomingCall with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("from", self.from.to_json())
   obj.set(
     "fromRanges",
@@ -3306,7 +3322,7 @@ pub impl @json.ToJson for CallHierarchyIncomingCall with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyIncomingCall with from_json(json) {
+pub impl @json.FromJson for CallHierarchyIncomingCall with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyIncomingCall")
@@ -3340,8 +3356,8 @@ pub struct CallHierarchyOutgoingCallsParams {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyOutgoingCallsParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyOutgoingCallsParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -3355,7 +3371,7 @@ pub impl @json.ToJson for CallHierarchyOutgoingCallsParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyOutgoingCallsParams with from_json(
+pub impl @json.FromJson for CallHierarchyOutgoingCallsParams with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -3366,12 +3382,12 @@ pub impl @json.FromJson for CallHierarchyOutgoingCallsParams with from_json(
       )
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let item = match obj.get("item") {
@@ -3395,8 +3411,8 @@ pub struct CallHierarchyOutgoingCall {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyOutgoingCall with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyOutgoingCall with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("to", self.to.to_json())
   obj.set(
     "fromRanges",
@@ -3406,7 +3422,7 @@ pub impl @json.ToJson for CallHierarchyOutgoingCall with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyOutgoingCall with from_json(json) {
+pub impl @json.FromJson for CallHierarchyOutgoingCall with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyOutgoingCall")
@@ -3441,8 +3457,8 @@ pub struct SemanticTokensParams {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -3456,18 +3472,18 @@ pub impl @json.ToJson for SemanticTokensParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensParams with from_json(json) {
+pub impl @json.FromJson for SemanticTokensParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -3487,8 +3503,8 @@ pub struct SemanticTokens {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokens with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokens with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.result_id {
     Some(v) => obj.set("resultId", @json.JsonValue::String(v))
     None => ()
@@ -3503,13 +3519,13 @@ pub impl @json.ToJson for SemanticTokens with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokens with from_json(json) {
+pub impl @json.FromJson for SemanticTokens with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokens")
   }
   let result_id : String? = match obj.get("resultId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -3542,8 +3558,8 @@ pub struct SemanticTokensPartialResult {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensPartialResult with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensPartialResult with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "data",
     @json.JsonValue::Array(
@@ -3554,7 +3570,7 @@ pub impl @json.ToJson for SemanticTokensPartialResult with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensPartialResult with from_json(json) {
+pub impl @json.FromJson for SemanticTokensPartialResult with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -3598,8 +3614,10 @@ pub struct SemanticTokensRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -3622,7 +3640,7 @@ pub impl @json.ToJson for SemanticTokensRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensRegistrationOptions with from_json(
+pub impl @json.FromJson for SemanticTokensRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -3637,7 +3655,7 @@ pub impl @json.FromJson for SemanticTokensRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -3653,7 +3671,7 @@ pub impl @json.FromJson for SemanticTokensRegistrationOptions with from_json(
   let range : @json.JsonValue? = obj.get("range")
   let full : @json.JsonValue? = obj.get("full")
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -3688,8 +3706,8 @@ pub struct SemanticTokensDeltaParams {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensDeltaParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensDeltaParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -3704,18 +3722,18 @@ pub impl @json.ToJson for SemanticTokensDeltaParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensDeltaParams with from_json(json) {
+pub impl @json.FromJson for SemanticTokensDeltaParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensDeltaParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -3747,8 +3765,8 @@ pub struct SemanticTokensDelta {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensDelta with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensDelta with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.result_id {
     Some(v) => obj.set("resultId", @json.JsonValue::String(v))
     None => ()
@@ -3761,13 +3779,13 @@ pub impl @json.ToJson for SemanticTokensDelta with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensDelta with from_json(json) {
+pub impl @json.FromJson for SemanticTokensDelta with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensDelta")
   }
   let result_id : String? = match obj.get("resultId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -3795,8 +3813,8 @@ pub struct SemanticTokensDeltaPartialResult {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensDeltaPartialResult with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensDeltaPartialResult with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "edits",
     @json.JsonValue::Array(self.edits.map(item => item.to_json())),
@@ -3805,7 +3823,7 @@ pub impl @json.ToJson for SemanticTokensDeltaPartialResult with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensDeltaPartialResult with from_json(
+pub impl @json.FromJson for SemanticTokensDeltaPartialResult with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -3843,8 +3861,8 @@ pub struct SemanticTokensRangeParams {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensRangeParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensRangeParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -3859,18 +3877,18 @@ pub impl @json.ToJson for SemanticTokensRangeParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensRangeParams with from_json(json) {
+pub impl @json.FromJson for SemanticTokensRangeParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensRangeParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -3903,8 +3921,8 @@ pub struct ShowDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for ShowDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ShowDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   match self.external {
     Some(v) => obj.set("external", @json.JsonValue::Bool(v))
@@ -3922,7 +3940,7 @@ pub impl @json.ToJson for ShowDocumentParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ShowDocumentParams with from_json(json) {
+pub impl @json.FromJson for ShowDocumentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ShowDocumentParams")
@@ -3936,7 +3954,7 @@ pub impl @json.FromJson for ShowDocumentParams with from_json(json) {
     None => raise @json.JsonError("missing uri")
   }
   let external : Bool? = match obj.get("external") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -3946,7 +3964,7 @@ pub impl @json.FromJson for ShowDocumentParams with from_json(json) {
     _ => None
   }
   let take_focus : Bool? = match obj.get("takeFocus") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -3956,7 +3974,7 @@ pub impl @json.FromJson for ShowDocumentParams with from_json(json) {
     _ => None
   }
   let selection : Range? = match obj.get("selection") {
-    Some(v) if not(v.is_null()) => Some(Range::from_json(v))
+    Some(v) if !v.is_null() => Some(Range::from_json(v))
     _ => None
   }
   ShowDocumentParams::{ uri, external, take_focus, selection }
@@ -3970,14 +3988,14 @@ pub struct ShowDocumentResult {
 }
 
 ///|
-pub impl @json.ToJson for ShowDocumentResult with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ShowDocumentResult with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("success", @json.JsonValue::Bool(self.success))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ShowDocumentResult with from_json(json) {
+pub impl @json.FromJson for ShowDocumentResult with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ShowDocumentResult")
@@ -4007,8 +4025,8 @@ pub struct LinkedEditingRangeParams {
 }
 
 ///|
-pub impl @json.ToJson for LinkedEditingRangeParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LinkedEditingRangeParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -4019,7 +4037,7 @@ pub impl @json.ToJson for LinkedEditingRangeParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LinkedEditingRangeParams with from_json(json) {
+pub impl @json.FromJson for LinkedEditingRangeParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LinkedEditingRangeParams")
@@ -4033,7 +4051,7 @@ pub impl @json.FromJson for LinkedEditingRangeParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   LinkedEditingRangeParams::{ text_document, position, work_done_token }
@@ -4049,8 +4067,8 @@ pub struct LinkedEditingRanges {
 }
 
 ///|
-pub impl @json.ToJson for LinkedEditingRanges with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LinkedEditingRanges with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "ranges",
     @json.JsonValue::Array(self.ranges.map(item => item.to_json())),
@@ -4063,7 +4081,7 @@ pub impl @json.ToJson for LinkedEditingRanges with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LinkedEditingRanges with from_json(json) {
+pub impl @json.FromJson for LinkedEditingRanges with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LinkedEditingRanges")
@@ -4078,7 +4096,7 @@ pub impl @json.FromJson for LinkedEditingRanges with from_json(json) {
     None => raise @json.JsonError("missing ranges")
   }
   let word_pattern : String? = match obj.get("wordPattern") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -4103,10 +4121,10 @@ pub struct LinkedEditingRangeRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for LinkedEditingRangeRegistrationOptions with to_json(
+pub impl @json.ToJson for LinkedEditingRangeRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -4120,7 +4138,7 @@ pub impl @json.ToJson for LinkedEditingRangeRegistrationOptions with to_json(
 }
 
 ///|
-pub impl @json.FromJson for LinkedEditingRangeRegistrationOptions with from_json(
+pub impl @json.FromJson for LinkedEditingRangeRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -4135,7 +4153,7 @@ pub impl @json.FromJson for LinkedEditingRangeRegistrationOptions with from_json
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -4145,7 +4163,7 @@ pub impl @json.FromJson for LinkedEditingRangeRegistrationOptions with from_json
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -4169,8 +4187,8 @@ pub struct CreateFilesParams {
 }
 
 ///|
-pub impl @json.ToJson for CreateFilesParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CreateFilesParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "files",
     @json.JsonValue::Array(self.files.map(item => item.to_json())),
@@ -4179,7 +4197,7 @@ pub impl @json.ToJson for CreateFilesParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CreateFilesParams with from_json(json) {
+pub impl @json.FromJson for CreateFilesParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CreateFilesParams")
@@ -4208,8 +4226,8 @@ pub struct WorkspaceEdit {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.changes {
     Some(v) => obj.set("changes", v)
     None => ()
@@ -4230,7 +4248,7 @@ pub impl @json.ToJson for WorkspaceEdit with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceEdit with from_json(json) {
+pub impl @json.FromJson for WorkspaceEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceEdit")
@@ -4238,7 +4256,7 @@ pub impl @json.FromJson for WorkspaceEdit with from_json(json) {
   let changes : @json.JsonValue? = obj.get("changes")
   let document_changes : Array[@json.JsonValue]? = match
     obj.get("documentChanges") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) => items
@@ -4259,8 +4277,8 @@ pub struct FileOperationRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileOperationRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "filters",
     @json.JsonValue::Array(self.filters.map(item => item.to_json())),
@@ -4269,7 +4287,7 @@ pub impl @json.ToJson for FileOperationRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationRegistrationOptions with from_json(
+pub impl @json.FromJson for FileOperationRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -4299,8 +4317,8 @@ pub struct RenameFilesParams {
 }
 
 ///|
-pub impl @json.ToJson for RenameFilesParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameFilesParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "files",
     @json.JsonValue::Array(self.files.map(item => item.to_json())),
@@ -4309,7 +4327,7 @@ pub impl @json.ToJson for RenameFilesParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameFilesParams with from_json(json) {
+pub impl @json.FromJson for RenameFilesParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameFilesParams")
@@ -4334,8 +4352,8 @@ pub struct DeleteFilesParams {
 }
 
 ///|
-pub impl @json.ToJson for DeleteFilesParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeleteFilesParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "files",
     @json.JsonValue::Array(self.files.map(item => item.to_json())),
@@ -4344,7 +4362,7 @@ pub impl @json.ToJson for DeleteFilesParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeleteFilesParams with from_json(json) {
+pub impl @json.FromJson for DeleteFilesParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DeleteFilesParams")
@@ -4377,8 +4395,8 @@ pub struct MonikerParams {
 }
 
 ///|
-pub impl @json.ToJson for MonikerParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MonikerParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -4393,7 +4411,7 @@ pub impl @json.ToJson for MonikerParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MonikerParams with from_json(json) {
+pub impl @json.FromJson for MonikerParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MonikerParams")
@@ -4407,12 +4425,12 @@ pub impl @json.FromJson for MonikerParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   MonikerParams::{
@@ -4437,8 +4455,8 @@ pub struct Moniker {
 }
 
 ///|
-pub impl @json.ToJson for Moniker with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Moniker with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("scheme", @json.JsonValue::String(self.scheme))
   obj.set("identifier", @json.JsonValue::String(self.identifier))
   obj.set("unique", self.unique.to_json())
@@ -4450,7 +4468,7 @@ pub impl @json.ToJson for Moniker with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Moniker with from_json(json) {
+pub impl @json.FromJson for Moniker with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Moniker")
@@ -4476,7 +4494,7 @@ pub impl @json.FromJson for Moniker with from_json(json) {
     None => raise @json.JsonError("missing unique")
   }
   let kind : MonikerKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(MonikerKind::from_json(v))
+    Some(v) if !v.is_null() => Some(MonikerKind::from_json(v))
     _ => None
   }
   Moniker::{ scheme, identifier, unique, kind }
@@ -4491,8 +4509,8 @@ pub struct MonikerRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for MonikerRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MonikerRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -4502,7 +4520,7 @@ pub impl @json.ToJson for MonikerRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MonikerRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for MonikerRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MonikerRegistrationOptions")
@@ -4512,7 +4530,7 @@ pub impl @json.FromJson for MonikerRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -4540,8 +4558,8 @@ pub struct TypeHierarchyPrepareParams {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchyPrepareParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchyPrepareParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -4552,7 +4570,7 @@ pub impl @json.ToJson for TypeHierarchyPrepareParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchyPrepareParams with from_json(json) {
+pub impl @json.FromJson for TypeHierarchyPrepareParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeHierarchyPrepareParams")
@@ -4566,7 +4584,7 @@ pub impl @json.FromJson for TypeHierarchyPrepareParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   TypeHierarchyPrepareParams::{ text_document, position, work_done_token }
@@ -4594,8 +4612,8 @@ pub struct TypeHierarchyItem {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchyItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchyItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   obj.set("kind", self.kind.to_json())
   match self.tags {
@@ -4618,7 +4636,7 @@ pub impl @json.ToJson for TypeHierarchyItem with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchyItem with from_json(json) {
+pub impl @json.FromJson for TypeHierarchyItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeHierarchyItem")
@@ -4636,7 +4654,7 @@ pub impl @json.FromJson for TypeHierarchyItem with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let tags : Array[SymbolTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -4647,7 +4665,7 @@ pub impl @json.FromJson for TypeHierarchyItem with from_json(json) {
     _ => None
   }
   let detail : String? = match obj.get("detail") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -4673,7 +4691,7 @@ pub impl @json.FromJson for TypeHierarchyItem with from_json(json) {
     None => raise @json.JsonError("missing selectionRange")
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   TypeHierarchyItem::{
@@ -4703,8 +4721,8 @@ pub struct TypeHierarchyRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchyRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchyRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -4718,7 +4736,7 @@ pub impl @json.ToJson for TypeHierarchyRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchyRegistrationOptions with from_json(
+pub impl @json.FromJson for TypeHierarchyRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -4733,7 +4751,7 @@ pub impl @json.FromJson for TypeHierarchyRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -4743,7 +4761,7 @@ pub impl @json.FromJson for TypeHierarchyRegistrationOptions with from_json(
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -4772,8 +4790,8 @@ pub struct TypeHierarchySupertypesParams {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchySupertypesParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchySupertypesParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -4787,19 +4805,21 @@ pub impl @json.ToJson for TypeHierarchySupertypesParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchySupertypesParams with from_json(json) {
+pub impl @json.FromJson for TypeHierarchySupertypesParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for TypeHierarchySupertypesParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let item = match obj.get("item") {
@@ -4822,8 +4842,8 @@ pub struct TypeHierarchySubtypesParams {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchySubtypesParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchySubtypesParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -4837,19 +4857,19 @@ pub impl @json.ToJson for TypeHierarchySubtypesParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchySubtypesParams with from_json(json) {
+pub impl @json.FromJson for TypeHierarchySubtypesParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for TypeHierarchySubtypesParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let item = match obj.get("item") {
@@ -4875,8 +4895,8 @@ pub struct InlineValueParams {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -4888,13 +4908,13 @@ pub impl @json.ToJson for InlineValueParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineValueParams with from_json(json) {
+pub impl @json.FromJson for InlineValueParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -4927,8 +4947,8 @@ pub struct InlineValueRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -4942,7 +4962,9 @@ pub impl @json.ToJson for InlineValueRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineValueRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for InlineValueRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -4951,7 +4973,7 @@ pub impl @json.FromJson for InlineValueRegistrationOptions with from_json(json) 
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -4965,7 +4987,7 @@ pub impl @json.FromJson for InlineValueRegistrationOptions with from_json(json) 
     None => raise @json.JsonError("missing documentSelector")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -4991,8 +5013,8 @@ pub struct InlayHintParams {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlayHintParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -5003,13 +5025,13 @@ pub impl @json.ToJson for InlayHintParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHintParams with from_json(json) {
+pub impl @json.FromJson for InlayHintParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlayHintParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -5045,8 +5067,8 @@ pub struct InlayHint {
 }
 
 ///|
-pub impl @json.ToJson for InlayHint with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlayHint with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("position", self.position.to_json())
   obj.set("label", self.label)
   match self.kind {
@@ -5081,7 +5103,7 @@ pub impl @json.ToJson for InlayHint with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHint with from_json(json) {
+pub impl @json.FromJson for InlayHint with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlayHint")
@@ -5095,11 +5117,11 @@ pub impl @json.FromJson for InlayHint with from_json(json) {
     None => raise @json.JsonError("missing label")
   }
   let kind : InlayHintKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(InlayHintKind::from_json(v))
+    Some(v) if !v.is_null() => Some(InlayHintKind::from_json(v))
     _ => None
   }
   let text_edits : Array[TextEdit]? = match obj.get("textEdits") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -5111,7 +5133,7 @@ pub impl @json.FromJson for InlayHint with from_json(json) {
   }
   let tooltip : @json.JsonValue? = obj.get("tooltip")
   let padding_left : Bool? = match obj.get("paddingLeft") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -5121,7 +5143,7 @@ pub impl @json.FromJson for InlayHint with from_json(json) {
     _ => None
   }
   let padding_right : Bool? = match obj.get("paddingRight") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -5131,7 +5153,7 @@ pub impl @json.FromJson for InlayHint with from_json(json) {
     _ => None
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   InlayHint::{
@@ -5163,8 +5185,8 @@ pub struct InlayHintRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlayHintRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -5182,14 +5204,14 @@ pub impl @json.ToJson for InlayHintRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHintRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for InlayHintRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for InlayHintRegistrationOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -5199,7 +5221,7 @@ pub impl @json.FromJson for InlayHintRegistrationOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -5213,7 +5235,7 @@ pub impl @json.FromJson for InlayHintRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5248,8 +5270,8 @@ pub struct DocumentDiagnosticParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentDiagnosticParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentDiagnosticParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -5271,18 +5293,18 @@ pub impl @json.ToJson for DocumentDiagnosticParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentDiagnosticParams with from_json(json) {
+pub impl @json.FromJson for DocumentDiagnosticParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentDiagnosticParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -5290,7 +5312,7 @@ pub impl @json.FromJson for DocumentDiagnosticParams with from_json(json) {
     None => raise @json.JsonError("missing textDocument")
   }
   let identifier : String? = match obj.get("identifier") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5300,7 +5322,7 @@ pub impl @json.FromJson for DocumentDiagnosticParams with from_json(json) {
     _ => None
   }
   let previous_result_id : String? = match obj.get("previousResultId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5325,16 +5347,16 @@ pub struct DocumentDiagnosticReportPartialResult {
 }
 
 ///|
-pub impl @json.ToJson for DocumentDiagnosticReportPartialResult with to_json(
+pub impl @json.ToJson for DocumentDiagnosticReportPartialResult with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("relatedDocuments", self.related_documents)
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DocumentDiagnosticReportPartialResult with from_json(
+pub impl @json.FromJson for DocumentDiagnosticReportPartialResult with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -5358,14 +5380,14 @@ pub struct DiagnosticServerCancellationData {
 }
 
 ///|
-pub impl @json.ToJson for DiagnosticServerCancellationData with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DiagnosticServerCancellationData with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("retriggerRequest", @json.JsonValue::Bool(self.retrigger_request))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticServerCancellationData with from_json(
+pub impl @json.FromJson for DiagnosticServerCancellationData with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -5407,8 +5429,8 @@ pub struct DiagnosticRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DiagnosticRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DiagnosticRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -5434,7 +5456,9 @@ pub impl @json.ToJson for DiagnosticRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for DiagnosticRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -5445,7 +5469,7 @@ pub impl @json.FromJson for DiagnosticRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -5455,7 +5479,7 @@ pub impl @json.FromJson for DiagnosticRegistrationOptions with from_json(json) {
     _ => None
   }
   let identifier : String? = match obj.get("identifier") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5481,7 +5505,7 @@ pub impl @json.FromJson for DiagnosticRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing workspaceDiagnostics")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5516,8 +5540,8 @@ pub struct WorkspaceDiagnosticParams {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceDiagnosticParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceDiagnosticParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -5538,22 +5562,22 @@ pub impl @json.ToJson for WorkspaceDiagnosticParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceDiagnosticParams with from_json(json) {
+pub impl @json.FromJson for WorkspaceDiagnosticParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceDiagnosticParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let identifier : String? = match obj.get("identifier") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5586,8 +5610,8 @@ pub struct WorkspaceDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceDiagnosticReport with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceDiagnosticReport with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "items",
     @json.JsonValue::Array(self.items.map(item => item.to_json())),
@@ -5596,7 +5620,7 @@ pub impl @json.ToJson for WorkspaceDiagnosticReport with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceDiagnosticReport with from_json(json) {
+pub impl @json.FromJson for WorkspaceDiagnosticReport with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceDiagnosticReport")
@@ -5620,10 +5644,10 @@ pub struct WorkspaceDiagnosticReportPartialResult {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceDiagnosticReportPartialResult with to_json(
+pub impl @json.ToJson for WorkspaceDiagnosticReportPartialResult with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "items",
     @json.JsonValue::Array(self.items.map(item => item.to_json())),
@@ -5632,7 +5656,7 @@ pub impl @json.ToJson for WorkspaceDiagnosticReportPartialResult with to_json(
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceDiagnosticReportPartialResult with from_json(
+pub impl @json.FromJson for WorkspaceDiagnosticReportPartialResult with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -5664,8 +5688,8 @@ pub struct DidOpenNotebookDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidOpenNotebookDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidOpenNotebookDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebookDocument", self.notebook_document.to_json())
   obj.set(
     "cellTextDocuments",
@@ -5675,7 +5699,9 @@ pub impl @json.ToJson for DidOpenNotebookDocumentParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DidOpenNotebookDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidOpenNotebookDocumentParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -5713,10 +5739,10 @@ pub struct NotebookDocumentSyncRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentSyncRegistrationOptions with to_json(
+pub impl @json.ToJson for NotebookDocumentSyncRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "notebookSelector",
     @json.JsonValue::Array(self.notebook_selector.map(item => item.to_json())),
@@ -5733,7 +5759,7 @@ pub impl @json.ToJson for NotebookDocumentSyncRegistrationOptions with to_json(
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentSyncRegistrationOptions with from_json(
+pub impl @json.FromJson for NotebookDocumentSyncRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -5752,7 +5778,7 @@ pub impl @json.FromJson for NotebookDocumentSyncRegistrationOptions with from_js
     None => raise @json.JsonError("missing notebookSelector")
   }
   let save : Bool? = match obj.get("save") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -5762,7 +5788,7 @@ pub impl @json.FromJson for NotebookDocumentSyncRegistrationOptions with from_js
     _ => None
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -5784,15 +5810,17 @@ pub struct DidChangeNotebookDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeNotebookDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidChangeNotebookDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebookDocument", self.notebook_document.to_json())
   obj.set("change", self.change.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DidChangeNotebookDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidChangeNotebookDocumentParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -5819,14 +5847,16 @@ pub struct DidSaveNotebookDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidSaveNotebookDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidSaveNotebookDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebookDocument", self.notebook_document.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DidSaveNotebookDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidSaveNotebookDocumentParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -5849,8 +5879,8 @@ pub struct DidCloseNotebookDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidCloseNotebookDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidCloseNotebookDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebookDocument", self.notebook_document.to_json())
   obj.set(
     "cellTextDocuments",
@@ -5860,7 +5890,9 @@ pub impl @json.ToJson for DidCloseNotebookDocumentParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DidCloseNotebookDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidCloseNotebookDocumentParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -5902,8 +5934,8 @@ pub struct InlineCompletionParams {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -5915,7 +5947,7 @@ pub impl @json.ToJson for InlineCompletionParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionParams with from_json(json) {
+pub impl @json.FromJson for InlineCompletionParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineCompletionParams")
@@ -5929,7 +5961,7 @@ pub impl @json.FromJson for InlineCompletionParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let context = match obj.get("context") {
@@ -5947,8 +5979,8 @@ pub struct InlineCompletionList {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionList with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionList with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "items",
     @json.JsonValue::Array(self.items.map(item => item.to_json())),
@@ -5957,7 +5989,7 @@ pub impl @json.ToJson for InlineCompletionList with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionList with from_json(json) {
+pub impl @json.FromJson for InlineCompletionList with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineCompletionList")
@@ -5988,8 +6020,8 @@ pub struct InlineCompletionItem {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("insertText", self.insert_text)
   match self.filter_text {
     Some(v) => obj.set("filterText", @json.JsonValue::String(v))
@@ -6007,7 +6039,7 @@ pub impl @json.ToJson for InlineCompletionItem with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionItem with from_json(json) {
+pub impl @json.FromJson for InlineCompletionItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineCompletionItem")
@@ -6017,7 +6049,7 @@ pub impl @json.FromJson for InlineCompletionItem with from_json(json) {
     None => raise @json.JsonError("missing insertText")
   }
   let filter_text : String? = match obj.get("filterText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -6027,11 +6059,11 @@ pub impl @json.FromJson for InlineCompletionItem with from_json(json) {
     _ => None
   }
   let range : Range? = match obj.get("range") {
-    Some(v) if not(v.is_null()) => Some(Range::from_json(v))
+    Some(v) if !v.is_null() => Some(Range::from_json(v))
     _ => None
   }
   let command : Command? = match obj.get("command") {
-    Some(v) if not(v.is_null()) => Some(Command::from_json(v))
+    Some(v) if !v.is_null() => Some(Command::from_json(v))
     _ => None
   }
   InlineCompletionItem::{ insert_text, filter_text, range, command }
@@ -6052,8 +6084,10 @@ pub struct InlineCompletionRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -6067,7 +6101,7 @@ pub impl @json.ToJson for InlineCompletionRegistrationOptions with to_json(self)
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionRegistrationOptions with from_json(
+pub impl @json.FromJson for InlineCompletionRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -6078,7 +6112,7 @@ pub impl @json.FromJson for InlineCompletionRegistrationOptions with from_json(
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -6092,7 +6126,7 @@ pub impl @json.FromJson for InlineCompletionRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -6116,14 +6150,14 @@ pub struct TextDocumentContentParams {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentContentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentParams with from_json(json) {
+pub impl @json.FromJson for TextDocumentContentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentContentParams")
@@ -6147,14 +6181,14 @@ pub struct TextDocumentContentResult {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentResult with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentContentResult with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("text", @json.JsonValue::String(self.text))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentResult with from_json(json) {
+pub impl @json.FromJson for TextDocumentContentResult with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentContentResult")
@@ -6184,10 +6218,10 @@ pub struct TextDocumentContentRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentRegistrationOptions with to_json(
+pub impl @json.ToJson for TextDocumentContentRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "schemes",
     @json.JsonValue::Array(
@@ -6202,7 +6236,7 @@ pub impl @json.ToJson for TextDocumentContentRegistrationOptions with to_json(
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentRegistrationOptions with from_json(
+pub impl @json.FromJson for TextDocumentContentRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -6227,7 +6261,7 @@ pub impl @json.FromJson for TextDocumentContentRegistrationOptions with from_jso
     None => raise @json.JsonError("missing schemes")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -6247,14 +6281,14 @@ pub struct TextDocumentContentRefreshParams {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentRefreshParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentContentRefreshParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentRefreshParams with from_json(
+pub impl @json.FromJson for TextDocumentContentRefreshParams with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -6281,8 +6315,8 @@ pub struct RegistrationParams {
 }
 
 ///|
-pub impl @json.ToJson for RegistrationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RegistrationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "registrations",
     @json.JsonValue::Array(self.registrations.map(item => item.to_json())),
@@ -6291,7 +6325,7 @@ pub impl @json.ToJson for RegistrationParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RegistrationParams with from_json(json) {
+pub impl @json.FromJson for RegistrationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RegistrationParams")
@@ -6314,8 +6348,8 @@ pub struct UnregistrationParams {
 }
 
 ///|
-pub impl @json.ToJson for UnregistrationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for UnregistrationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "unregisterations",
     @json.JsonValue::Array(self.unregisterations.map(item => item.to_json())),
@@ -6324,7 +6358,7 @@ pub impl @json.ToJson for UnregistrationParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for UnregistrationParams with from_json(json) {
+pub impl @json.FromJson for UnregistrationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for UnregistrationParams")
@@ -6367,8 +6401,8 @@ pub struct InitializeParams {
 }
 
 ///|
-pub impl @json.ToJson for InitializeParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InitializeParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -6404,13 +6438,13 @@ pub impl @json.ToJson for InitializeParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InitializeParams with from_json(json) {
+pub impl @json.FromJson for InitializeParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InitializeParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let process_id = match obj.get("processId") {
@@ -6418,11 +6452,11 @@ pub impl @json.FromJson for InitializeParams with from_json(json) {
     None => raise @json.JsonError("missing processId")
   }
   let client_info : ClientInfo? = match obj.get("clientInfo") {
-    Some(v) if not(v.is_null()) => Some(ClientInfo::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientInfo::from_json(v))
     _ => None
   }
   let locale : String? = match obj.get("locale") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -6442,11 +6476,11 @@ pub impl @json.FromJson for InitializeParams with from_json(json) {
   }
   let initialization_options : LSPAny? = match
     obj.get("initializationOptions") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   let trace : TraceValue? = match obj.get("trace") {
-    Some(v) if not(v.is_null()) => Some(TraceValue::from_json(v))
+    Some(v) if !v.is_null() => Some(TraceValue::from_json(v))
     _ => None
   }
   let workspace_folders : @json.JsonValue? = obj.get("workspaceFolders")
@@ -6474,8 +6508,8 @@ pub struct InitializeResult {
 }
 
 ///|
-pub impl @json.ToJson for InitializeResult with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InitializeResult with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("capabilities", self.capabilities.to_json())
   match self.server_info {
     Some(v) => obj.set("serverInfo", v.to_json())
@@ -6485,7 +6519,7 @@ pub impl @json.ToJson for InitializeResult with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InitializeResult with from_json(json) {
+pub impl @json.FromJson for InitializeResult with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InitializeResult")
@@ -6495,7 +6529,7 @@ pub impl @json.FromJson for InitializeResult with from_json(json) {
     None => raise @json.JsonError("missing capabilities")
   }
   let server_info : ServerInfo? = match obj.get("serverInfo") {
-    Some(v) if not(v.is_null()) => Some(ServerInfo::from_json(v))
+    Some(v) if !v.is_null() => Some(ServerInfo::from_json(v))
     _ => None
   }
   InitializeResult::{ capabilities, server_info }
@@ -6509,14 +6543,14 @@ pub struct InitializeError {
 }
 
 ///|
-pub impl @json.ToJson for InitializeError with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InitializeError with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("retry", @json.JsonValue::Bool(self.retry))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for InitializeError with from_json(json) {
+pub impl @json.FromJson for InitializeError with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InitializeError")
@@ -6536,13 +6570,13 @@ pub impl @json.FromJson for InitializeError with from_json(json) {
 pub struct InitializedParams {}
 
 ///|
-pub impl @json.ToJson for InitializedParams with to_json(_self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InitializedParams with fn to_json(_self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for InitializedParams with from_json(json) {
+pub impl @json.FromJson for InitializedParams with fn from_json(json) {
   let _ = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InitializedParams")
@@ -6558,14 +6592,14 @@ pub struct DidChangeConfigurationParams {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeConfigurationParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidChangeConfigurationParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("settings", self.settings.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DidChangeConfigurationParams with from_json(json) {
+pub impl @json.FromJson for DidChangeConfigurationParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -6584,10 +6618,10 @@ pub struct DidChangeConfigurationRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeConfigurationRegistrationOptions with to_json(
+pub impl @json.ToJson for DidChangeConfigurationRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.section {
     Some(v) => obj.set("section", v)
     None => ()
@@ -6596,7 +6630,7 @@ pub impl @json.ToJson for DidChangeConfigurationRegistrationOptions with to_json
 }
 
 ///|
-pub impl @json.FromJson for DidChangeConfigurationRegistrationOptions with from_json(
+pub impl @json.FromJson for DidChangeConfigurationRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -6620,15 +6654,15 @@ pub struct ShowMessageParams {
 }
 
 ///|
-pub impl @json.ToJson for ShowMessageParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ShowMessageParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("type", self.type_.to_json())
   obj.set("message", @json.JsonValue::String(self.message))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ShowMessageParams with from_json(json) {
+pub impl @json.FromJson for ShowMessageParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ShowMessageParams")
@@ -6659,8 +6693,8 @@ pub struct ShowMessageRequestParams {
 }
 
 ///|
-pub impl @json.ToJson for ShowMessageRequestParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ShowMessageRequestParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("type", self.type_.to_json())
   obj.set("message", @json.JsonValue::String(self.message))
   match self.actions {
@@ -6672,7 +6706,7 @@ pub impl @json.ToJson for ShowMessageRequestParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ShowMessageRequestParams with from_json(json) {
+pub impl @json.FromJson for ShowMessageRequestParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ShowMessageRequestParams")
@@ -6690,7 +6724,7 @@ pub impl @json.FromJson for ShowMessageRequestParams with from_json(json) {
     None => raise @json.JsonError("missing message")
   }
   let actions : Array[MessageActionItem]? = match obj.get("actions") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -6710,14 +6744,14 @@ pub struct MessageActionItem {
 }
 
 ///|
-pub impl @json.ToJson for MessageActionItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MessageActionItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("title", @json.JsonValue::String(self.title))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for MessageActionItem with from_json(json) {
+pub impl @json.FromJson for MessageActionItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MessageActionItem")
@@ -6743,15 +6777,15 @@ pub struct LogMessageParams {
 }
 
 ///|
-pub impl @json.ToJson for LogMessageParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LogMessageParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("type", self.type_.to_json())
   obj.set("message", @json.JsonValue::String(self.message))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for LogMessageParams with from_json(json) {
+pub impl @json.FromJson for LogMessageParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LogMessageParams")
@@ -6779,14 +6813,14 @@ pub struct DidOpenTextDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidOpenTextDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidOpenTextDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DidOpenTextDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidOpenTextDocumentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DidOpenTextDocumentParams")
@@ -6808,8 +6842,8 @@ pub struct DidChangeTextDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeTextDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidChangeTextDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set(
     "contentChanges",
@@ -6819,7 +6853,7 @@ pub impl @json.ToJson for DidChangeTextDocumentParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DidChangeTextDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidChangeTextDocumentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -6853,17 +6887,17 @@ pub struct TextDocumentChangeRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentChangeRegistrationOptions with to_json(
+pub impl @json.ToJson for TextDocumentChangeRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   obj.set("syncKind", self.sync_kind.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentChangeRegistrationOptions with from_json(
+pub impl @json.FromJson for TextDocumentChangeRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -6892,14 +6926,14 @@ pub struct DidCloseTextDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidCloseTextDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidCloseTextDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DidCloseTextDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidCloseTextDocumentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DidCloseTextDocumentParams")
@@ -6921,8 +6955,8 @@ pub struct DidSaveTextDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for DidSaveTextDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidSaveTextDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   match self.text {
     Some(v) => obj.set("text", @json.JsonValue::String(v))
@@ -6932,7 +6966,7 @@ pub impl @json.ToJson for DidSaveTextDocumentParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DidSaveTextDocumentParams with from_json(json) {
+pub impl @json.FromJson for DidSaveTextDocumentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DidSaveTextDocumentParams")
@@ -6942,7 +6976,7 @@ pub impl @json.FromJson for DidSaveTextDocumentParams with from_json(json) {
     None => raise @json.JsonError("missing textDocument")
   }
   let text : String? = match obj.get("text") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -6966,8 +7000,10 @@ pub struct TextDocumentSaveRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentSaveRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentSaveRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.include_text {
     Some(v) => obj.set("includeText", @json.JsonValue::Bool(v))
@@ -6977,7 +7013,7 @@ pub impl @json.ToJson for TextDocumentSaveRegistrationOptions with to_json(self)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentSaveRegistrationOptions with from_json(
+pub impl @json.FromJson for TextDocumentSaveRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -6992,7 +7028,7 @@ pub impl @json.FromJson for TextDocumentSaveRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let include_text : Bool? = match obj.get("includeText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -7014,15 +7050,15 @@ pub struct WillSaveTextDocumentParams {
 }
 
 ///|
-pub impl @json.ToJson for WillSaveTextDocumentParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WillSaveTextDocumentParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("reason", self.reason.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for WillSaveTextDocumentParams with from_json(json) {
+pub impl @json.FromJson for WillSaveTextDocumentParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WillSaveTextDocumentParams")
@@ -7048,15 +7084,15 @@ pub struct TextEdit {
 }
 
 ///|
-pub impl @json.ToJson for TextEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("newText", @json.JsonValue::String(self.new_text))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextEdit with from_json(json) {
+pub impl @json.FromJson for TextEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextEdit")
@@ -7084,8 +7120,8 @@ pub struct DidChangeWatchedFilesParams {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeWatchedFilesParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DidChangeWatchedFilesParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "changes",
     @json.JsonValue::Array(self.changes.map(item => item.to_json())),
@@ -7094,7 +7130,7 @@ pub impl @json.ToJson for DidChangeWatchedFilesParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DidChangeWatchedFilesParams with from_json(json) {
+pub impl @json.FromJson for DidChangeWatchedFilesParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -7120,10 +7156,10 @@ pub struct DidChangeWatchedFilesRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeWatchedFilesRegistrationOptions with to_json(
+pub impl @json.ToJson for DidChangeWatchedFilesRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "watchers",
     @json.JsonValue::Array(self.watchers.map(item => item.to_json())),
@@ -7132,7 +7168,7 @@ pub impl @json.ToJson for DidChangeWatchedFilesRegistrationOptions with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DidChangeWatchedFilesRegistrationOptions with from_json(
+pub impl @json.FromJson for DidChangeWatchedFilesRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -7174,8 +7210,8 @@ pub struct CompletionParams {
 }
 
 ///|
-pub impl @json.ToJson for CompletionParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -7194,7 +7230,7 @@ pub impl @json.ToJson for CompletionParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionParams with from_json(json) {
+pub impl @json.FromJson for CompletionParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionParams")
@@ -7208,16 +7244,16 @@ pub impl @json.FromJson for CompletionParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let context : CompletionContext? = match obj.get("context") {
-    Some(v) if not(v.is_null()) => Some(CompletionContext::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionContext::from_json(v))
     _ => None
   }
   CompletionParams::{
@@ -7273,8 +7309,8 @@ pub struct CompletionItem {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("label", @json.JsonValue::String(self.label))
   match self.label_details {
     Some(v) => obj.set("labelDetails", v.to_json())
@@ -7361,7 +7397,7 @@ pub impl @json.ToJson for CompletionItem with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItem with from_json(json) {
+pub impl @json.FromJson for CompletionItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionItem")
@@ -7376,16 +7412,15 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
   }
   let label_details : CompletionItemLabelDetails? = match
     obj.get("labelDetails") {
-    Some(v) if not(v.is_null()) =>
-      Some(CompletionItemLabelDetails::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionItemLabelDetails::from_json(v))
     _ => None
   }
   let kind : CompletionItemKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(CompletionItemKind::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionItemKind::from_json(v))
     _ => None
   }
   let tags : Array[CompletionItemTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -7396,7 +7431,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let detail : String? = match obj.get("detail") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -7407,7 +7442,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
   }
   let documentation : @json.JsonValue? = obj.get("documentation")
   let deprecated : Bool? = match obj.get("deprecated") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -7417,7 +7452,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let preselect : Bool? = match obj.get("preselect") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -7427,7 +7462,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let sort_text : String? = match obj.get("sortText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -7437,7 +7472,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let filter_text : String? = match obj.get("filterText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -7447,7 +7482,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let insert_text : String? = match obj.get("insertText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -7458,16 +7493,16 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
   }
   let insert_text_format : InsertTextFormat? = match
     obj.get("insertTextFormat") {
-    Some(v) if not(v.is_null()) => Some(InsertTextFormat::from_json(v))
+    Some(v) if !v.is_null() => Some(InsertTextFormat::from_json(v))
     _ => None
   }
   let insert_text_mode : InsertTextMode? = match obj.get("insertTextMode") {
-    Some(v) if not(v.is_null()) => Some(InsertTextMode::from_json(v))
+    Some(v) if !v.is_null() => Some(InsertTextMode::from_json(v))
     _ => None
   }
   let text_edit : @json.JsonValue? = obj.get("textEdit")
   let text_edit_text : String? = match obj.get("textEditText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -7478,7 +7513,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
   }
   let additional_text_edits : Array[TextEdit]? = match
     obj.get("additionalTextEdits") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -7489,7 +7524,7 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let commit_characters : Array[String]? = match obj.get("commitCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -7505,11 +7540,11 @@ pub impl @json.FromJson for CompletionItem with from_json(json) {
     _ => None
   }
   let command : Command? = match obj.get("command") {
-    Some(v) if not(v.is_null()) => Some(Command::from_json(v))
+    Some(v) if !v.is_null() => Some(Command::from_json(v))
     _ => None
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   CompletionItem::{
@@ -7549,8 +7584,8 @@ pub struct CompletionList {
 }
 
 ///|
-pub impl @json.ToJson for CompletionList with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionList with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("isIncomplete", @json.JsonValue::Bool(self.is_incomplete))
   match self.item_defaults {
     Some(v) => obj.set("itemDefaults", v.to_json())
@@ -7568,7 +7603,7 @@ pub impl @json.ToJson for CompletionList with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionList with from_json(json) {
+pub impl @json.FromJson for CompletionList with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionList")
@@ -7582,11 +7617,11 @@ pub impl @json.FromJson for CompletionList with from_json(json) {
     None => raise @json.JsonError("missing isIncomplete")
   }
   let item_defaults : CompletionItemDefaults? = match obj.get("itemDefaults") {
-    Some(v) if not(v.is_null()) => Some(CompletionItemDefaults::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionItemDefaults::from_json(v))
     _ => None
   }
   let apply_kind : CompletionItemApplyKinds? = match obj.get("applyKind") {
-    Some(v) if not(v.is_null()) => Some(CompletionItemApplyKinds::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionItemApplyKinds::from_json(v))
     _ => None
   }
   let items = match obj.get("items") {
@@ -7620,8 +7655,8 @@ pub struct CompletionRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for CompletionRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -7655,7 +7690,9 @@ pub impl @json.ToJson for CompletionRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for CompletionRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -7666,7 +7703,7 @@ pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -7676,7 +7713,7 @@ pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
     _ => None
   }
   let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -7693,7 +7730,7 @@ pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
   }
   let all_commit_characters : Array[String]? = match
     obj.get("allCommitCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -7709,7 +7746,7 @@ pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -7720,8 +7757,7 @@ pub impl @json.FromJson for CompletionRegistrationOptions with from_json(json) {
   }
   let completion_item : ServerCompletionItemOptions? = match
     obj.get("completionItem") {
-    Some(v) if not(v.is_null()) =>
-      Some(ServerCompletionItemOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ServerCompletionItemOptions::from_json(v))
     _ => None
   }
   CompletionRegistrationOptions::{
@@ -7750,8 +7786,8 @@ pub struct HoverParams {
 }
 
 ///|
-pub impl @json.ToJson for HoverParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for HoverParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -7762,7 +7798,7 @@ pub impl @json.ToJson for HoverParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for HoverParams with from_json(json) {
+pub impl @json.FromJson for HoverParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for HoverParams")
@@ -7776,7 +7812,7 @@ pub impl @json.FromJson for HoverParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   HoverParams::{ text_document, position, work_done_token }
@@ -7792,8 +7828,8 @@ pub struct Hover {
 }
 
 ///|
-pub impl @json.ToJson for Hover with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Hover with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("contents", self.contents)
   match self.range {
     Some(v) => obj.set("range", v.to_json())
@@ -7803,7 +7839,7 @@ pub impl @json.ToJson for Hover with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Hover with from_json(json) {
+pub impl @json.FromJson for Hover with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Hover")
@@ -7813,7 +7849,7 @@ pub impl @json.FromJson for Hover with from_json(json) {
     None => raise @json.JsonError("missing contents")
   }
   let range : Range? = match obj.get("range") {
-    Some(v) if not(v.is_null()) => Some(Range::from_json(v))
+    Some(v) if !v.is_null() => Some(Range::from_json(v))
     _ => None
   }
   Hover::{ contents, range }
@@ -7830,8 +7866,8 @@ pub struct HoverRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for HoverRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for HoverRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -7841,7 +7877,7 @@ pub impl @json.ToJson for HoverRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for HoverRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for HoverRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for HoverRegistrationOptions")
@@ -7851,7 +7887,7 @@ pub impl @json.FromJson for HoverRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -7881,8 +7917,8 @@ pub struct SignatureHelpParams {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelpParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureHelpParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -7897,7 +7933,7 @@ pub impl @json.ToJson for SignatureHelpParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelpParams with from_json(json) {
+pub impl @json.FromJson for SignatureHelpParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SignatureHelpParams")
@@ -7911,11 +7947,11 @@ pub impl @json.FromJson for SignatureHelpParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let context : SignatureHelpContext? = match obj.get("context") {
-    Some(v) if not(v.is_null()) => Some(SignatureHelpContext::from_json(v))
+    Some(v) if !v.is_null() => Some(SignatureHelpContext::from_json(v))
     _ => None
   }
   SignatureHelpParams::{ text_document, position, work_done_token, context }
@@ -7933,8 +7969,8 @@ pub struct SignatureHelp {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelp with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureHelp with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "signatures",
     @json.JsonValue::Array(self.signatures.map(item => item.to_json())),
@@ -7952,7 +7988,7 @@ pub impl @json.ToJson for SignatureHelp with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelp with from_json(json) {
+pub impl @json.FromJson for SignatureHelp with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SignatureHelp")
@@ -7967,7 +8003,7 @@ pub impl @json.FromJson for SignatureHelp with from_json(json) {
     None => raise @json.JsonError("missing signatures")
   }
   let active_signature : Int? = match obj.get("activeSignature") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -7995,8 +8031,8 @@ pub struct SignatureHelpRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelpRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureHelpRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -8022,7 +8058,7 @@ pub impl @json.ToJson for SignatureHelpRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelpRegistrationOptions with from_json(
+pub impl @json.FromJson for SignatureHelpRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -8037,7 +8073,7 @@ pub impl @json.FromJson for SignatureHelpRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8047,7 +8083,7 @@ pub impl @json.FromJson for SignatureHelpRegistrationOptions with from_json(
     _ => None
   }
   let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -8064,7 +8100,7 @@ pub impl @json.FromJson for SignatureHelpRegistrationOptions with from_json(
   }
   let retrigger_characters : Array[String]? = match
     obj.get("retriggerCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -8105,8 +8141,8 @@ pub struct DefinitionParams {
 }
 
 ///|
-pub impl @json.ToJson for DefinitionParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DefinitionParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -8121,7 +8157,7 @@ pub impl @json.ToJson for DefinitionParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DefinitionParams with from_json(json) {
+pub impl @json.FromJson for DefinitionParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DefinitionParams")
@@ -8135,12 +8171,12 @@ pub impl @json.FromJson for DefinitionParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   DefinitionParams::{
@@ -8162,8 +8198,8 @@ pub struct DefinitionRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DefinitionRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DefinitionRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -8173,7 +8209,9 @@ pub impl @json.ToJson for DefinitionRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DefinitionRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for DefinitionRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -8184,7 +8222,7 @@ pub impl @json.FromJson for DefinitionRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8215,8 +8253,8 @@ pub struct ReferenceParams {
 }
 
 ///|
-pub impl @json.ToJson for ReferenceParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ReferenceParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -8232,7 +8270,7 @@ pub impl @json.ToJson for ReferenceParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ReferenceParams with from_json(json) {
+pub impl @json.FromJson for ReferenceParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ReferenceParams")
@@ -8246,12 +8284,12 @@ pub impl @json.FromJson for ReferenceParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let context = match obj.get("context") {
@@ -8278,8 +8316,8 @@ pub struct ReferenceRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for ReferenceRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ReferenceRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -8289,7 +8327,7 @@ pub impl @json.ToJson for ReferenceRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ReferenceRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for ReferenceRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -8300,7 +8338,7 @@ pub impl @json.FromJson for ReferenceRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8330,8 +8368,8 @@ pub struct DocumentHighlightParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentHighlightParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentHighlightParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -8346,7 +8384,7 @@ pub impl @json.ToJson for DocumentHighlightParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentHighlightParams with from_json(json) {
+pub impl @json.FromJson for DocumentHighlightParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentHighlightParams")
@@ -8360,12 +8398,12 @@ pub impl @json.FromJson for DocumentHighlightParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   DocumentHighlightParams::{
@@ -8386,8 +8424,8 @@ pub struct DocumentHighlight {
 }
 
 ///|
-pub impl @json.ToJson for DocumentHighlight with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentHighlight with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.kind {
     Some(v) => obj.set("kind", v.to_json())
@@ -8397,7 +8435,7 @@ pub impl @json.ToJson for DocumentHighlight with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentHighlight with from_json(json) {
+pub impl @json.FromJson for DocumentHighlight with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentHighlight")
@@ -8407,7 +8445,7 @@ pub impl @json.FromJson for DocumentHighlight with from_json(json) {
     None => raise @json.JsonError("missing range")
   }
   let kind : DocumentHighlightKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(DocumentHighlightKind::from_json(v))
+    Some(v) if !v.is_null() => Some(DocumentHighlightKind::from_json(v))
     _ => None
   }
   DocumentHighlight::{ range, kind }
@@ -8424,10 +8462,10 @@ pub struct DocumentHighlightRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentHighlightRegistrationOptions with to_json(
+pub impl @json.ToJson for DocumentHighlightRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -8437,7 +8475,7 @@ pub impl @json.ToJson for DocumentHighlightRegistrationOptions with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DocumentHighlightRegistrationOptions with from_json(
+pub impl @json.FromJson for DocumentHighlightRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -8452,7 +8490,7 @@ pub impl @json.FromJson for DocumentHighlightRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8481,8 +8519,8 @@ pub struct DocumentSymbolParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentSymbolParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentSymbolParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -8496,18 +8534,18 @@ pub impl @json.ToJson for DocumentSymbolParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentSymbolParams with from_json(json) {
+pub impl @json.FromJson for DocumentSymbolParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentSymbolParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -8537,8 +8575,8 @@ pub struct SymbolInformation {
 }
 
 ///|
-pub impl @json.ToJson for SymbolInformation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SymbolInformation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   obj.set("kind", self.kind.to_json())
   match self.tags {
@@ -8559,7 +8597,7 @@ pub impl @json.ToJson for SymbolInformation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SymbolInformation with from_json(json) {
+pub impl @json.FromJson for SymbolInformation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SymbolInformation")
@@ -8577,7 +8615,7 @@ pub impl @json.FromJson for SymbolInformation with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let tags : Array[SymbolTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -8588,7 +8626,7 @@ pub impl @json.FromJson for SymbolInformation with from_json(json) {
     _ => None
   }
   let container_name : String? = match obj.get("containerName") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -8598,7 +8636,7 @@ pub impl @json.FromJson for SymbolInformation with from_json(json) {
     _ => None
   }
   let deprecated : Bool? = match obj.get("deprecated") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8636,8 +8674,8 @@ pub struct DocumentSymbol {
 }
 
 ///|
-pub impl @json.ToJson for DocumentSymbol with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentSymbol with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   match self.detail {
     Some(v) => obj.set("detail", @json.JsonValue::String(v))
@@ -8664,7 +8702,7 @@ pub impl @json.ToJson for DocumentSymbol with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentSymbol with from_json(json) {
+pub impl @json.FromJson for DocumentSymbol with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentSymbol")
@@ -8678,7 +8716,7 @@ pub impl @json.FromJson for DocumentSymbol with from_json(json) {
     None => raise @json.JsonError("missing name")
   }
   let detail : String? = match obj.get("detail") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -8692,7 +8730,7 @@ pub impl @json.FromJson for DocumentSymbol with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let tags : Array[SymbolTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -8703,7 +8741,7 @@ pub impl @json.FromJson for DocumentSymbol with from_json(json) {
     _ => None
   }
   let deprecated : Bool? = match obj.get("deprecated") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8721,7 +8759,7 @@ pub impl @json.FromJson for DocumentSymbol with from_json(json) {
     None => raise @json.JsonError("missing selectionRange")
   }
   let children : Array[DocumentSymbol]? = match obj.get("children") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -8756,8 +8794,10 @@ pub struct DocumentSymbolRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentSymbolRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentSymbolRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -8771,7 +8811,7 @@ pub impl @json.ToJson for DocumentSymbolRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentSymbolRegistrationOptions with from_json(
+pub impl @json.FromJson for DocumentSymbolRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -8786,7 +8826,7 @@ pub impl @json.FromJson for DocumentSymbolRegistrationOptions with from_json(
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -8796,7 +8836,7 @@ pub impl @json.FromJson for DocumentSymbolRegistrationOptions with from_json(
     _ => None
   }
   let label : String? = match obj.get("label") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -8830,8 +8870,8 @@ pub struct CodeActionParams {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -8847,18 +8887,18 @@ pub impl @json.ToJson for CodeActionParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionParams with from_json(json) {
+pub impl @json.FromJson for CodeActionParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -8896,8 +8936,8 @@ pub struct Command {
 }
 
 ///|
-pub impl @json.ToJson for Command with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Command with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("title", @json.JsonValue::String(self.title))
   match self.tooltip {
     Some(v) => obj.set("tooltip", @json.JsonValue::String(v))
@@ -8916,7 +8956,7 @@ pub impl @json.ToJson for Command with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Command with from_json(json) {
+pub impl @json.FromJson for Command with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Command")
@@ -8930,7 +8970,7 @@ pub impl @json.FromJson for Command with from_json(json) {
     None => raise @json.JsonError("missing title")
   }
   let tooltip : String? = match obj.get("tooltip") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -8948,7 +8988,7 @@ pub impl @json.FromJson for Command with from_json(json) {
     None => raise @json.JsonError("missing command")
   }
   let arguments : Array[LSPAny]? = match obj.get("arguments") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -8985,8 +9025,8 @@ pub struct CodeAction {
 }
 
 ///|
-pub impl @json.ToJson for CodeAction with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeAction with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("title", @json.JsonValue::String(self.title))
   match self.kind {
     Some(v) => obj.set("kind", v.to_json())
@@ -9029,7 +9069,7 @@ pub impl @json.ToJson for CodeAction with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeAction with from_json(json) {
+pub impl @json.FromJson for CodeAction with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeAction")
@@ -9043,11 +9083,11 @@ pub impl @json.FromJson for CodeAction with from_json(json) {
     None => raise @json.JsonError("missing title")
   }
   let kind : CodeActionKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(CodeActionKind::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeActionKind::from_json(v))
     _ => None
   }
   let diagnostics : Array[Diagnostic]? = match obj.get("diagnostics") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -9058,7 +9098,7 @@ pub impl @json.FromJson for CodeAction with from_json(json) {
     _ => None
   }
   let is_preferred : Bool? = match obj.get("isPreferred") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9068,23 +9108,23 @@ pub impl @json.FromJson for CodeAction with from_json(json) {
     _ => None
   }
   let disabled : CodeActionDisabled? = match obj.get("disabled") {
-    Some(v) if not(v.is_null()) => Some(CodeActionDisabled::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeActionDisabled::from_json(v))
     _ => None
   }
   let edit : WorkspaceEdit? = match obj.get("edit") {
-    Some(v) if not(v.is_null()) => Some(WorkspaceEdit::from_json(v))
+    Some(v) if !v.is_null() => Some(WorkspaceEdit::from_json(v))
     _ => None
   }
   let command : Command? = match obj.get("command") {
-    Some(v) if not(v.is_null()) => Some(Command::from_json(v))
+    Some(v) if !v.is_null() => Some(Command::from_json(v))
     _ => None
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   let tags : Array[CodeActionTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -9124,8 +9164,8 @@ pub struct CodeActionRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -9155,7 +9195,9 @@ pub impl @json.ToJson for CodeActionRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for CodeActionRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -9166,7 +9208,7 @@ pub impl @json.FromJson for CodeActionRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9177,7 +9219,7 @@ pub impl @json.FromJson for CodeActionRegistrationOptions with from_json(json) {
   }
   let code_action_kinds : Array[CodeActionKind]? = match
     obj.get("codeActionKinds") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -9189,7 +9231,7 @@ pub impl @json.FromJson for CodeActionRegistrationOptions with from_json(json) {
   }
   let documentation : Array[CodeActionKindDocumentation]? = match
     obj.get("documentation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -9200,7 +9242,7 @@ pub impl @json.FromJson for CodeActionRegistrationOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9232,8 +9274,8 @@ pub struct WorkspaceSymbolParams {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceSymbolParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceSymbolParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -9247,18 +9289,18 @@ pub impl @json.ToJson for WorkspaceSymbolParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceSymbolParams with from_json(json) {
+pub impl @json.FromJson for WorkspaceSymbolParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceSymbolParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let query = match obj.get("query") {
@@ -9292,8 +9334,8 @@ pub struct WorkspaceSymbol {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceSymbol with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceSymbol with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   obj.set("kind", self.kind.to_json())
   match self.tags {
@@ -9314,7 +9356,7 @@ pub impl @json.ToJson for WorkspaceSymbol with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceSymbol with from_json(json) {
+pub impl @json.FromJson for WorkspaceSymbol with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceSymbol")
@@ -9332,7 +9374,7 @@ pub impl @json.FromJson for WorkspaceSymbol with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let tags : Array[SymbolTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -9343,7 +9385,7 @@ pub impl @json.FromJson for WorkspaceSymbol with from_json(json) {
     _ => None
   }
   let container_name : String? = match obj.get("containerName") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -9357,7 +9399,7 @@ pub impl @json.FromJson for WorkspaceSymbol with from_json(json) {
     None => raise @json.JsonError("missing location")
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   WorkspaceSymbol::{ name, kind, tags, container_name, location, data }
@@ -9374,8 +9416,10 @@ pub struct WorkspaceSymbolRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceSymbolRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceSymbolRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -9388,7 +9432,7 @@ pub impl @json.ToJson for WorkspaceSymbolRegistrationOptions with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceSymbolRegistrationOptions with from_json(
+pub impl @json.FromJson for WorkspaceSymbolRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -9399,7 +9443,7 @@ pub impl @json.FromJson for WorkspaceSymbolRegistrationOptions with from_json(
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9409,7 +9453,7 @@ pub impl @json.FromJson for WorkspaceSymbolRegistrationOptions with from_json(
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9435,8 +9479,8 @@ pub struct CodeLensParams {
 }
 
 ///|
-pub impl @json.ToJson for CodeLensParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeLensParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -9450,18 +9494,18 @@ pub impl @json.ToJson for CodeLensParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeLensParams with from_json(json) {
+pub impl @json.FromJson for CodeLensParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeLensParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -9483,8 +9527,8 @@ pub struct CodeLens {
 }
 
 ///|
-pub impl @json.ToJson for CodeLens with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeLens with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.command {
     Some(v) => obj.set("command", v.to_json())
@@ -9498,7 +9542,7 @@ pub impl @json.ToJson for CodeLens with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeLens with from_json(json) {
+pub impl @json.FromJson for CodeLens with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeLens")
@@ -9508,11 +9552,11 @@ pub impl @json.FromJson for CodeLens with from_json(json) {
     None => raise @json.JsonError("missing range")
   }
   let command : Command? = match obj.get("command") {
-    Some(v) if not(v.is_null()) => Some(Command::from_json(v))
+    Some(v) if !v.is_null() => Some(Command::from_json(v))
     _ => None
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   CodeLens::{ range, command, data }
@@ -9531,8 +9575,8 @@ pub struct CodeLensRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for CodeLensRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeLensRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -9546,7 +9590,7 @@ pub impl @json.ToJson for CodeLensRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeLensRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for CodeLensRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -9557,7 +9601,7 @@ pub impl @json.FromJson for CodeLensRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9567,7 +9611,7 @@ pub impl @json.FromJson for CodeLensRegistrationOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9597,8 +9641,8 @@ pub struct DocumentLinkParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentLinkParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentLinkParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -9612,18 +9656,18 @@ pub impl @json.ToJson for DocumentLinkParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentLinkParams with from_json(json) {
+pub impl @json.FromJson for DocumentLinkParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentLinkParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -9647,8 +9691,8 @@ pub struct DocumentLink {
 }
 
 ///|
-pub impl @json.ToJson for DocumentLink with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentLink with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.target {
     Some(v) => obj.set("target", @json.JsonValue::String(v))
@@ -9666,7 +9710,7 @@ pub impl @json.ToJson for DocumentLink with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentLink with from_json(json) {
+pub impl @json.FromJson for DocumentLink with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentLink")
@@ -9676,7 +9720,7 @@ pub impl @json.FromJson for DocumentLink with from_json(json) {
     None => raise @json.JsonError("missing range")
   }
   let target : String? = match obj.get("target") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -9686,7 +9730,7 @@ pub impl @json.FromJson for DocumentLink with from_json(json) {
     _ => None
   }
   let tooltip : String? = match obj.get("tooltip") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -9696,7 +9740,7 @@ pub impl @json.FromJson for DocumentLink with from_json(json) {
     _ => None
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   DocumentLink::{ range, target, tooltip, data }
@@ -9715,8 +9759,8 @@ pub struct DocumentLinkRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentLinkRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentLinkRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -9730,7 +9774,9 @@ pub impl @json.ToJson for DocumentLinkRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentLinkRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for DocumentLinkRegistrationOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -9743,7 +9789,7 @@ pub impl @json.FromJson for DocumentLinkRegistrationOptions with from_json(json)
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9753,7 +9799,7 @@ pub impl @json.FromJson for DocumentLinkRegistrationOptions with from_json(json)
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9783,8 +9829,8 @@ pub struct DocumentFormattingParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentFormattingParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentFormattingParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -9795,13 +9841,13 @@ pub impl @json.ToJson for DocumentFormattingParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentFormattingParams with from_json(json) {
+pub impl @json.FromJson for DocumentFormattingParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentFormattingParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -9826,10 +9872,10 @@ pub struct DocumentFormattingRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentFormattingRegistrationOptions with to_json(
+pub impl @json.ToJson for DocumentFormattingRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -9839,7 +9885,7 @@ pub impl @json.ToJson for DocumentFormattingRegistrationOptions with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DocumentFormattingRegistrationOptions with from_json(
+pub impl @json.FromJson for DocumentFormattingRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -9854,7 +9900,7 @@ pub impl @json.FromJson for DocumentFormattingRegistrationOptions with from_json
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9885,8 +9931,8 @@ pub struct DocumentRangeFormattingParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentRangeFormattingParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentRangeFormattingParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -9898,14 +9944,16 @@ pub impl @json.ToJson for DocumentRangeFormattingParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentRangeFormattingParams with from_json(json) {
+pub impl @json.FromJson for DocumentRangeFormattingParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for DocumentRangeFormattingParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -9941,10 +9989,10 @@ pub struct DocumentRangeFormattingRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentRangeFormattingRegistrationOptions with to_json(
+pub impl @json.ToJson for DocumentRangeFormattingRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -9958,7 +10006,7 @@ pub impl @json.ToJson for DocumentRangeFormattingRegistrationOptions with to_jso
 }
 
 ///|
-pub impl @json.FromJson for DocumentRangeFormattingRegistrationOptions with from_json(
+pub impl @json.FromJson for DocumentRangeFormattingRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -9973,7 +10021,7 @@ pub impl @json.FromJson for DocumentRangeFormattingRegistrationOptions with from
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -9983,7 +10031,7 @@ pub impl @json.FromJson for DocumentRangeFormattingRegistrationOptions with from
     _ => None
   }
   let ranges_support : Bool? = match obj.get("rangesSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -10015,8 +10063,8 @@ pub struct DocumentRangesFormattingParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentRangesFormattingParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentRangesFormattingParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -10031,7 +10079,9 @@ pub impl @json.ToJson for DocumentRangesFormattingParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentRangesFormattingParams with from_json(json) {
+pub impl @json.FromJson for DocumentRangesFormattingParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -10040,7 +10090,7 @@ pub impl @json.FromJson for DocumentRangesFormattingParams with from_json(json) 
       )
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let text_document = match obj.get("textDocument") {
@@ -10082,8 +10132,8 @@ pub struct DocumentOnTypeFormattingParams {
 }
 
 ///|
-pub impl @json.ToJson for DocumentOnTypeFormattingParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentOnTypeFormattingParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   obj.set("ch", @json.JsonValue::String(self.ch))
@@ -10092,7 +10142,9 @@ pub impl @json.ToJson for DocumentOnTypeFormattingParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentOnTypeFormattingParams with from_json(json) {
+pub impl @json.FromJson for DocumentOnTypeFormattingParams with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -10137,10 +10189,10 @@ pub struct DocumentOnTypeFormattingRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentOnTypeFormattingRegistrationOptions with to_json(
+pub impl @json.ToJson for DocumentOnTypeFormattingRegistrationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   obj.set(
     "firstTriggerCharacter",
@@ -10158,7 +10210,7 @@ pub impl @json.ToJson for DocumentOnTypeFormattingRegistrationOptions with to_js
 }
 
 ///|
-pub impl @json.FromJson for DocumentOnTypeFormattingRegistrationOptions with from_json(
+pub impl @json.FromJson for DocumentOnTypeFormattingRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -10182,7 +10234,7 @@ pub impl @json.FromJson for DocumentOnTypeFormattingRegistrationOptions with fro
   }
   let more_trigger_character : Array[String]? = match
     obj.get("moreTriggerCharacter") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -10222,8 +10274,8 @@ pub struct RenameParams {
 }
 
 ///|
-pub impl @json.ToJson for RenameParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -10235,7 +10287,7 @@ pub impl @json.ToJson for RenameParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameParams with from_json(json) {
+pub impl @json.FromJson for RenameParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameParams")
@@ -10249,7 +10301,7 @@ pub impl @json.FromJson for RenameParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let new_name = match obj.get("newName") {
@@ -10276,8 +10328,8 @@ pub struct RenameRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for RenameRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("documentSelector", self.document_selector)
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
@@ -10291,7 +10343,7 @@ pub impl @json.ToJson for RenameRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for RenameRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameRegistrationOptions")
@@ -10301,7 +10353,7 @@ pub impl @json.FromJson for RenameRegistrationOptions with from_json(json) {
     None => raise @json.JsonError("missing documentSelector")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -10311,7 +10363,7 @@ pub impl @json.FromJson for RenameRegistrationOptions with from_json(json) {
     _ => None
   }
   let prepare_provider : Bool? = match obj.get("prepareProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -10341,8 +10393,8 @@ pub struct PrepareRenameParams {
 }
 
 ///|
-pub impl @json.ToJson for PrepareRenameParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for PrepareRenameParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set("position", self.position.to_json())
   match self.work_done_token {
@@ -10353,7 +10405,7 @@ pub impl @json.ToJson for PrepareRenameParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for PrepareRenameParams with from_json(json) {
+pub impl @json.FromJson for PrepareRenameParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for PrepareRenameParams")
@@ -10367,7 +10419,7 @@ pub impl @json.FromJson for PrepareRenameParams with from_json(json) {
     None => raise @json.JsonError("missing position")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   PrepareRenameParams::{ text_document, position, work_done_token }
@@ -10387,8 +10439,8 @@ pub struct ExecuteCommandParams {
 }
 
 ///|
-pub impl @json.ToJson for ExecuteCommandParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ExecuteCommandParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -10406,13 +10458,13 @@ pub impl @json.ToJson for ExecuteCommandParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ExecuteCommandParams with from_json(json) {
+pub impl @json.FromJson for ExecuteCommandParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ExecuteCommandParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   let command = match obj.get("command") {
@@ -10424,7 +10476,7 @@ pub impl @json.FromJson for ExecuteCommandParams with from_json(json) {
     None => raise @json.JsonError("missing command")
   }
   let arguments : Array[LSPAny]? = match obj.get("arguments") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -10448,8 +10500,10 @@ pub struct ExecuteCommandRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for ExecuteCommandRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ExecuteCommandRegistrationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -10464,7 +10518,7 @@ pub impl @json.ToJson for ExecuteCommandRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ExecuteCommandRegistrationOptions with from_json(
+pub impl @json.FromJson for ExecuteCommandRegistrationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -10475,7 +10529,7 @@ pub impl @json.FromJson for ExecuteCommandRegistrationOptions with from_json(
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -10513,8 +10567,8 @@ pub struct ApplyWorkspaceEditParams {
 }
 
 ///|
-pub impl @json.ToJson for ApplyWorkspaceEditParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ApplyWorkspaceEditParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.label {
     Some(v) => obj.set("label", @json.JsonValue::String(v))
     None => ()
@@ -10528,13 +10582,13 @@ pub impl @json.ToJson for ApplyWorkspaceEditParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ApplyWorkspaceEditParams with from_json(json) {
+pub impl @json.FromJson for ApplyWorkspaceEditParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ApplyWorkspaceEditParams")
   }
   let label : String? = match obj.get("label") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -10548,7 +10602,7 @@ pub impl @json.FromJson for ApplyWorkspaceEditParams with from_json(json) {
     None => raise @json.JsonError("missing edit")
   }
   let metadata : WorkspaceEditMetadata? = match obj.get("metadata") {
-    Some(v) if not(v.is_null()) => Some(WorkspaceEditMetadata::from_json(v))
+    Some(v) if !v.is_null() => Some(WorkspaceEditMetadata::from_json(v))
     _ => None
   }
   ApplyWorkspaceEditParams::{ label, edit, metadata }
@@ -10566,8 +10620,8 @@ pub struct ApplyWorkspaceEditResult {
 }
 
 ///|
-pub impl @json.ToJson for ApplyWorkspaceEditResult with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ApplyWorkspaceEditResult with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("applied", @json.JsonValue::Bool(self.applied))
   match self.failure_reason {
     Some(v) => obj.set("failureReason", @json.JsonValue::String(v))
@@ -10581,7 +10635,7 @@ pub impl @json.ToJson for ApplyWorkspaceEditResult with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ApplyWorkspaceEditResult with from_json(json) {
+pub impl @json.FromJson for ApplyWorkspaceEditResult with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ApplyWorkspaceEditResult")
@@ -10595,7 +10649,7 @@ pub impl @json.FromJson for ApplyWorkspaceEditResult with from_json(json) {
     None => raise @json.JsonError("missing applied")
   }
   let failure_reason : String? = match obj.get("failureReason") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -10605,7 +10659,7 @@ pub impl @json.FromJson for ApplyWorkspaceEditResult with from_json(json) {
     _ => None
   }
   let failed_change : Int? = match obj.get("failedChange") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -10631,8 +10685,8 @@ pub struct WorkDoneProgressBegin {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressBegin with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressBegin with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   obj.set("title", @json.JsonValue::String(self.title))
   match self.cancellable {
@@ -10651,7 +10705,7 @@ pub impl @json.ToJson for WorkDoneProgressBegin with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressBegin with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressBegin with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkDoneProgressBegin")
@@ -10673,7 +10727,7 @@ pub impl @json.FromJson for WorkDoneProgressBegin with from_json(json) {
     None => raise @json.JsonError("missing title")
   }
   let cancellable : Bool? = match obj.get("cancellable") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -10683,7 +10737,7 @@ pub impl @json.FromJson for WorkDoneProgressBegin with from_json(json) {
     _ => None
   }
   let message : String? = match obj.get("message") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -10693,7 +10747,7 @@ pub impl @json.FromJson for WorkDoneProgressBegin with from_json(json) {
     _ => None
   }
   let percentage : Int? = match obj.get("percentage") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -10717,8 +10771,8 @@ pub struct WorkDoneProgressReport {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressReport with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressReport with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.cancellable {
     Some(v) => obj.set("cancellable", @json.JsonValue::Bool(v))
@@ -10736,7 +10790,7 @@ pub impl @json.ToJson for WorkDoneProgressReport with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressReport with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressReport with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkDoneProgressReport")
@@ -10750,7 +10804,7 @@ pub impl @json.FromJson for WorkDoneProgressReport with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let cancellable : Bool? = match obj.get("cancellable") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -10760,7 +10814,7 @@ pub impl @json.FromJson for WorkDoneProgressReport with from_json(json) {
     _ => None
   }
   let message : String? = match obj.get("message") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -10770,7 +10824,7 @@ pub impl @json.FromJson for WorkDoneProgressReport with from_json(json) {
     _ => None
   }
   let percentage : Int? = match obj.get("percentage") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -10790,8 +10844,8 @@ pub struct WorkDoneProgressEnd {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressEnd with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressEnd with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.message {
     Some(v) => obj.set("message", @json.JsonValue::String(v))
@@ -10801,7 +10855,7 @@ pub impl @json.ToJson for WorkDoneProgressEnd with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressEnd with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressEnd with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkDoneProgressEnd")
@@ -10815,7 +10869,7 @@ pub impl @json.FromJson for WorkDoneProgressEnd with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let message : String? = match obj.get("message") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -10833,14 +10887,14 @@ pub struct SetTraceParams {
 }
 
 ///|
-pub impl @json.ToJson for SetTraceParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SetTraceParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("value", self.value.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for SetTraceParams with from_json(json) {
+pub impl @json.FromJson for SetTraceParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SetTraceParams")
@@ -10859,8 +10913,8 @@ pub struct LogTraceParams {
 }
 
 ///|
-pub impl @json.ToJson for LogTraceParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LogTraceParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("message", @json.JsonValue::String(self.message))
   match self.verbose {
     Some(v) => obj.set("verbose", @json.JsonValue::String(v))
@@ -10870,7 +10924,7 @@ pub impl @json.ToJson for LogTraceParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LogTraceParams with from_json(json) {
+pub impl @json.FromJson for LogTraceParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LogTraceParams")
@@ -10884,7 +10938,7 @@ pub impl @json.FromJson for LogTraceParams with from_json(json) {
     None => raise @json.JsonError("missing message")
   }
   let verbose : String? = match obj.get("verbose") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -10903,14 +10957,14 @@ pub struct CancelParams {
 }
 
 ///|
-pub impl @json.ToJson for CancelParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CancelParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("id", self.id)
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for CancelParams with from_json(json) {
+pub impl @json.FromJson for CancelParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CancelParams")
@@ -10931,15 +10985,15 @@ pub struct ProgressParams {
 }
 
 ///|
-pub impl @json.ToJson for ProgressParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ProgressParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("token", self.token.to_json())
   obj.set("value", self.value.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ProgressParams with from_json(json) {
+pub impl @json.FromJson for ProgressParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ProgressParams")
@@ -10962,8 +11016,8 @@ pub struct WorkDoneProgressParams {
 }
 
 ///|
-pub impl @json.ToJson for WorkDoneProgressParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkDoneProgressParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_token {
     Some(v) => obj.set("workDoneToken", v.to_json())
     None => ()
@@ -10972,13 +11026,13 @@ pub impl @json.ToJson for WorkDoneProgressParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkDoneProgressParams with from_json(json) {
+pub impl @json.FromJson for WorkDoneProgressParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkDoneProgressParams")
   }
   let work_done_token : ProgressToken? = match obj.get("workDoneToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   WorkDoneProgressParams::{ work_done_token, }
@@ -10991,8 +11045,8 @@ pub struct PartialResultParams {
 }
 
 ///|
-pub impl @json.ToJson for PartialResultParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for PartialResultParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.partial_result_token {
     Some(v) => obj.set("partialResultToken", v.to_json())
     None => ()
@@ -11001,14 +11055,14 @@ pub impl @json.ToJson for PartialResultParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for PartialResultParams with from_json(json) {
+pub impl @json.FromJson for PartialResultParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for PartialResultParams")
   }
   let partial_result_token : ProgressToken? = match
     obj.get("partialResultToken") {
-    Some(v) if not(v.is_null()) => Some(ProgressToken::from_json(v))
+    Some(v) if !v.is_null() => Some(ProgressToken::from_json(v))
     _ => None
   }
   PartialResultParams::{ partial_result_token, }
@@ -11028,8 +11082,8 @@ pub struct LocationLink {
 }
 
 ///|
-pub impl @json.ToJson for LocationLink with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LocationLink with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.origin_selection_range {
     Some(v) => obj.set("originSelectionRange", v.to_json())
     None => ()
@@ -11041,13 +11095,13 @@ pub impl @json.ToJson for LocationLink with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LocationLink with from_json(json) {
+pub impl @json.FromJson for LocationLink with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LocationLink")
   }
   let origin_selection_range : Range? = match obj.get("originSelectionRange") {
-    Some(v) if not(v.is_null()) => Some(Range::from_json(v))
+    Some(v) if !v.is_null() => Some(Range::from_json(v))
     _ => None
   }
   let target_uri = match obj.get("targetUri") {
@@ -11081,8 +11135,8 @@ pub struct ImplementationOptions {
 }
 
 ///|
-pub impl @json.ToJson for ImplementationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ImplementationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11091,13 +11145,13 @@ pub impl @json.ToJson for ImplementationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ImplementationOptions with from_json(json) {
+pub impl @json.FromJson for ImplementationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ImplementationOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11117,8 +11171,8 @@ pub struct StaticRegistrationOptions {
 }
 
 ///|
-pub impl @json.ToJson for StaticRegistrationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for StaticRegistrationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.id {
     Some(v) => obj.set("id", @json.JsonValue::String(v))
     None => ()
@@ -11127,13 +11181,13 @@ pub impl @json.ToJson for StaticRegistrationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for StaticRegistrationOptions with from_json(json) {
+pub impl @json.FromJson for StaticRegistrationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for StaticRegistrationOptions")
   }
   let id : String? = match obj.get("id") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -11152,8 +11206,8 @@ pub struct TypeDefinitionOptions {
 }
 
 ///|
-pub impl @json.ToJson for TypeDefinitionOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeDefinitionOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11162,13 +11216,13 @@ pub impl @json.ToJson for TypeDefinitionOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeDefinitionOptions with from_json(json) {
+pub impl @json.FromJson for TypeDefinitionOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeDefinitionOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11190,8 +11244,8 @@ pub struct WorkspaceFoldersChangeEvent {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceFoldersChangeEvent with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceFoldersChangeEvent with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "added",
     @json.JsonValue::Array(self.added.map(item => item.to_json())),
@@ -11204,7 +11258,7 @@ pub impl @json.ToJson for WorkspaceFoldersChangeEvent with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceFoldersChangeEvent with from_json(json) {
+pub impl @json.FromJson for WorkspaceFoldersChangeEvent with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -11240,8 +11294,8 @@ pub struct ConfigurationItem {
 }
 
 ///|
-pub impl @json.ToJson for ConfigurationItem with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ConfigurationItem with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.scope_uri {
     Some(v) => obj.set("scopeUri", @json.JsonValue::String(v))
     None => ()
@@ -11254,13 +11308,13 @@ pub impl @json.ToJson for ConfigurationItem with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ConfigurationItem with from_json(json) {
+pub impl @json.FromJson for ConfigurationItem with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ConfigurationItem")
   }
   let scope_uri : String? = match obj.get("scopeUri") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -11270,7 +11324,7 @@ pub impl @json.FromJson for ConfigurationItem with from_json(json) {
     _ => None
   }
   let section : String? = match obj.get("section") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -11296,8 +11350,8 @@ pub struct Color {
 }
 
 ///|
-pub impl @json.ToJson for Color with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Color with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("red", @json.JsonValue::Number(self.red))
   obj.set("green", @json.JsonValue::Number(self.green))
   obj.set("blue", @json.JsonValue::Number(self.blue))
@@ -11306,7 +11360,7 @@ pub impl @json.ToJson for Color with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Color with from_json(json) {
+pub impl @json.FromJson for Color with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Color")
@@ -11353,8 +11407,8 @@ pub struct DocumentColorOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentColorOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentColorOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11363,13 +11417,13 @@ pub impl @json.ToJson for DocumentColorOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentColorOptions with from_json(json) {
+pub impl @json.FromJson for DocumentColorOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentColorOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11388,8 +11442,8 @@ pub struct FoldingRangeOptions {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRangeOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FoldingRangeOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11398,13 +11452,13 @@ pub impl @json.ToJson for FoldingRangeOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FoldingRangeOptions with from_json(json) {
+pub impl @json.FromJson for FoldingRangeOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FoldingRangeOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11423,8 +11477,8 @@ pub struct DeclarationOptions {
 }
 
 ///|
-pub impl @json.ToJson for DeclarationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeclarationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11433,13 +11487,13 @@ pub impl @json.ToJson for DeclarationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeclarationOptions with from_json(json) {
+pub impl @json.FromJson for DeclarationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DeclarationOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11458,8 +11512,8 @@ pub struct SelectionRangeOptions {
 }
 
 ///|
-pub impl @json.ToJson for SelectionRangeOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SelectionRangeOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11468,13 +11522,13 @@ pub impl @json.ToJson for SelectionRangeOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SelectionRangeOptions with from_json(json) {
+pub impl @json.FromJson for SelectionRangeOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SelectionRangeOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11495,8 +11549,8 @@ pub struct CallHierarchyOptions {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11505,13 +11559,13 @@ pub impl @json.ToJson for CallHierarchyOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyOptions with from_json(json) {
+pub impl @json.FromJson for CallHierarchyOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CallHierarchyOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11538,8 +11592,8 @@ pub struct SemanticTokensOptions {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11557,13 +11611,13 @@ pub impl @json.ToJson for SemanticTokensOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensOptions with from_json(json) {
+pub impl @json.FromJson for SemanticTokensOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11593,8 +11647,8 @@ pub struct SemanticTokensEdit {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("start", @json.JsonValue::Number(self.start.to_double()))
   obj.set("deleteCount", @json.JsonValue::Number(self.delete_count.to_double()))
   match self.data {
@@ -11611,7 +11665,7 @@ pub impl @json.ToJson for SemanticTokensEdit with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensEdit with from_json(json) {
+pub impl @json.FromJson for SemanticTokensEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensEdit")
@@ -11633,7 +11687,7 @@ pub impl @json.FromJson for SemanticTokensEdit with from_json(json) {
     None => raise @json.JsonError("missing deleteCount")
   }
   let data : Array[Int]? = match obj.get("data") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -11658,8 +11712,8 @@ pub struct LinkedEditingRangeOptions {
 }
 
 ///|
-pub impl @json.ToJson for LinkedEditingRangeOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LinkedEditingRangeOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -11668,13 +11722,13 @@ pub impl @json.ToJson for LinkedEditingRangeOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for LinkedEditingRangeOptions with from_json(json) {
+pub impl @json.FromJson for LinkedEditingRangeOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LinkedEditingRangeOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -11694,14 +11748,14 @@ pub struct FileCreate {
 }
 
 ///|
-pub impl @json.ToJson for FileCreate with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileCreate with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for FileCreate with from_json(json) {
+pub impl @json.FromJson for FileCreate with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileCreate")
@@ -11727,8 +11781,8 @@ pub struct TextDocumentEdit {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("textDocument", self.text_document.to_json())
   obj.set(
     "edits",
@@ -11738,7 +11792,7 @@ pub impl @json.ToJson for TextDocumentEdit with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentEdit with from_json(json) {
+pub impl @json.FromJson for TextDocumentEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentEdit")
@@ -11774,8 +11828,8 @@ pub struct CreateFile {
 }
 
 ///|
-pub impl @json.ToJson for CreateFile with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CreateFile with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.annotation_id {
     Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
@@ -11790,7 +11844,7 @@ pub impl @json.ToJson for CreateFile with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CreateFile with from_json(json) {
+pub impl @json.FromJson for CreateFile with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CreateFile")
@@ -11805,7 +11859,7 @@ pub impl @json.FromJson for CreateFile with from_json(json) {
   }
   let annotation_id : ChangeAnnotationIdentifier? = match
     obj.get("annotationId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -11823,7 +11877,7 @@ pub impl @json.FromJson for CreateFile with from_json(json) {
     None => raise @json.JsonError("missing uri")
   }
   let options : CreateFileOptions? = match obj.get("options") {
-    Some(v) if not(v.is_null()) => Some(CreateFileOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(CreateFileOptions::from_json(v))
     _ => None
   }
   CreateFile::{ kind, annotation_id, uri, options }
@@ -11847,8 +11901,8 @@ pub struct RenameFile {
 }
 
 ///|
-pub impl @json.ToJson for RenameFile with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameFile with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.annotation_id {
     Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
@@ -11864,7 +11918,7 @@ pub impl @json.ToJson for RenameFile with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameFile with from_json(json) {
+pub impl @json.FromJson for RenameFile with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameFile")
@@ -11879,7 +11933,7 @@ pub impl @json.FromJson for RenameFile with from_json(json) {
   }
   let annotation_id : ChangeAnnotationIdentifier? = match
     obj.get("annotationId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -11905,7 +11959,7 @@ pub impl @json.FromJson for RenameFile with from_json(json) {
     None => raise @json.JsonError("missing newUri")
   }
   let options : RenameFileOptions? = match obj.get("options") {
-    Some(v) if not(v.is_null()) => Some(RenameFileOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(RenameFileOptions::from_json(v))
     _ => None
   }
   RenameFile::{ kind, annotation_id, old_uri, new_uri, options }
@@ -11927,8 +11981,8 @@ pub struct DeleteFile {
 }
 
 ///|
-pub impl @json.ToJson for DeleteFile with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeleteFile with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.annotation_id {
     Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
@@ -11943,7 +11997,7 @@ pub impl @json.ToJson for DeleteFile with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeleteFile with from_json(json) {
+pub impl @json.FromJson for DeleteFile with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DeleteFile")
@@ -11958,7 +12012,7 @@ pub impl @json.FromJson for DeleteFile with from_json(json) {
   }
   let annotation_id : ChangeAnnotationIdentifier? = match
     obj.get("annotationId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -11976,7 +12030,7 @@ pub impl @json.FromJson for DeleteFile with from_json(json) {
     None => raise @json.JsonError("missing uri")
   }
   let options : DeleteFileOptions? = match obj.get("options") {
-    Some(v) if not(v.is_null()) => Some(DeleteFileOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(DeleteFileOptions::from_json(v))
     _ => None
   }
   DeleteFile::{ kind, annotation_id, uri, options }
@@ -11994,8 +12048,8 @@ pub struct ChangeAnnotation {
 }
 
 ///|
-pub impl @json.ToJson for ChangeAnnotation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ChangeAnnotation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("label", @json.JsonValue::String(self.label))
   match self.needs_confirmation {
     Some(v) => obj.set("needsConfirmation", @json.JsonValue::Bool(v))
@@ -12009,7 +12063,7 @@ pub impl @json.ToJson for ChangeAnnotation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ChangeAnnotation with from_json(json) {
+pub impl @json.FromJson for ChangeAnnotation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ChangeAnnotation")
@@ -12023,7 +12077,7 @@ pub impl @json.FromJson for ChangeAnnotation with from_json(json) {
     None => raise @json.JsonError("missing label")
   }
   let needs_confirmation : Bool? = match obj.get("needsConfirmation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12033,7 +12087,7 @@ pub impl @json.FromJson for ChangeAnnotation with from_json(json) {
     _ => None
   }
   let description : String? = match obj.get("description") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12055,8 +12109,8 @@ pub struct FileOperationFilter {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationFilter with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileOperationFilter with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.scheme {
     Some(v) => obj.set("scheme", @json.JsonValue::String(v))
     None => ()
@@ -12066,13 +12120,13 @@ pub impl @json.ToJson for FileOperationFilter with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationFilter with from_json(json) {
+pub impl @json.FromJson for FileOperationFilter with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileOperationFilter")
   }
   let scheme : String? = match obj.get("scheme") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12098,15 +12152,15 @@ pub struct FileRename {
 }
 
 ///|
-pub impl @json.ToJson for FileRename with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileRename with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("oldUri", @json.JsonValue::String(self.old_uri))
   obj.set("newUri", @json.JsonValue::String(self.new_uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for FileRename with from_json(json) {
+pub impl @json.FromJson for FileRename with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileRename")
@@ -12138,14 +12192,14 @@ pub struct FileDelete {
 }
 
 ///|
-pub impl @json.ToJson for FileDelete with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileDelete with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for FileDelete with from_json(json) {
+pub impl @json.FromJson for FileDelete with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileDelete")
@@ -12168,8 +12222,8 @@ pub struct MonikerOptions {
 }
 
 ///|
-pub impl @json.ToJson for MonikerOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MonikerOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -12178,13 +12232,13 @@ pub impl @json.ToJson for MonikerOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MonikerOptions with from_json(json) {
+pub impl @json.FromJson for MonikerOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MonikerOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12205,8 +12259,8 @@ pub struct TypeHierarchyOptions {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchyOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchyOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -12215,13 +12269,13 @@ pub impl @json.ToJson for TypeHierarchyOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchyOptions with from_json(json) {
+pub impl @json.FromJson for TypeHierarchyOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TypeHierarchyOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12243,15 +12297,15 @@ pub struct InlineValueContext {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueContext with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueContext with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("frameId", @json.JsonValue::Number(self.frame_id.to_double()))
   obj.set("stoppedLocation", self.stopped_location.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for InlineValueContext with from_json(json) {
+pub impl @json.FromJson for InlineValueContext with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueContext")
@@ -12281,15 +12335,15 @@ pub struct InlineValueText {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueText with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueText with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("text", @json.JsonValue::String(self.text))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for InlineValueText with from_json(json) {
+pub impl @json.FromJson for InlineValueText with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueText")
@@ -12321,8 +12375,8 @@ pub struct InlineValueVariableLookup {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueVariableLookup with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueVariableLookup with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.variable_name {
     Some(v) => obj.set("variableName", @json.JsonValue::String(v))
@@ -12336,7 +12390,7 @@ pub impl @json.ToJson for InlineValueVariableLookup with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineValueVariableLookup with from_json(json) {
+pub impl @json.FromJson for InlineValueVariableLookup with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueVariableLookup")
@@ -12346,7 +12400,7 @@ pub impl @json.FromJson for InlineValueVariableLookup with from_json(json) {
     None => raise @json.JsonError("missing range")
   }
   let variable_name : String? = match obj.get("variableName") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12376,8 +12430,8 @@ pub struct InlineValueEvaluatableExpression {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueEvaluatableExpression with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueEvaluatableExpression with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.expression {
     Some(v) => obj.set("expression", @json.JsonValue::String(v))
@@ -12387,7 +12441,7 @@ pub impl @json.ToJson for InlineValueEvaluatableExpression with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineValueEvaluatableExpression with from_json(
+pub impl @json.FromJson for InlineValueEvaluatableExpression with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -12402,7 +12456,7 @@ pub impl @json.FromJson for InlineValueEvaluatableExpression with from_json(
     None => raise @json.JsonError("missing range")
   }
   let expression : String? = match obj.get("expression") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12423,8 +12477,8 @@ pub struct InlineValueOptions {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -12433,13 +12487,13 @@ pub impl @json.ToJson for InlineValueOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineValueOptions with from_json(json) {
+pub impl @json.FromJson for InlineValueOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineValueOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12465,8 +12519,8 @@ pub struct InlayHintLabelPart {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintLabelPart with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlayHintLabelPart with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("value", @json.JsonValue::String(self.value))
   match self.tooltip {
     Some(v) => obj.set("tooltip", v)
@@ -12484,7 +12538,7 @@ pub impl @json.ToJson for InlayHintLabelPart with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHintLabelPart with from_json(json) {
+pub impl @json.FromJson for InlayHintLabelPart with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlayHintLabelPart")
@@ -12499,11 +12553,11 @@ pub impl @json.FromJson for InlayHintLabelPart with from_json(json) {
   }
   let tooltip : @json.JsonValue? = obj.get("tooltip")
   let location : Location? = match obj.get("location") {
-    Some(v) if not(v.is_null()) => Some(Location::from_json(v))
+    Some(v) if !v.is_null() => Some(Location::from_json(v))
     _ => None
   }
   let command : Command? = match obj.get("command") {
-    Some(v) if not(v.is_null()) => Some(Command::from_json(v))
+    Some(v) if !v.is_null() => Some(Command::from_json(v))
     _ => None
   }
   InlayHintLabelPart::{ value, tooltip, location, command }
@@ -12519,15 +12573,15 @@ pub struct MarkupContent {
 }
 
 ///|
-pub impl @json.ToJson for MarkupContent with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MarkupContent with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", self.kind.to_json())
   obj.set("value", @json.JsonValue::String(self.value))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for MarkupContent with from_json(json) {
+pub impl @json.FromJson for MarkupContent with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MarkupContent")
@@ -12558,8 +12612,8 @@ pub struct InlayHintOptions {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlayHintOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -12572,13 +12626,13 @@ pub impl @json.ToJson for InlayHintOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHintOptions with from_json(json) {
+pub impl @json.FromJson for InlayHintOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlayHintOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12588,7 +12642,7 @@ pub impl @json.FromJson for InlayHintOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12616,8 +12670,10 @@ pub struct RelatedFullDocumentDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for RelatedFullDocumentDiagnosticReport with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RelatedFullDocumentDiagnosticReport with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.result_id {
     Some(v) => obj.set("resultId", @json.JsonValue::String(v))
@@ -12635,7 +12691,7 @@ pub impl @json.ToJson for RelatedFullDocumentDiagnosticReport with to_json(self)
 }
 
 ///|
-pub impl @json.FromJson for RelatedFullDocumentDiagnosticReport with from_json(
+pub impl @json.FromJson for RelatedFullDocumentDiagnosticReport with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -12654,7 +12710,7 @@ pub impl @json.FromJson for RelatedFullDocumentDiagnosticReport with from_json(
     None => raise @json.JsonError("missing kind")
   }
   let result_id : String? = match obj.get("resultId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12695,10 +12751,10 @@ pub struct RelatedUnchangedDocumentDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for RelatedUnchangedDocumentDiagnosticReport with to_json(
+pub impl @json.ToJson for RelatedUnchangedDocumentDiagnosticReport with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   obj.set("resultId", @json.JsonValue::String(self.result_id))
   match self.related_documents {
@@ -12709,7 +12765,7 @@ pub impl @json.ToJson for RelatedUnchangedDocumentDiagnosticReport with to_json(
 }
 
 ///|
-pub impl @json.FromJson for RelatedUnchangedDocumentDiagnosticReport with from_json(
+pub impl @json.FromJson for RelatedUnchangedDocumentDiagnosticReport with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -12755,8 +12811,8 @@ pub struct FullDocumentDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for FullDocumentDiagnosticReport with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FullDocumentDiagnosticReport with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.result_id {
     Some(v) => obj.set("resultId", @json.JsonValue::String(v))
@@ -12770,7 +12826,7 @@ pub impl @json.ToJson for FullDocumentDiagnosticReport with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FullDocumentDiagnosticReport with from_json(json) {
+pub impl @json.FromJson for FullDocumentDiagnosticReport with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -12785,7 +12841,7 @@ pub impl @json.FromJson for FullDocumentDiagnosticReport with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let result_id : String? = match obj.get("resultId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12816,15 +12872,17 @@ pub struct UnchangedDocumentDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for UnchangedDocumentDiagnosticReport with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for UnchangedDocumentDiagnosticReport with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   obj.set("resultId", @json.JsonValue::String(self.result_id))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for UnchangedDocumentDiagnosticReport with from_json(
+pub impl @json.FromJson for UnchangedDocumentDiagnosticReport with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -12868,8 +12926,8 @@ pub struct DiagnosticOptions {
 }
 
 ///|
-pub impl @json.ToJson for DiagnosticOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DiagnosticOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -12890,13 +12948,13 @@ pub impl @json.ToJson for DiagnosticOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticOptions with from_json(json) {
+pub impl @json.FromJson for DiagnosticOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DiagnosticOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -12906,7 +12964,7 @@ pub impl @json.FromJson for DiagnosticOptions with from_json(json) {
     _ => None
   }
   let identifier : String? = match obj.get("identifier") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -12949,15 +13007,15 @@ pub struct PreviousResultId {
 }
 
 ///|
-pub impl @json.ToJson for PreviousResultId with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for PreviousResultId with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   obj.set("value", @json.JsonValue::String(self.value))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for PreviousResultId with from_json(json) {
+pub impl @json.FromJson for PreviousResultId with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for PreviousResultId")
@@ -12997,8 +13055,8 @@ pub struct NotebookDocument {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocument with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocument with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   obj.set("notebookType", @json.JsonValue::String(self.notebook_type))
   obj.set("version", @json.JsonValue::Number(self.version.to_double()))
@@ -13014,7 +13072,7 @@ pub impl @json.ToJson for NotebookDocument with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocument with from_json(json) {
+pub impl @json.FromJson for NotebookDocument with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for NotebookDocument")
@@ -13044,7 +13102,7 @@ pub impl @json.FromJson for NotebookDocument with from_json(json) {
     None => raise @json.JsonError("missing version")
   }
   let metadata : LSPObject? = match obj.get("metadata") {
-    Some(v) if not(v.is_null()) => Some(LSPObject::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPObject::from_json(v))
     _ => None
   }
   let cells = match obj.get("cells") {
@@ -13069,8 +13127,8 @@ pub struct NotebookDocumentSyncOptions {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentSyncOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentSyncOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "notebookSelector",
     @json.JsonValue::Array(self.notebook_selector.map(item => item.to_json())),
@@ -13083,7 +13141,7 @@ pub impl @json.ToJson for NotebookDocumentSyncOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentSyncOptions with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentSyncOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -13098,7 +13156,7 @@ pub impl @json.FromJson for NotebookDocumentSyncOptions with from_json(json) {
     None => raise @json.JsonError("missing notebookSelector")
   }
   let save : Bool? = match obj.get("save") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -13120,15 +13178,17 @@ pub struct VersionedNotebookDocumentIdentifier {
 }
 
 ///|
-pub impl @json.ToJson for VersionedNotebookDocumentIdentifier with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for VersionedNotebookDocumentIdentifier with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("version", @json.JsonValue::Number(self.version.to_double()))
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for VersionedNotebookDocumentIdentifier with from_json(
+pub impl @json.FromJson for VersionedNotebookDocumentIdentifier with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -13167,8 +13227,8 @@ pub struct NotebookDocumentChangeEvent {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentChangeEvent with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentChangeEvent with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.metadata {
     Some(v) => obj.set("metadata", v.to_json())
     None => ()
@@ -13181,19 +13241,18 @@ pub impl @json.ToJson for NotebookDocumentChangeEvent with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentChangeEvent with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentChangeEvent with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for NotebookDocumentChangeEvent")
   }
   let metadata : LSPObject? = match obj.get("metadata") {
-    Some(v) if not(v.is_null()) => Some(LSPObject::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPObject::from_json(v))
     _ => None
   }
   let cells : NotebookDocumentCellChanges? = match obj.get("cells") {
-    Some(v) if not(v.is_null()) =>
-      Some(NotebookDocumentCellChanges::from_json(v))
+    Some(v) if !v.is_null() => Some(NotebookDocumentCellChanges::from_json(v))
     _ => None
   }
   NotebookDocumentChangeEvent::{ metadata, cells }
@@ -13207,14 +13266,14 @@ pub struct NotebookDocumentIdentifier {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentIdentifier with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentIdentifier with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentIdentifier with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentIdentifier with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for NotebookDocumentIdentifier")
@@ -13240,8 +13299,8 @@ pub struct InlineCompletionContext {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionContext with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionContext with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("triggerKind", self.trigger_kind.to_json())
   match self.selected_completion_info {
     Some(v) => obj.set("selectedCompletionInfo", v.to_json())
@@ -13251,7 +13310,7 @@ pub impl @json.ToJson for InlineCompletionContext with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionContext with from_json(json) {
+pub impl @json.FromJson for InlineCompletionContext with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineCompletionContext")
@@ -13262,7 +13321,7 @@ pub impl @json.FromJson for InlineCompletionContext with from_json(json) {
   }
   let selected_completion_info : SelectedCompletionInfo? = match
     obj.get("selectedCompletionInfo") {
-    Some(v) if not(v.is_null()) => Some(SelectedCompletionInfo::from_json(v))
+    Some(v) if !v.is_null() => Some(SelectedCompletionInfo::from_json(v))
     _ => None
   }
   InlineCompletionContext::{ trigger_kind, selected_completion_info }
@@ -13278,15 +13337,15 @@ pub struct StringValue {
 }
 
 ///|
-pub impl @json.ToJson for StringValue with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for StringValue with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   obj.set("value", @json.JsonValue::String(self.value))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for StringValue with from_json(json) {
+pub impl @json.FromJson for StringValue with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for StringValue")
@@ -13319,8 +13378,8 @@ pub struct InlineCompletionOptions {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -13329,13 +13388,13 @@ pub impl @json.ToJson for InlineCompletionOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionOptions with from_json(json) {
+pub impl @json.FromJson for InlineCompletionOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InlineCompletionOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -13355,8 +13414,8 @@ pub struct TextDocumentContentOptions {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentContentOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "schemes",
     @json.JsonValue::Array(
@@ -13367,7 +13426,7 @@ pub impl @json.ToJson for TextDocumentContentOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentOptions with from_json(json) {
+pub impl @json.FromJson for TextDocumentContentOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentContentOptions")
@@ -13401,8 +13460,8 @@ pub struct Registration {
 }
 
 ///|
-pub impl @json.ToJson for Registration with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Registration with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("id", @json.JsonValue::String(self.id))
   obj.set("method", @json.JsonValue::String(self.method_))
   match self.register_options {
@@ -13413,7 +13472,7 @@ pub impl @json.ToJson for Registration with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Registration with from_json(json) {
+pub impl @json.FromJson for Registration with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Registration")
@@ -13435,7 +13494,7 @@ pub impl @json.FromJson for Registration with from_json(json) {
     None => raise @json.JsonError("missing method")
   }
   let register_options : LSPAny? = match obj.get("registerOptions") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   Registration::{ id, method_, register_options }
@@ -13451,15 +13510,15 @@ pub struct Unregistration {
 }
 
 ///|
-pub impl @json.ToJson for Unregistration with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Unregistration with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("id", @json.JsonValue::String(self.id))
   obj.set("method", @json.JsonValue::String(self.method_))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for Unregistration with from_json(json) {
+pub impl @json.FromJson for Unregistration with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Unregistration")
@@ -13490,8 +13549,8 @@ pub struct WorkspaceFoldersInitializeParams {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceFoldersInitializeParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceFoldersInitializeParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.workspace_folders {
     Some(v) => obj.set("workspaceFolders", v)
     None => ()
@@ -13500,7 +13559,7 @@ pub impl @json.ToJson for WorkspaceFoldersInitializeParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceFoldersInitializeParams with from_json(
+pub impl @json.FromJson for WorkspaceFoldersInitializeParams with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -13592,8 +13651,8 @@ pub struct ServerCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ServerCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ServerCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.position_encoding {
     Some(v) => obj.set("positionEncoding", v.to_json())
     None => ()
@@ -13742,14 +13801,14 @@ pub impl @json.ToJson for ServerCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ServerCapabilities with from_json(json) {
+pub impl @json.FromJson for ServerCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ServerCapabilities")
   }
   let position_encoding : PositionEncodingKind? = match
     obj.get("positionEncoding") {
-    Some(v) if not(v.is_null()) => Some(PositionEncodingKind::from_json(v))
+    Some(v) if !v.is_null() => Some(PositionEncodingKind::from_json(v))
     _ => None
   }
   let text_document_sync : @json.JsonValue? = obj.get("textDocumentSync")
@@ -13758,13 +13817,13 @@ pub impl @json.FromJson for ServerCapabilities with from_json(json) {
   )
   let completion_provider : CompletionOptions? = match
     obj.get("completionProvider") {
-    Some(v) if not(v.is_null()) => Some(CompletionOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionOptions::from_json(v))
     _ => None
   }
   let hover_provider : @json.JsonValue? = obj.get("hoverProvider")
   let signature_help_provider : SignatureHelpOptions? = match
     obj.get("signatureHelpProvider") {
-    Some(v) if not(v.is_null()) => Some(SignatureHelpOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(SignatureHelpOptions::from_json(v))
     _ => None
   }
   let declaration_provider : @json.JsonValue? = obj.get("declarationProvider")
@@ -13785,12 +13844,12 @@ pub impl @json.FromJson for ServerCapabilities with from_json(json) {
   let code_action_provider : @json.JsonValue? = obj.get("codeActionProvider")
   let code_lens_provider : CodeLensOptions? = match
     obj.get("codeLensProvider") {
-    Some(v) if not(v.is_null()) => Some(CodeLensOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeLensOptions::from_json(v))
     _ => None
   }
   let document_link_provider : DocumentLinkOptions? = match
     obj.get("documentLinkProvider") {
-    Some(v) if not(v.is_null()) => Some(DocumentLinkOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(DocumentLinkOptions::from_json(v))
     _ => None
   }
   let color_provider : @json.JsonValue? = obj.get("colorProvider")
@@ -13805,7 +13864,7 @@ pub impl @json.FromJson for ServerCapabilities with from_json(json) {
   )
   let document_on_type_formatting_provider : DocumentOnTypeFormattingOptions? = match
     obj.get("documentOnTypeFormattingProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentOnTypeFormattingOptions::from_json(v))
     _ => None
   }
@@ -13818,7 +13877,7 @@ pub impl @json.FromJson for ServerCapabilities with from_json(json) {
   )
   let execute_command_provider : ExecuteCommandOptions? = match
     obj.get("executeCommandProvider") {
-    Some(v) if not(v.is_null()) => Some(ExecuteCommandOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ExecuteCommandOptions::from_json(v))
     _ => None
   }
   let call_hierarchy_provider : @json.JsonValue? = obj.get(
@@ -13841,11 +13900,11 @@ pub impl @json.FromJson for ServerCapabilities with from_json(json) {
     "inlineCompletionProvider",
   )
   let workspace : WorkspaceOptions? = match obj.get("workspace") {
-    Some(v) if not(v.is_null()) => Some(WorkspaceOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(WorkspaceOptions::from_json(v))
     _ => None
   }
   let experimental : LSPAny? = match obj.get("experimental") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   ServerCapabilities::{
@@ -13898,8 +13957,8 @@ pub struct ServerInfo {
 }
 
 ///|
-pub impl @json.ToJson for ServerInfo with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ServerInfo with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   match self.version {
     Some(v) => obj.set("version", @json.JsonValue::String(v))
@@ -13909,7 +13968,7 @@ pub impl @json.ToJson for ServerInfo with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ServerInfo with from_json(json) {
+pub impl @json.FromJson for ServerInfo with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ServerInfo")
@@ -13923,7 +13982,7 @@ pub impl @json.FromJson for ServerInfo with from_json(json) {
     None => raise @json.JsonError("missing name")
   }
   let version : String? = match obj.get("version") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -13943,8 +14002,8 @@ pub struct SaveOptions {
 }
 
 ///|
-pub impl @json.ToJson for SaveOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SaveOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.include_text {
     Some(v) => obj.set("includeText", @json.JsonValue::Bool(v))
     None => ()
@@ -13953,13 +14012,13 @@ pub impl @json.ToJson for SaveOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SaveOptions with from_json(json) {
+pub impl @json.FromJson for SaveOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SaveOptions")
   }
   let include_text : Bool? = match obj.get("includeText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -13981,15 +14040,15 @@ pub struct FileEvent {
 }
 
 ///|
-pub impl @json.ToJson for FileEvent with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileEvent with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   obj.set("type", self.type_.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for FileEvent with from_json(json) {
+pub impl @json.FromJson for FileEvent with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileEvent")
@@ -14018,8 +14077,8 @@ pub struct FileSystemWatcher {
 }
 
 ///|
-pub impl @json.ToJson for FileSystemWatcher with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileSystemWatcher with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("globPattern", self.glob_pattern.to_json())
   match self.kind {
     Some(v) => obj.set("kind", v.to_json())
@@ -14029,7 +14088,7 @@ pub impl @json.ToJson for FileSystemWatcher with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileSystemWatcher with from_json(json) {
+pub impl @json.FromJson for FileSystemWatcher with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileSystemWatcher")
@@ -14039,7 +14098,7 @@ pub impl @json.FromJson for FileSystemWatcher with from_json(json) {
     None => raise @json.JsonError("missing globPattern")
   }
   let kind : WatchKind? = match obj.get("kind") {
-    Some(v) if not(v.is_null()) => Some(WatchKind::from_json(v))
+    Some(v) if !v.is_null() => Some(WatchKind::from_json(v))
     _ => None
   }
   FileSystemWatcher::{ glob_pattern, kind }
@@ -14055,8 +14114,8 @@ pub struct CompletionContext {
 }
 
 ///|
-pub impl @json.ToJson for CompletionContext with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionContext with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("triggerKind", self.trigger_kind.to_json())
   match self.trigger_character {
     Some(v) => obj.set("triggerCharacter", @json.JsonValue::String(v))
@@ -14066,7 +14125,7 @@ pub impl @json.ToJson for CompletionContext with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionContext with from_json(json) {
+pub impl @json.FromJson for CompletionContext with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionContext")
@@ -14076,7 +14135,7 @@ pub impl @json.FromJson for CompletionContext with from_json(json) {
     None => raise @json.JsonError("missing triggerKind")
   }
   let trigger_character : String? = match obj.get("triggerCharacter") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -14098,8 +14157,8 @@ pub struct CompletionItemLabelDetails {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItemLabelDetails with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionItemLabelDetails with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.detail {
     Some(v) => obj.set("detail", @json.JsonValue::String(v))
     None => ()
@@ -14112,13 +14171,13 @@ pub impl @json.ToJson for CompletionItemLabelDetails with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItemLabelDetails with from_json(json) {
+pub impl @json.FromJson for CompletionItemLabelDetails with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionItemLabelDetails")
   }
   let detail : String? = match obj.get("detail") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -14128,7 +14187,7 @@ pub impl @json.FromJson for CompletionItemLabelDetails with from_json(json) {
     _ => None
   }
   let description : String? = match obj.get("description") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -14152,8 +14211,8 @@ pub struct InsertReplaceEdit {
 }
 
 ///|
-pub impl @json.ToJson for InsertReplaceEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InsertReplaceEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("newText", @json.JsonValue::String(self.new_text))
   obj.set("insert", self.insert.to_json())
   obj.set("replace", self.replace.to_json())
@@ -14161,7 +14220,7 @@ pub impl @json.ToJson for InsertReplaceEdit with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InsertReplaceEdit with from_json(json) {
+pub impl @json.FromJson for InsertReplaceEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for InsertReplaceEdit")
@@ -14201,8 +14260,8 @@ pub struct CompletionItemDefaults {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItemDefaults with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionItemDefaults with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.commit_characters {
     Some(v) =>
       obj.set(
@@ -14231,13 +14290,13 @@ pub impl @json.ToJson for CompletionItemDefaults with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItemDefaults with from_json(json) {
+pub impl @json.FromJson for CompletionItemDefaults with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionItemDefaults")
   }
   let commit_characters : Array[String]? = match obj.get("commitCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14255,15 +14314,15 @@ pub impl @json.FromJson for CompletionItemDefaults with from_json(json) {
   let edit_range : @json.JsonValue? = obj.get("editRange")
   let insert_text_format : InsertTextFormat? = match
     obj.get("insertTextFormat") {
-    Some(v) if not(v.is_null()) => Some(InsertTextFormat::from_json(v))
+    Some(v) if !v.is_null() => Some(InsertTextFormat::from_json(v))
     _ => None
   }
   let insert_text_mode : InsertTextMode? = match obj.get("insertTextMode") {
-    Some(v) if not(v.is_null()) => Some(InsertTextMode::from_json(v))
+    Some(v) if !v.is_null() => Some(InsertTextMode::from_json(v))
     _ => None
   }
   let data : LSPAny? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   CompletionItemDefaults::{
@@ -14285,8 +14344,8 @@ pub struct CompletionItemApplyKinds {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItemApplyKinds with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionItemApplyKinds with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.commit_characters {
     Some(v) => obj.set("commitCharacters", v.to_json())
     None => ()
@@ -14299,17 +14358,17 @@ pub impl @json.ToJson for CompletionItemApplyKinds with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItemApplyKinds with from_json(json) {
+pub impl @json.FromJson for CompletionItemApplyKinds with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionItemApplyKinds")
   }
   let commit_characters : ApplyKind? = match obj.get("commitCharacters") {
-    Some(v) if not(v.is_null()) => Some(ApplyKind::from_json(v))
+    Some(v) if !v.is_null() => Some(ApplyKind::from_json(v))
     _ => None
   }
   let data : ApplyKind? = match obj.get("data") {
-    Some(v) if not(v.is_null()) => Some(ApplyKind::from_json(v))
+    Some(v) if !v.is_null() => Some(ApplyKind::from_json(v))
     _ => None
   }
   CompletionItemApplyKinds::{ commit_characters, data }
@@ -14332,8 +14391,8 @@ pub struct CompletionOptions {
 }
 
 ///|
-pub impl @json.ToJson for CompletionOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14366,13 +14425,13 @@ pub impl @json.ToJson for CompletionOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionOptions with from_json(json) {
+pub impl @json.FromJson for CompletionOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14382,7 +14441,7 @@ pub impl @json.FromJson for CompletionOptions with from_json(json) {
     _ => None
   }
   let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14399,7 +14458,7 @@ pub impl @json.FromJson for CompletionOptions with from_json(json) {
   }
   let all_commit_characters : Array[String]? = match
     obj.get("allCommitCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14415,7 +14474,7 @@ pub impl @json.FromJson for CompletionOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14426,8 +14485,7 @@ pub impl @json.FromJson for CompletionOptions with from_json(json) {
   }
   let completion_item : ServerCompletionItemOptions? = match
     obj.get("completionItem") {
-    Some(v) if not(v.is_null()) =>
-      Some(ServerCompletionItemOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ServerCompletionItemOptions::from_json(v))
     _ => None
   }
   CompletionOptions::{
@@ -14448,8 +14506,8 @@ pub struct HoverOptions {
 }
 
 ///|
-pub impl @json.ToJson for HoverOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for HoverOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14458,13 +14516,13 @@ pub impl @json.ToJson for HoverOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for HoverOptions with from_json(json) {
+pub impl @json.FromJson for HoverOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for HoverOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14490,8 +14548,8 @@ pub struct SignatureHelpContext {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelpContext with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureHelpContext with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("triggerKind", self.trigger_kind.to_json())
   match self.trigger_character {
     Some(v) => obj.set("triggerCharacter", @json.JsonValue::String(v))
@@ -14506,7 +14564,7 @@ pub impl @json.ToJson for SignatureHelpContext with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelpContext with from_json(json) {
+pub impl @json.FromJson for SignatureHelpContext with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SignatureHelpContext")
@@ -14516,7 +14574,7 @@ pub impl @json.FromJson for SignatureHelpContext with from_json(json) {
     None => raise @json.JsonError("missing triggerKind")
   }
   let trigger_character : String? = match obj.get("triggerCharacter") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -14535,7 +14593,7 @@ pub impl @json.FromJson for SignatureHelpContext with from_json(json) {
   }
   let active_signature_help : SignatureHelp? = match
     obj.get("activeSignatureHelp") {
-    Some(v) if not(v.is_null()) => Some(SignatureHelp::from_json(v))
+    Some(v) if !v.is_null() => Some(SignatureHelp::from_json(v))
     _ => None
   }
   SignatureHelpContext::{
@@ -14560,8 +14618,8 @@ pub struct SignatureInformation {
 }
 
 ///|
-pub impl @json.ToJson for SignatureInformation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureInformation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("label", @json.JsonValue::String(self.label))
   match self.documentation {
     Some(v) => obj.set("documentation", v)
@@ -14583,7 +14641,7 @@ pub impl @json.ToJson for SignatureInformation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureInformation with from_json(json) {
+pub impl @json.FromJson for SignatureInformation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SignatureInformation")
@@ -14598,7 +14656,7 @@ pub impl @json.FromJson for SignatureInformation with from_json(json) {
   }
   let documentation : @json.JsonValue? = obj.get("documentation")
   let parameters : Array[ParameterInformation]? = match obj.get("parameters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14625,8 +14683,8 @@ pub struct SignatureHelpOptions {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelpOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureHelpOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14651,13 +14709,13 @@ pub impl @json.ToJson for SignatureHelpOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelpOptions with from_json(json) {
+pub impl @json.FromJson for SignatureHelpOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SignatureHelpOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14667,7 +14725,7 @@ pub impl @json.FromJson for SignatureHelpOptions with from_json(json) {
     _ => None
   }
   let trigger_characters : Array[String]? = match obj.get("triggerCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14684,7 +14742,7 @@ pub impl @json.FromJson for SignatureHelpOptions with from_json(json) {
   }
   let retrigger_characters : Array[String]? = match
     obj.get("retriggerCharacters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14715,8 +14773,8 @@ pub struct DefinitionOptions {
 }
 
 ///|
-pub impl @json.ToJson for DefinitionOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DefinitionOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14725,13 +14783,13 @@ pub impl @json.ToJson for DefinitionOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DefinitionOptions with from_json(json) {
+pub impl @json.FromJson for DefinitionOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DefinitionOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14751,14 +14809,14 @@ pub struct ReferenceContext {
 }
 
 ///|
-pub impl @json.ToJson for ReferenceContext with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ReferenceContext with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("includeDeclaration", @json.JsonValue::Bool(self.include_declaration))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ReferenceContext with from_json(json) {
+pub impl @json.FromJson for ReferenceContext with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ReferenceContext")
@@ -14783,8 +14841,8 @@ pub struct ReferenceOptions {
 }
 
 ///|
-pub impl @json.ToJson for ReferenceOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ReferenceOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14793,13 +14851,13 @@ pub impl @json.ToJson for ReferenceOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ReferenceOptions with from_json(json) {
+pub impl @json.FromJson for ReferenceOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ReferenceOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14820,8 +14878,8 @@ pub struct DocumentHighlightOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentHighlightOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentHighlightOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14830,13 +14888,13 @@ pub impl @json.ToJson for DocumentHighlightOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentHighlightOptions with from_json(json) {
+pub impl @json.FromJson for DocumentHighlightOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentHighlightOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14862,8 +14920,8 @@ pub struct BaseSymbolInformation {
 }
 
 ///|
-pub impl @json.ToJson for BaseSymbolInformation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for BaseSymbolInformation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   obj.set("kind", self.kind.to_json())
   match self.tags {
@@ -14879,7 +14937,7 @@ pub impl @json.ToJson for BaseSymbolInformation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for BaseSymbolInformation with from_json(json) {
+pub impl @json.FromJson for BaseSymbolInformation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for BaseSymbolInformation")
@@ -14897,7 +14955,7 @@ pub impl @json.FromJson for BaseSymbolInformation with from_json(json) {
     None => raise @json.JsonError("missing kind")
   }
   let tags : Array[SymbolTag]? = match obj.get("tags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -14908,7 +14966,7 @@ pub impl @json.FromJson for BaseSymbolInformation with from_json(json) {
     _ => None
   }
   let container_name : String? = match obj.get("containerName") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -14931,8 +14989,8 @@ pub struct DocumentSymbolOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentSymbolOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentSymbolOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -14945,13 +15003,13 @@ pub impl @json.ToJson for DocumentSymbolOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentSymbolOptions with from_json(json) {
+pub impl @json.FromJson for DocumentSymbolOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentSymbolOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -14961,7 +15019,7 @@ pub impl @json.FromJson for DocumentSymbolOptions with from_json(json) {
     _ => None
   }
   let label : String? = match obj.get("label") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -14985,8 +15043,8 @@ pub struct CodeActionContext {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionContext with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionContext with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "diagnostics",
     @json.JsonValue::Array(self.diagnostics.map(item => item.to_json())),
@@ -15004,7 +15062,7 @@ pub impl @json.ToJson for CodeActionContext with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionContext with from_json(json) {
+pub impl @json.FromJson for CodeActionContext with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionContext")
@@ -15019,7 +15077,7 @@ pub impl @json.FromJson for CodeActionContext with from_json(json) {
     None => raise @json.JsonError("missing diagnostics")
   }
   let only : Array[CodeActionKind]? = match obj.get("only") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -15030,7 +15088,7 @@ pub impl @json.FromJson for CodeActionContext with from_json(json) {
     _ => None
   }
   let trigger_kind : CodeActionTriggerKind? = match obj.get("triggerKind") {
-    Some(v) if not(v.is_null()) => Some(CodeActionTriggerKind::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeActionTriggerKind::from_json(v))
     _ => None
   }
   CodeActionContext::{ diagnostics, only, trigger_kind }
@@ -15044,14 +15102,14 @@ pub struct CodeActionDisabled {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionDisabled with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionDisabled with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("reason", @json.JsonValue::String(self.reason))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for CodeActionDisabled with from_json(json) {
+pub impl @json.FromJson for CodeActionDisabled with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionDisabled")
@@ -15082,8 +15140,8 @@ pub struct CodeActionOptions {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15112,13 +15170,13 @@ pub impl @json.ToJson for CodeActionOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionOptions with from_json(json) {
+pub impl @json.FromJson for CodeActionOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15129,7 +15187,7 @@ pub impl @json.FromJson for CodeActionOptions with from_json(json) {
   }
   let code_action_kinds : Array[CodeActionKind]? = match
     obj.get("codeActionKinds") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -15141,7 +15199,7 @@ pub impl @json.FromJson for CodeActionOptions with from_json(json) {
   }
   let documentation : Array[CodeActionKindDocumentation]? = match
     obj.get("documentation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -15152,7 +15210,7 @@ pub impl @json.FromJson for CodeActionOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15176,14 +15234,14 @@ pub struct LocationUriOnly {
 }
 
 ///|
-pub impl @json.ToJson for LocationUriOnly with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for LocationUriOnly with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for LocationUriOnly with from_json(json) {
+pub impl @json.FromJson for LocationUriOnly with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for LocationUriOnly")
@@ -15210,8 +15268,8 @@ pub struct WorkspaceSymbolOptions {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceSymbolOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceSymbolOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15224,13 +15282,13 @@ pub impl @json.ToJson for WorkspaceSymbolOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceSymbolOptions with from_json(json) {
+pub impl @json.FromJson for WorkspaceSymbolOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceSymbolOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15240,7 +15298,7 @@ pub impl @json.FromJson for WorkspaceSymbolOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15263,8 +15321,8 @@ pub struct CodeLensOptions {
 }
 
 ///|
-pub impl @json.ToJson for CodeLensOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeLensOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15277,13 +15335,13 @@ pub impl @json.ToJson for CodeLensOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeLensOptions with from_json(json) {
+pub impl @json.FromJson for CodeLensOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeLensOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15293,7 +15351,7 @@ pub impl @json.FromJson for CodeLensOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15316,8 +15374,8 @@ pub struct DocumentLinkOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentLinkOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentLinkOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15330,13 +15388,13 @@ pub impl @json.ToJson for DocumentLinkOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentLinkOptions with from_json(json) {
+pub impl @json.FromJson for DocumentLinkOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentLinkOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15346,7 +15404,7 @@ pub impl @json.FromJson for DocumentLinkOptions with from_json(json) {
     _ => None
   }
   let resolve_provider : Bool? = match obj.get("resolveProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15374,8 +15432,8 @@ pub struct FormattingOptions {
 }
 
 ///|
-pub impl @json.ToJson for FormattingOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FormattingOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("tabSize", @json.JsonValue::Number(self.tab_size.to_double()))
   obj.set("insertSpaces", @json.JsonValue::Bool(self.insert_spaces))
   match self.trim_trailing_whitespace {
@@ -15394,7 +15452,7 @@ pub impl @json.ToJson for FormattingOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FormattingOptions with from_json(json) {
+pub impl @json.FromJson for FormattingOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FormattingOptions")
@@ -15417,7 +15475,7 @@ pub impl @json.FromJson for FormattingOptions with from_json(json) {
   }
   let trim_trailing_whitespace : Bool? = match
     obj.get("trimTrailingWhitespace") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15427,7 +15485,7 @@ pub impl @json.FromJson for FormattingOptions with from_json(json) {
     _ => None
   }
   let insert_final_newline : Bool? = match obj.get("insertFinalNewline") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15437,7 +15495,7 @@ pub impl @json.FromJson for FormattingOptions with from_json(json) {
     _ => None
   }
   let trim_final_newlines : Bool? = match obj.get("trimFinalNewlines") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15464,8 +15522,8 @@ pub struct DocumentFormattingOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentFormattingOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentFormattingOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15474,13 +15532,13 @@ pub impl @json.ToJson for DocumentFormattingOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentFormattingOptions with from_json(json) {
+pub impl @json.FromJson for DocumentFormattingOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DocumentFormattingOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15503,8 +15561,8 @@ pub struct DocumentRangeFormattingOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentRangeFormattingOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentRangeFormattingOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15517,7 +15575,9 @@ pub impl @json.ToJson for DocumentRangeFormattingOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentRangeFormattingOptions with from_json(json) {
+pub impl @json.FromJson for DocumentRangeFormattingOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -15526,7 +15586,7 @@ pub impl @json.FromJson for DocumentRangeFormattingOptions with from_json(json) 
       )
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15536,7 +15596,7 @@ pub impl @json.FromJson for DocumentRangeFormattingOptions with from_json(json) 
     _ => None
   }
   let ranges_support : Bool? = match obj.get("rangesSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15558,8 +15618,8 @@ pub struct DocumentOnTypeFormattingOptions {
 }
 
 ///|
-pub impl @json.ToJson for DocumentOnTypeFormattingOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentOnTypeFormattingOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "firstTriggerCharacter",
     @json.JsonValue::String(self.first_trigger_character),
@@ -15576,7 +15636,9 @@ pub impl @json.ToJson for DocumentOnTypeFormattingOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentOnTypeFormattingOptions with from_json(json) {
+pub impl @json.FromJson for DocumentOnTypeFormattingOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -15594,7 +15656,7 @@ pub impl @json.FromJson for DocumentOnTypeFormattingOptions with from_json(json)
   }
   let more_trigger_character : Array[String]? = match
     obj.get("moreTriggerCharacter") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -15626,8 +15688,8 @@ pub struct RenameOptions {
 }
 
 ///|
-pub impl @json.ToJson for RenameOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15640,13 +15702,13 @@ pub impl @json.ToJson for RenameOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameOptions with from_json(json) {
+pub impl @json.FromJson for RenameOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15656,7 +15718,7 @@ pub impl @json.FromJson for RenameOptions with from_json(json) {
     _ => None
   }
   let prepare_provider : Bool? = match obj.get("prepareProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15676,15 +15738,15 @@ pub struct PrepareRenamePlaceholder {
 }
 
 ///|
-pub impl @json.ToJson for PrepareRenamePlaceholder with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for PrepareRenamePlaceholder with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("placeholder", @json.JsonValue::String(self.placeholder))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for PrepareRenamePlaceholder with from_json(json) {
+pub impl @json.FromJson for PrepareRenamePlaceholder with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for PrepareRenamePlaceholder")
@@ -15711,14 +15773,14 @@ pub struct PrepareRenameDefaultBehavior {
 }
 
 ///|
-pub impl @json.ToJson for PrepareRenameDefaultBehavior with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for PrepareRenameDefaultBehavior with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("defaultBehavior", @json.JsonValue::Bool(self.default_behavior))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for PrepareRenameDefaultBehavior with from_json(json) {
+pub impl @json.FromJson for PrepareRenameDefaultBehavior with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -15746,8 +15808,8 @@ pub struct ExecuteCommandOptions {
 }
 
 ///|
-pub impl @json.ToJson for ExecuteCommandOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ExecuteCommandOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -15762,13 +15824,13 @@ pub impl @json.ToJson for ExecuteCommandOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ExecuteCommandOptions with from_json(json) {
+pub impl @json.FromJson for ExecuteCommandOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ExecuteCommandOptions")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15802,8 +15864,8 @@ pub struct WorkspaceEditMetadata {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceEditMetadata with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceEditMetadata with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.is_refactoring {
     Some(v) => obj.set("isRefactoring", @json.JsonValue::Bool(v))
     None => ()
@@ -15812,13 +15874,13 @@ pub impl @json.ToJson for WorkspaceEditMetadata with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceEditMetadata with from_json(json) {
+pub impl @json.FromJson for WorkspaceEditMetadata with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceEditMetadata")
   }
   let is_refactoring : Bool? = match obj.get("isRefactoring") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15840,8 +15902,8 @@ pub struct SemanticTokensLegend {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensLegend with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensLegend with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "tokenTypes",
     @json.JsonValue::Array(
@@ -15858,7 +15920,7 @@ pub impl @json.ToJson for SemanticTokensLegend with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensLegend with from_json(json) {
+pub impl @json.FromJson for SemanticTokensLegend with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensLegend")
@@ -15902,8 +15964,8 @@ pub struct SemanticTokensFullDelta {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensFullDelta with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensFullDelta with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.delta {
     Some(v) => obj.set("delta", @json.JsonValue::Bool(v))
     None => ()
@@ -15912,13 +15974,13 @@ pub impl @json.ToJson for SemanticTokensFullDelta with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensFullDelta with from_json(json) {
+pub impl @json.FromJson for SemanticTokensFullDelta with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SemanticTokensFullDelta")
   }
   let delta : Bool? = match obj.get("delta") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -15942,17 +16004,17 @@ pub struct OptionalVersionedTextDocumentIdentifier {
 }
 
 ///|
-pub impl @json.ToJson for OptionalVersionedTextDocumentIdentifier with to_json(
+pub impl @json.ToJson for OptionalVersionedTextDocumentIdentifier with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", @json.JsonValue::String(self.uri))
   obj.set("version", self.version)
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for OptionalVersionedTextDocumentIdentifier with from_json(
+pub impl @json.FromJson for OptionalVersionedTextDocumentIdentifier with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -15991,8 +16053,8 @@ pub struct AnnotatedTextEdit {
 }
 
 ///|
-pub impl @json.ToJson for AnnotatedTextEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for AnnotatedTextEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("newText", @json.JsonValue::String(self.new_text))
   obj.set("annotationId", @json.JsonValue::String(self.annotation_id))
@@ -16000,7 +16062,7 @@ pub impl @json.ToJson for AnnotatedTextEdit with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for AnnotatedTextEdit with from_json(json) {
+pub impl @json.FromJson for AnnotatedTextEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for AnnotatedTextEdit")
@@ -16040,8 +16102,8 @@ pub struct SnippetTextEdit {
 }
 
 ///|
-pub impl @json.ToJson for SnippetTextEdit with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SnippetTextEdit with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("snippet", self.snippet.to_json())
   match self.annotation_id {
@@ -16052,7 +16114,7 @@ pub impl @json.ToJson for SnippetTextEdit with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SnippetTextEdit with from_json(json) {
+pub impl @json.FromJson for SnippetTextEdit with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SnippetTextEdit")
@@ -16067,7 +16129,7 @@ pub impl @json.FromJson for SnippetTextEdit with from_json(json) {
   }
   let annotation_id : ChangeAnnotationIdentifier? = match
     obj.get("annotationId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -16089,8 +16151,8 @@ pub struct ResourceOperation {
 }
 
 ///|
-pub impl @json.ToJson for ResourceOperation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ResourceOperation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.annotation_id {
     Some(v) => obj.set("annotationId", @json.JsonValue::String(v))
@@ -16100,7 +16162,7 @@ pub impl @json.ToJson for ResourceOperation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ResourceOperation with from_json(json) {
+pub impl @json.FromJson for ResourceOperation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ResourceOperation")
@@ -16115,7 +16177,7 @@ pub impl @json.FromJson for ResourceOperation with from_json(json) {
   }
   let annotation_id : ChangeAnnotationIdentifier? = match
     obj.get("annotationId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -16137,8 +16199,8 @@ pub struct CreateFileOptions {
 }
 
 ///|
-pub impl @json.ToJson for CreateFileOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CreateFileOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.overwrite {
     Some(v) => obj.set("overwrite", @json.JsonValue::Bool(v))
     None => ()
@@ -16151,13 +16213,13 @@ pub impl @json.ToJson for CreateFileOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CreateFileOptions with from_json(json) {
+pub impl @json.FromJson for CreateFileOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CreateFileOptions")
   }
   let overwrite : Bool? = match obj.get("overwrite") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16167,7 +16229,7 @@ pub impl @json.FromJson for CreateFileOptions with from_json(json) {
     _ => None
   }
   let ignore_if_exists : Bool? = match obj.get("ignoreIfExists") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16189,8 +16251,8 @@ pub struct RenameFileOptions {
 }
 
 ///|
-pub impl @json.ToJson for RenameFileOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameFileOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.overwrite {
     Some(v) => obj.set("overwrite", @json.JsonValue::Bool(v))
     None => ()
@@ -16203,13 +16265,13 @@ pub impl @json.ToJson for RenameFileOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameFileOptions with from_json(json) {
+pub impl @json.FromJson for RenameFileOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameFileOptions")
   }
   let overwrite : Bool? = match obj.get("overwrite") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16219,7 +16281,7 @@ pub impl @json.FromJson for RenameFileOptions with from_json(json) {
     _ => None
   }
   let ignore_if_exists : Bool? = match obj.get("ignoreIfExists") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16241,8 +16303,8 @@ pub struct DeleteFileOptions {
 }
 
 ///|
-pub impl @json.ToJson for DeleteFileOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeleteFileOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.recursive {
     Some(v) => obj.set("recursive", @json.JsonValue::Bool(v))
     None => ()
@@ -16255,13 +16317,13 @@ pub impl @json.ToJson for DeleteFileOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeleteFileOptions with from_json(json) {
+pub impl @json.FromJson for DeleteFileOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DeleteFileOptions")
   }
   let recursive : Bool? = match obj.get("recursive") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16271,7 +16333,7 @@ pub impl @json.FromJson for DeleteFileOptions with from_json(json) {
     _ => None
   }
   let ignore_if_not_exists : Bool? = match obj.get("ignoreIfNotExists") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16295,8 +16357,8 @@ pub struct FileOperationPattern {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationPattern with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileOperationPattern with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("glob", @json.JsonValue::String(self.glob))
   match self.matches {
     Some(v) => obj.set("matches", v.to_json())
@@ -16310,7 +16372,7 @@ pub impl @json.ToJson for FileOperationPattern with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationPattern with from_json(json) {
+pub impl @json.FromJson for FileOperationPattern with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileOperationPattern")
@@ -16324,12 +16386,11 @@ pub impl @json.FromJson for FileOperationPattern with from_json(json) {
     None => raise @json.JsonError("missing glob")
   }
   let matches : FileOperationPatternKind? = match obj.get("matches") {
-    Some(v) if not(v.is_null()) => Some(FileOperationPatternKind::from_json(v))
+    Some(v) if !v.is_null() => Some(FileOperationPatternKind::from_json(v))
     _ => None
   }
   let options : FileOperationPatternOptions? = match obj.get("options") {
-    Some(v) if not(v.is_null()) =>
-      Some(FileOperationPatternOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(FileOperationPatternOptions::from_json(v))
     _ => None
   }
   FileOperationPattern::{ glob, matches, options }
@@ -16353,10 +16414,10 @@ pub struct WorkspaceFullDocumentDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceFullDocumentDiagnosticReport with to_json(
+pub impl @json.ToJson for WorkspaceFullDocumentDiagnosticReport with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   match self.result_id {
     Some(v) => obj.set("resultId", @json.JsonValue::String(v))
@@ -16372,7 +16433,7 @@ pub impl @json.ToJson for WorkspaceFullDocumentDiagnosticReport with to_json(
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceFullDocumentDiagnosticReport with from_json(
+pub impl @json.FromJson for WorkspaceFullDocumentDiagnosticReport with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -16391,7 +16452,7 @@ pub impl @json.FromJson for WorkspaceFullDocumentDiagnosticReport with from_json
     None => raise @json.JsonError("missing kind")
   }
   let result_id : String? = match obj.get("resultId") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -16446,10 +16507,10 @@ pub struct WorkspaceUnchangedDocumentDiagnosticReport {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceUnchangedDocumentDiagnosticReport with to_json(
+pub impl @json.ToJson for WorkspaceUnchangedDocumentDiagnosticReport with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", @json.JsonValue::String(self.kind))
   obj.set("resultId", @json.JsonValue::String(self.result_id))
   obj.set("uri", @json.JsonValue::String(self.uri))
@@ -16458,7 +16519,7 @@ pub impl @json.ToJson for WorkspaceUnchangedDocumentDiagnosticReport with to_jso
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceUnchangedDocumentDiagnosticReport with from_json(
+pub impl @json.FromJson for WorkspaceUnchangedDocumentDiagnosticReport with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -16513,8 +16574,8 @@ pub struct NotebookCell {
 }
 
 ///|
-pub impl @json.ToJson for NotebookCell with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookCell with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", self.kind.to_json())
   obj.set("document", @json.JsonValue::String(self.document))
   match self.metadata {
@@ -16529,7 +16590,7 @@ pub impl @json.ToJson for NotebookCell with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookCell with from_json(json) {
+pub impl @json.FromJson for NotebookCell with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for NotebookCell")
@@ -16547,12 +16608,12 @@ pub impl @json.FromJson for NotebookCell with from_json(json) {
     None => raise @json.JsonError("missing document")
   }
   let metadata : LSPObject? = match obj.get("metadata") {
-    Some(v) if not(v.is_null()) => Some(LSPObject::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPObject::from_json(v))
     _ => None
   }
   let execution_summary : ExecutionSummary? = match
     obj.get("executionSummary") {
-    Some(v) if not(v.is_null()) => Some(ExecutionSummary::from_json(v))
+    Some(v) if !v.is_null() => Some(ExecutionSummary::from_json(v))
     _ => None
   }
   NotebookCell::{ kind, document, metadata, execution_summary }
@@ -16568,8 +16629,10 @@ pub struct NotebookDocumentFilterWithNotebook {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentFilterWithNotebook with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentFilterWithNotebook with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebook", self.notebook)
   match self.cells {
     Some(v) =>
@@ -16580,7 +16643,7 @@ pub impl @json.ToJson for NotebookDocumentFilterWithNotebook with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentFilterWithNotebook with from_json(
+pub impl @json.FromJson for NotebookDocumentFilterWithNotebook with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -16595,7 +16658,7 @@ pub impl @json.FromJson for NotebookDocumentFilterWithNotebook with from_json(
     None => raise @json.JsonError("missing notebook")
   }
   let cells : Array[NotebookCellLanguage]? = match obj.get("cells") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -16618,8 +16681,8 @@ pub struct NotebookDocumentFilterWithCells {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentFilterWithCells with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentFilterWithCells with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.notebook {
     Some(v) => obj.set("notebook", v)
     None => ()
@@ -16632,7 +16695,9 @@ pub impl @json.ToJson for NotebookDocumentFilterWithCells with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentFilterWithCells with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentFilterWithCells with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -16665,8 +16730,8 @@ pub struct NotebookDocumentCellChanges {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentCellChanges with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentCellChanges with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.structure {
     Some(v) => obj.set("structure", v.to_json())
     None => ()
@@ -16688,7 +16753,7 @@ pub impl @json.ToJson for NotebookDocumentCellChanges with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentCellChanges with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentCellChanges with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -16696,12 +16761,12 @@ pub impl @json.FromJson for NotebookDocumentCellChanges with from_json(json) {
   }
   let structure : NotebookDocumentCellChangeStructure? = match
     obj.get("structure") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(NotebookDocumentCellChangeStructure::from_json(v))
     _ => None
   }
   let data : Array[NotebookCell]? = match obj.get("data") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -16713,7 +16778,7 @@ pub impl @json.FromJson for NotebookDocumentCellChanges with from_json(json) {
   }
   let text_content : Array[NotebookDocumentCellContentChanges]? = match
     obj.get("textContent") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -16738,15 +16803,15 @@ pub struct SelectedCompletionInfo {
 }
 
 ///|
-pub impl @json.ToJson for SelectedCompletionInfo with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SelectedCompletionInfo with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("text", @json.JsonValue::String(self.text))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for SelectedCompletionInfo with from_json(json) {
+pub impl @json.FromJson for SelectedCompletionInfo with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for SelectedCompletionInfo")
@@ -16776,8 +16841,8 @@ pub struct ClientInfo {
 }
 
 ///|
-pub impl @json.ToJson for ClientInfo with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientInfo with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("name", @json.JsonValue::String(self.name))
   match self.version {
     Some(v) => obj.set("version", @json.JsonValue::String(v))
@@ -16787,7 +16852,7 @@ pub impl @json.ToJson for ClientInfo with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientInfo with from_json(json) {
+pub impl @json.FromJson for ClientInfo with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ClientInfo")
@@ -16801,7 +16866,7 @@ pub impl @json.FromJson for ClientInfo with from_json(json) {
     None => raise @json.JsonError("missing name")
   }
   let version : String? = match obj.get("version") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -16831,8 +16896,8 @@ pub struct ClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.workspace {
     Some(v) => obj.set("workspace", v.to_json())
     None => ()
@@ -16861,38 +16926,37 @@ pub impl @json.ToJson for ClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientCapabilities with from_json(json) {
+pub impl @json.FromJson for ClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ClientCapabilities")
   }
   let workspace : WorkspaceClientCapabilities? = match obj.get("workspace") {
-    Some(v) if not(v.is_null()) =>
-      Some(WorkspaceClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(WorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let text_document : TextDocumentClientCapabilities? = match
     obj.get("textDocument") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(TextDocumentClientCapabilities::from_json(v))
     _ => None
   }
   let notebook_document : NotebookDocumentClientCapabilities? = match
     obj.get("notebookDocument") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(NotebookDocumentClientCapabilities::from_json(v))
     _ => None
   }
   let window : WindowClientCapabilities? = match obj.get("window") {
-    Some(v) if not(v.is_null()) => Some(WindowClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(WindowClientCapabilities::from_json(v))
     _ => None
   }
   let general : GeneralClientCapabilities? = match obj.get("general") {
-    Some(v) if not(v.is_null()) => Some(GeneralClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(GeneralClientCapabilities::from_json(v))
     _ => None
   }
   let experimental : LSPAny? = match obj.get("experimental") {
-    Some(v) if not(v.is_null()) => Some(LSPAny::from_json(v))
+    Some(v) if !v.is_null() => Some(LSPAny::from_json(v))
     _ => None
   }
   ClientCapabilities::{
@@ -16920,8 +16984,8 @@ pub struct TextDocumentSyncOptions {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentSyncOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentSyncOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.open_close {
     Some(v) => obj.set("openClose", @json.JsonValue::Bool(v))
     None => ()
@@ -16946,13 +17010,13 @@ pub impl @json.ToJson for TextDocumentSyncOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentSyncOptions with from_json(json) {
+pub impl @json.FromJson for TextDocumentSyncOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentSyncOptions")
   }
   let open_close : Bool? = match obj.get("openClose") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16962,11 +17026,11 @@ pub impl @json.FromJson for TextDocumentSyncOptions with from_json(json) {
     _ => None
   }
   let change : TextDocumentSyncKind? = match obj.get("change") {
-    Some(v) if not(v.is_null()) => Some(TextDocumentSyncKind::from_json(v))
+    Some(v) if !v.is_null() => Some(TextDocumentSyncKind::from_json(v))
     _ => None
   }
   let will_save : Bool? = match obj.get("willSave") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -16976,7 +17040,7 @@ pub impl @json.FromJson for TextDocumentSyncOptions with from_json(json) {
     _ => None
   }
   let will_save_wait_until : Bool? = match obj.get("willSaveWaitUntil") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17007,8 +17071,8 @@ pub struct WorkspaceOptions {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.workspace_folders {
     Some(v) => obj.set("workspaceFolders", v.to_json())
     None => ()
@@ -17025,20 +17089,20 @@ pub impl @json.ToJson for WorkspaceOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceOptions with from_json(json) {
+pub impl @json.FromJson for WorkspaceOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WorkspaceOptions")
   }
   let workspace_folders : WorkspaceFoldersServerCapabilities? = match
     obj.get("workspaceFolders") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(WorkspaceFoldersServerCapabilities::from_json(v))
     _ => None
   }
   let file_operations : FileOperationOptions? = match
     obj.get("fileOperations") {
-    Some(v) if not(v.is_null()) => Some(FileOperationOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(FileOperationOptions::from_json(v))
     _ => None
   }
   let text_document_content : @json.JsonValue? = obj.get("textDocumentContent")
@@ -17061,8 +17125,8 @@ pub struct TextDocumentContentChangePartial {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentChangePartial with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentContentChangePartial with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   match self.range_length {
     Some(v) => obj.set("rangeLength", @json.JsonValue::Number(v.to_double()))
@@ -17073,7 +17137,7 @@ pub impl @json.ToJson for TextDocumentContentChangePartial with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentChangePartial with from_json(
+pub impl @json.FromJson for TextDocumentContentChangePartial with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -17088,7 +17152,7 @@ pub impl @json.FromJson for TextDocumentContentChangePartial with from_json(
     None => raise @json.JsonError("missing range")
   }
   let range_length : Int? = match obj.get("rangeLength") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -17116,16 +17180,16 @@ pub struct TextDocumentContentChangeWholeDocument {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentChangeWholeDocument with to_json(
+pub impl @json.ToJson for TextDocumentContentChangeWholeDocument with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("text", @json.JsonValue::String(self.text))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentChangeWholeDocument with from_json(
+pub impl @json.FromJson for TextDocumentContentChangeWholeDocument with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -17154,14 +17218,14 @@ pub struct CodeDescription {
 }
 
 ///|
-pub impl @json.ToJson for CodeDescription with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeDescription with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("href", @json.JsonValue::String(self.href))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for CodeDescription with from_json(json) {
+pub impl @json.FromJson for CodeDescription with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeDescription")
@@ -17185,15 +17249,15 @@ pub struct EditRangeWithInsertReplace {
 }
 
 ///|
-pub impl @json.ToJson for EditRangeWithInsertReplace with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for EditRangeWithInsertReplace with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("insert", self.insert.to_json())
   obj.set("replace", self.replace.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for EditRangeWithInsertReplace with from_json(json) {
+pub impl @json.FromJson for EditRangeWithInsertReplace with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for EditRangeWithInsertReplace")
@@ -17217,8 +17281,8 @@ pub struct ServerCompletionItemOptions {
 }
 
 ///|
-pub impl @json.ToJson for ServerCompletionItemOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ServerCompletionItemOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.label_details_support {
     Some(v) => obj.set("labelDetailsSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -17227,14 +17291,14 @@ pub impl @json.ToJson for ServerCompletionItemOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ServerCompletionItemOptions with from_json(json) {
+pub impl @json.FromJson for ServerCompletionItemOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for ServerCompletionItemOptions")
   }
   let label_details_support : Bool? = match obj.get("labelDetailsSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17254,15 +17318,15 @@ pub struct MarkedStringWithLanguage {
 }
 
 ///|
-pub impl @json.ToJson for MarkedStringWithLanguage with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MarkedStringWithLanguage with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("language", @json.JsonValue::String(self.language))
   obj.set("value", @json.JsonValue::String(self.value))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for MarkedStringWithLanguage with from_json(json) {
+pub impl @json.FromJson for MarkedStringWithLanguage with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MarkedStringWithLanguage")
@@ -17296,8 +17360,8 @@ pub struct ParameterInformation {
 }
 
 ///|
-pub impl @json.ToJson for ParameterInformation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ParameterInformation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("label", self.label)
   match self.documentation {
     Some(v) => obj.set("documentation", v)
@@ -17307,7 +17371,7 @@ pub impl @json.ToJson for ParameterInformation with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ParameterInformation with from_json(json) {
+pub impl @json.FromJson for ParameterInformation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ParameterInformation")
@@ -17330,15 +17394,15 @@ pub struct CodeActionKindDocumentation {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionKindDocumentation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionKindDocumentation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("kind", self.kind.to_json())
   obj.set("command", self.command.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for CodeActionKindDocumentation with from_json(json) {
+pub impl @json.FromJson for CodeActionKindDocumentation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -17365,8 +17429,8 @@ pub struct NotebookCellTextDocumentFilter {
 }
 
 ///|
-pub impl @json.ToJson for NotebookCellTextDocumentFilter with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookCellTextDocumentFilter with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebook", self.notebook)
   match self.language {
     Some(v) => obj.set("language", @json.JsonValue::String(v))
@@ -17376,7 +17440,9 @@ pub impl @json.ToJson for NotebookCellTextDocumentFilter with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookCellTextDocumentFilter with from_json(json) {
+pub impl @json.FromJson for NotebookCellTextDocumentFilter with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -17389,7 +17455,7 @@ pub impl @json.FromJson for NotebookCellTextDocumentFilter with from_json(json) 
     None => raise @json.JsonError("missing notebook")
   }
   let language : String? = match obj.get("language") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -17409,8 +17475,8 @@ pub struct FileOperationPatternOptions {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationPatternOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileOperationPatternOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.ignore_case {
     Some(v) => obj.set("ignoreCase", @json.JsonValue::Bool(v))
     None => ()
@@ -17419,14 +17485,14 @@ pub impl @json.ToJson for FileOperationPatternOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationPatternOptions with from_json(json) {
+pub impl @json.FromJson for FileOperationPatternOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for FileOperationPatternOptions")
   }
   let ignore_case : Bool? = match obj.get("ignoreCase") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17447,8 +17513,8 @@ pub struct ExecutionSummary {
 }
 
 ///|
-pub impl @json.ToJson for ExecutionSummary with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ExecutionSummary with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "executionOrder",
     @json.JsonValue::Number(self.execution_order.to_double()),
@@ -17461,7 +17527,7 @@ pub impl @json.ToJson for ExecutionSummary with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ExecutionSummary with from_json(json) {
+pub impl @json.FromJson for ExecutionSummary with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ExecutionSummary")
@@ -17475,7 +17541,7 @@ pub impl @json.FromJson for ExecutionSummary with from_json(json) {
     None => raise @json.JsonError("missing executionOrder")
   }
   let success : Bool? = match obj.get("success") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17494,14 +17560,14 @@ pub struct NotebookCellLanguage {
 }
 
 ///|
-pub impl @json.ToJson for NotebookCellLanguage with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookCellLanguage with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("language", @json.JsonValue::String(self.language))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for NotebookCellLanguage with from_json(json) {
+pub impl @json.FromJson for NotebookCellLanguage with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for NotebookCellLanguage")
@@ -17529,8 +17595,10 @@ pub struct NotebookDocumentCellChangeStructure {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentCellChangeStructure with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentCellChangeStructure with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("array", self.array.to_json())
   match self.did_open {
     Some(v) =>
@@ -17546,7 +17614,7 @@ pub impl @json.ToJson for NotebookDocumentCellChangeStructure with to_json(self)
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentCellChangeStructure with from_json(
+pub impl @json.FromJson for NotebookDocumentCellChangeStructure with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -17561,7 +17629,7 @@ pub impl @json.FromJson for NotebookDocumentCellChangeStructure with from_json(
     None => raise @json.JsonError("missing array")
   }
   let did_open : Array[TextDocumentItem]? = match obj.get("didOpen") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -17572,7 +17640,7 @@ pub impl @json.FromJson for NotebookDocumentCellChangeStructure with from_json(
     _ => None
   }
   let did_close : Array[TextDocumentIdentifier]? = match obj.get("didClose") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -17593,8 +17661,10 @@ pub struct NotebookDocumentCellContentChanges {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentCellContentChanges with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentCellContentChanges with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("document", self.document.to_json())
   obj.set(
     "changes",
@@ -17604,7 +17674,7 @@ pub impl @json.ToJson for NotebookDocumentCellContentChanges with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentCellContentChanges with from_json(
+pub impl @json.FromJson for NotebookDocumentCellContentChanges with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -17668,8 +17738,8 @@ pub struct WorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.apply_edit {
     Some(v) => obj.set("applyEdit", @json.JsonValue::Bool(v))
     None => ()
@@ -17738,14 +17808,14 @@ pub impl @json.ToJson for WorkspaceClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceClientCapabilities with from_json(json) {
+pub impl @json.FromJson for WorkspaceClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for WorkspaceClientCapabilities")
   }
   let apply_edit : Bool? = match obj.get("applyEdit") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17756,35 +17826,35 @@ pub impl @json.FromJson for WorkspaceClientCapabilities with from_json(json) {
   }
   let workspace_edit : WorkspaceEditClientCapabilities? = match
     obj.get("workspaceEdit") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(WorkspaceEditClientCapabilities::from_json(v))
     _ => None
   }
   let did_change_configuration : DidChangeConfigurationClientCapabilities? = match
     obj.get("didChangeConfiguration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DidChangeConfigurationClientCapabilities::from_json(v))
     _ => None
   }
   let did_change_watched_files : DidChangeWatchedFilesClientCapabilities? = match
     obj.get("didChangeWatchedFiles") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DidChangeWatchedFilesClientCapabilities::from_json(v))
     _ => None
   }
   let symbol : WorkspaceSymbolClientCapabilities? = match obj.get("symbol") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(WorkspaceSymbolClientCapabilities::from_json(v))
     _ => None
   }
   let execute_command : ExecuteCommandClientCapabilities? = match
     obj.get("executeCommand") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ExecuteCommandClientCapabilities::from_json(v))
     _ => None
   }
   let workspace_folders : Bool? = match obj.get("workspaceFolders") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17794,7 +17864,7 @@ pub impl @json.FromJson for WorkspaceClientCapabilities with from_json(json) {
     _ => None
   }
   let configuration : Bool? = match obj.get("configuration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -17805,49 +17875,49 @@ pub impl @json.FromJson for WorkspaceClientCapabilities with from_json(json) {
   }
   let semantic_tokens : SemanticTokensWorkspaceClientCapabilities? = match
     obj.get("semanticTokens") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(SemanticTokensWorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let code_lens : CodeLensWorkspaceClientCapabilities? = match
     obj.get("codeLens") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(CodeLensWorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let file_operations : FileOperationClientCapabilities? = match
     obj.get("fileOperations") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationClientCapabilities::from_json(v))
     _ => None
   }
   let inline_value : InlineValueWorkspaceClientCapabilities? = match
     obj.get("inlineValue") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(InlineValueWorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let inlay_hint : InlayHintWorkspaceClientCapabilities? = match
     obj.get("inlayHint") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(InlayHintWorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let diagnostics : DiagnosticWorkspaceClientCapabilities? = match
     obj.get("diagnostics") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DiagnosticWorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let folding_range : FoldingRangeWorkspaceClientCapabilities? = match
     obj.get("foldingRange") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FoldingRangeWorkspaceClientCapabilities::from_json(v))
     _ => None
   }
   let text_document_content : TextDocumentContentClientCapabilities? = match
     obj.get("textDocumentContent") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(TextDocumentContentClientCapabilities::from_json(v))
     _ => None
   }
@@ -17941,8 +18011,8 @@ pub struct TextDocumentClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.synchronization {
     Some(v) => obj.set("synchronization", v.to_json())
     None => ()
@@ -18075,7 +18145,9 @@ pub impl @json.ToJson for TextDocumentClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentClientCapabilities with from_json(json) {
+pub impl @json.FromJson for TextDocumentClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -18085,181 +18157,172 @@ pub impl @json.FromJson for TextDocumentClientCapabilities with from_json(json) 
   }
   let synchronization : TextDocumentSyncClientCapabilities? = match
     obj.get("synchronization") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(TextDocumentSyncClientCapabilities::from_json(v))
     _ => None
   }
   let filters : TextDocumentFilterClientCapabilities? = match
     obj.get("filters") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(TextDocumentFilterClientCapabilities::from_json(v))
     _ => None
   }
   let completion : CompletionClientCapabilities? = match obj.get("completion") {
-    Some(v) if not(v.is_null()) =>
-      Some(CompletionClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionClientCapabilities::from_json(v))
     _ => None
   }
   let hover : HoverClientCapabilities? = match obj.get("hover") {
-    Some(v) if not(v.is_null()) => Some(HoverClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(HoverClientCapabilities::from_json(v))
     _ => None
   }
   let signature_help : SignatureHelpClientCapabilities? = match
     obj.get("signatureHelp") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(SignatureHelpClientCapabilities::from_json(v))
     _ => None
   }
   let declaration : DeclarationClientCapabilities? = match
     obj.get("declaration") {
-    Some(v) if not(v.is_null()) =>
-      Some(DeclarationClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(DeclarationClientCapabilities::from_json(v))
     _ => None
   }
   let definition : DefinitionClientCapabilities? = match obj.get("definition") {
-    Some(v) if not(v.is_null()) =>
-      Some(DefinitionClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(DefinitionClientCapabilities::from_json(v))
     _ => None
   }
   let type_definition : TypeDefinitionClientCapabilities? = match
     obj.get("typeDefinition") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(TypeDefinitionClientCapabilities::from_json(v))
     _ => None
   }
   let implementation : ImplementationClientCapabilities? = match
     obj.get("implementation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ImplementationClientCapabilities::from_json(v))
     _ => None
   }
   let references : ReferenceClientCapabilities? = match obj.get("references") {
-    Some(v) if not(v.is_null()) =>
-      Some(ReferenceClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(ReferenceClientCapabilities::from_json(v))
     _ => None
   }
   let document_highlight : DocumentHighlightClientCapabilities? = match
     obj.get("documentHighlight") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentHighlightClientCapabilities::from_json(v))
     _ => None
   }
   let document_symbol : DocumentSymbolClientCapabilities? = match
     obj.get("documentSymbol") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentSymbolClientCapabilities::from_json(v))
     _ => None
   }
   let code_action : CodeActionClientCapabilities? = match
     obj.get("codeAction") {
-    Some(v) if not(v.is_null()) =>
-      Some(CodeActionClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeActionClientCapabilities::from_json(v))
     _ => None
   }
   let code_lens : CodeLensClientCapabilities? = match obj.get("codeLens") {
-    Some(v) if not(v.is_null()) =>
-      Some(CodeLensClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeLensClientCapabilities::from_json(v))
     _ => None
   }
   let document_link : DocumentLinkClientCapabilities? = match
     obj.get("documentLink") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentLinkClientCapabilities::from_json(v))
     _ => None
   }
   let color_provider : DocumentColorClientCapabilities? = match
     obj.get("colorProvider") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentColorClientCapabilities::from_json(v))
     _ => None
   }
   let formatting : DocumentFormattingClientCapabilities? = match
     obj.get("formatting") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentFormattingClientCapabilities::from_json(v))
     _ => None
   }
   let range_formatting : DocumentRangeFormattingClientCapabilities? = match
     obj.get("rangeFormatting") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentRangeFormattingClientCapabilities::from_json(v))
     _ => None
   }
   let on_type_formatting : DocumentOnTypeFormattingClientCapabilities? = match
     obj.get("onTypeFormatting") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(DocumentOnTypeFormattingClientCapabilities::from_json(v))
     _ => None
   }
   let rename : RenameClientCapabilities? = match obj.get("rename") {
-    Some(v) if not(v.is_null()) => Some(RenameClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(RenameClientCapabilities::from_json(v))
     _ => None
   }
   let folding_range : FoldingRangeClientCapabilities? = match
     obj.get("foldingRange") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FoldingRangeClientCapabilities::from_json(v))
     _ => None
   }
   let selection_range : SelectionRangeClientCapabilities? = match
     obj.get("selectionRange") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(SelectionRangeClientCapabilities::from_json(v))
     _ => None
   }
   let publish_diagnostics : PublishDiagnosticsClientCapabilities? = match
     obj.get("publishDiagnostics") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(PublishDiagnosticsClientCapabilities::from_json(v))
     _ => None
   }
   let call_hierarchy : CallHierarchyClientCapabilities? = match
     obj.get("callHierarchy") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(CallHierarchyClientCapabilities::from_json(v))
     _ => None
   }
   let semantic_tokens : SemanticTokensClientCapabilities? = match
     obj.get("semanticTokens") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(SemanticTokensClientCapabilities::from_json(v))
     _ => None
   }
   let linked_editing_range : LinkedEditingRangeClientCapabilities? = match
     obj.get("linkedEditingRange") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(LinkedEditingRangeClientCapabilities::from_json(v))
     _ => None
   }
   let moniker : MonikerClientCapabilities? = match obj.get("moniker") {
-    Some(v) if not(v.is_null()) => Some(MonikerClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(MonikerClientCapabilities::from_json(v))
     _ => None
   }
   let type_hierarchy : TypeHierarchyClientCapabilities? = match
     obj.get("typeHierarchy") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(TypeHierarchyClientCapabilities::from_json(v))
     _ => None
   }
   let inline_value : InlineValueClientCapabilities? = match
     obj.get("inlineValue") {
-    Some(v) if not(v.is_null()) =>
-      Some(InlineValueClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(InlineValueClientCapabilities::from_json(v))
     _ => None
   }
   let inlay_hint : InlayHintClientCapabilities? = match obj.get("inlayHint") {
-    Some(v) if not(v.is_null()) =>
-      Some(InlayHintClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(InlayHintClientCapabilities::from_json(v))
     _ => None
   }
   let diagnostic : DiagnosticClientCapabilities? = match obj.get("diagnostic") {
-    Some(v) if not(v.is_null()) =>
-      Some(DiagnosticClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(DiagnosticClientCapabilities::from_json(v))
     _ => None
   }
   let inline_completion : InlineCompletionClientCapabilities? = match
     obj.get("inlineCompletion") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(InlineCompletionClientCapabilities::from_json(v))
     _ => None
   }
@@ -18307,14 +18370,16 @@ pub struct NotebookDocumentClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentClientCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("synchronization", self.synchronization.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentClientCapabilities with from_json(
+pub impl @json.FromJson for NotebookDocumentClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -18342,8 +18407,8 @@ pub struct WindowClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for WindowClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WindowClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.work_done_progress {
     Some(v) => obj.set("workDoneProgress", @json.JsonValue::Bool(v))
     None => ()
@@ -18360,13 +18425,13 @@ pub impl @json.ToJson for WindowClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WindowClientCapabilities with from_json(json) {
+pub impl @json.FromJson for WindowClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for WindowClientCapabilities")
   }
   let work_done_progress : Bool? = match obj.get("workDoneProgress") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -18377,13 +18442,13 @@ pub impl @json.FromJson for WindowClientCapabilities with from_json(json) {
   }
   let show_message : ShowMessageRequestClientCapabilities? = match
     obj.get("showMessage") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ShowMessageRequestClientCapabilities::from_json(v))
     _ => None
   }
   let show_document : ShowDocumentClientCapabilities? = match
     obj.get("showDocument") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ShowDocumentClientCapabilities::from_json(v))
     _ => None
   }
@@ -18404,8 +18469,8 @@ pub struct GeneralClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for GeneralClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for GeneralClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.stale_request_support {
     Some(v) => obj.set("staleRequestSupport", v.to_json())
     None => ()
@@ -18430,31 +18495,29 @@ pub impl @json.ToJson for GeneralClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for GeneralClientCapabilities with from_json(json) {
+pub impl @json.FromJson for GeneralClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for GeneralClientCapabilities")
   }
   let stale_request_support : StaleRequestSupportOptions? = match
     obj.get("staleRequestSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(StaleRequestSupportOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(StaleRequestSupportOptions::from_json(v))
     _ => None
   }
   let regular_expressions : RegularExpressionsClientCapabilities? = match
     obj.get("regularExpressions") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(RegularExpressionsClientCapabilities::from_json(v))
     _ => None
   }
   let markdown : MarkdownClientCapabilities? = match obj.get("markdown") {
-    Some(v) if not(v.is_null()) =>
-      Some(MarkdownClientCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(MarkdownClientCapabilities::from_json(v))
     _ => None
   }
   let position_encodings : Array[PositionEncodingKind]? = match
     obj.get("positionEncodings") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -18481,8 +18544,10 @@ pub struct WorkspaceFoldersServerCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceFoldersServerCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceFoldersServerCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.supported {
     Some(v) => obj.set("supported", @json.JsonValue::Bool(v))
     None => ()
@@ -18495,7 +18560,7 @@ pub impl @json.ToJson for WorkspaceFoldersServerCapabilities with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceFoldersServerCapabilities with from_json(
+pub impl @json.FromJson for WorkspaceFoldersServerCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -18506,7 +18571,7 @@ pub impl @json.FromJson for WorkspaceFoldersServerCapabilities with from_json(
       )
   }
   let supported : Bool? = match obj.get("supported") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -18537,8 +18602,8 @@ pub struct FileOperationOptions {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileOperationOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.did_create {
     Some(v) => obj.set("didCreate", v.to_json())
     None => ()
@@ -18567,44 +18632,44 @@ pub impl @json.ToJson for FileOperationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationOptions with from_json(json) {
+pub impl @json.FromJson for FileOperationOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for FileOperationOptions")
   }
   let did_create : FileOperationRegistrationOptions? = match
     obj.get("didCreate") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationRegistrationOptions::from_json(v))
     _ => None
   }
   let will_create : FileOperationRegistrationOptions? = match
     obj.get("willCreate") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationRegistrationOptions::from_json(v))
     _ => None
   }
   let did_rename : FileOperationRegistrationOptions? = match
     obj.get("didRename") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationRegistrationOptions::from_json(v))
     _ => None
   }
   let will_rename : FileOperationRegistrationOptions? = match
     obj.get("willRename") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationRegistrationOptions::from_json(v))
     _ => None
   }
   let did_delete : FileOperationRegistrationOptions? = match
     obj.get("didDelete") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationRegistrationOptions::from_json(v))
     _ => None
   }
   let will_delete : FileOperationRegistrationOptions? = match
     obj.get("willDelete") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(FileOperationRegistrationOptions::from_json(v))
     _ => None
   }
@@ -18628,15 +18693,15 @@ pub struct RelativePattern {
 }
 
 ///|
-pub impl @json.ToJson for RelativePattern with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RelativePattern with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("baseUri", self.base_uri)
   obj.set("pattern", @json.JsonValue::String(self.pattern))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for RelativePattern with from_json(json) {
+pub impl @json.FromJson for RelativePattern with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RelativePattern")
@@ -18668,8 +18733,8 @@ pub struct TextDocumentFilterLanguage {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentFilterLanguage with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentFilterLanguage with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("language", @json.JsonValue::String(self.language))
   match self.scheme {
     Some(v) => obj.set("scheme", @json.JsonValue::String(v))
@@ -18683,7 +18748,7 @@ pub impl @json.ToJson for TextDocumentFilterLanguage with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentFilterLanguage with from_json(json) {
+pub impl @json.FromJson for TextDocumentFilterLanguage with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentFilterLanguage")
@@ -18697,7 +18762,7 @@ pub impl @json.FromJson for TextDocumentFilterLanguage with from_json(json) {
     None => raise @json.JsonError("missing language")
   }
   let scheme : String? = match obj.get("scheme") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18707,7 +18772,7 @@ pub impl @json.FromJson for TextDocumentFilterLanguage with from_json(json) {
     _ => None
   }
   let pattern : GlobPattern? = match obj.get("pattern") {
-    Some(v) if not(v.is_null()) => Some(GlobPattern::from_json(v))
+    Some(v) if !v.is_null() => Some(GlobPattern::from_json(v))
     _ => None
   }
   TextDocumentFilterLanguage::{ language, scheme, pattern }
@@ -18725,8 +18790,8 @@ pub struct TextDocumentFilterScheme {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentFilterScheme with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentFilterScheme with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.language {
     Some(v) => obj.set("language", @json.JsonValue::String(v))
     None => ()
@@ -18740,13 +18805,13 @@ pub impl @json.ToJson for TextDocumentFilterScheme with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentFilterScheme with from_json(json) {
+pub impl @json.FromJson for TextDocumentFilterScheme with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentFilterScheme")
   }
   let language : String? = match obj.get("language") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18764,7 +18829,7 @@ pub impl @json.FromJson for TextDocumentFilterScheme with from_json(json) {
     None => raise @json.JsonError("missing scheme")
   }
   let pattern : GlobPattern? = match obj.get("pattern") {
-    Some(v) if not(v.is_null()) => Some(GlobPattern::from_json(v))
+    Some(v) if !v.is_null() => Some(GlobPattern::from_json(v))
     _ => None
   }
   TextDocumentFilterScheme::{ language, scheme, pattern }
@@ -18782,8 +18847,8 @@ pub struct TextDocumentFilterPattern {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentFilterPattern with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentFilterPattern with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.language {
     Some(v) => obj.set("language", @json.JsonValue::String(v))
     None => ()
@@ -18797,13 +18862,13 @@ pub impl @json.ToJson for TextDocumentFilterPattern with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentFilterPattern with from_json(json) {
+pub impl @json.FromJson for TextDocumentFilterPattern with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for TextDocumentFilterPattern")
   }
   let language : String? = match obj.get("language") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18813,7 +18878,7 @@ pub impl @json.FromJson for TextDocumentFilterPattern with from_json(json) {
     _ => None
   }
   let scheme : String? = match obj.get("scheme") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18841,8 +18906,10 @@ pub struct NotebookDocumentFilterNotebookType {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentFilterNotebookType with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentFilterNotebookType with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("notebookType", @json.JsonValue::String(self.notebook_type))
   match self.scheme {
     Some(v) => obj.set("scheme", @json.JsonValue::String(v))
@@ -18856,7 +18923,7 @@ pub impl @json.ToJson for NotebookDocumentFilterNotebookType with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentFilterNotebookType with from_json(
+pub impl @json.FromJson for NotebookDocumentFilterNotebookType with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -18875,7 +18942,7 @@ pub impl @json.FromJson for NotebookDocumentFilterNotebookType with from_json(
     None => raise @json.JsonError("missing notebookType")
   }
   let scheme : String? = match obj.get("scheme") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18885,7 +18952,7 @@ pub impl @json.FromJson for NotebookDocumentFilterNotebookType with from_json(
     _ => None
   }
   let pattern : GlobPattern? = match obj.get("pattern") {
-    Some(v) if not(v.is_null()) => Some(GlobPattern::from_json(v))
+    Some(v) if !v.is_null() => Some(GlobPattern::from_json(v))
     _ => None
   }
   NotebookDocumentFilterNotebookType::{ notebook_type, scheme, pattern }
@@ -18903,8 +18970,8 @@ pub struct NotebookDocumentFilterScheme {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentFilterScheme with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentFilterScheme with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.notebook_type {
     Some(v) => obj.set("notebookType", @json.JsonValue::String(v))
     None => ()
@@ -18918,14 +18985,14 @@ pub impl @json.ToJson for NotebookDocumentFilterScheme with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentFilterScheme with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentFilterScheme with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for NotebookDocumentFilterScheme")
   }
   let notebook_type : String? = match obj.get("notebookType") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18943,7 +19010,7 @@ pub impl @json.FromJson for NotebookDocumentFilterScheme with from_json(json) {
     None => raise @json.JsonError("missing scheme")
   }
   let pattern : GlobPattern? = match obj.get("pattern") {
-    Some(v) if not(v.is_null()) => Some(GlobPattern::from_json(v))
+    Some(v) if !v.is_null() => Some(GlobPattern::from_json(v))
     _ => None
   }
   NotebookDocumentFilterScheme::{ notebook_type, scheme, pattern }
@@ -18961,8 +19028,8 @@ pub struct NotebookDocumentFilterPattern {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentFilterPattern with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookDocumentFilterPattern with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.notebook_type {
     Some(v) => obj.set("notebookType", @json.JsonValue::String(v))
     None => ()
@@ -18976,14 +19043,16 @@ pub impl @json.ToJson for NotebookDocumentFilterPattern with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentFilterPattern with from_json(json) {
+pub impl @json.FromJson for NotebookDocumentFilterPattern with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for NotebookDocumentFilterPattern")
   }
   let notebook_type : String? = match obj.get("notebookType") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -18993,7 +19062,7 @@ pub impl @json.FromJson for NotebookDocumentFilterPattern with from_json(json) {
     _ => None
   }
   let scheme : String? = match obj.get("scheme") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -19021,8 +19090,8 @@ pub struct NotebookCellArrayChange {
 }
 
 ///|
-pub impl @json.ToJson for NotebookCellArrayChange with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for NotebookCellArrayChange with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("start", @json.JsonValue::Number(self.start.to_double()))
   obj.set("deleteCount", @json.JsonValue::Number(self.delete_count.to_double()))
   match self.cells {
@@ -19034,7 +19103,7 @@ pub impl @json.ToJson for NotebookCellArrayChange with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for NotebookCellArrayChange with from_json(json) {
+pub impl @json.FromJson for NotebookCellArrayChange with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for NotebookCellArrayChange")
@@ -19056,7 +19125,7 @@ pub impl @json.FromJson for NotebookCellArrayChange with from_json(json) {
     None => raise @json.JsonError("missing deleteCount")
   }
   let cells : Array[NotebookCell]? = match obj.get("cells") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -19088,8 +19157,8 @@ pub struct WorkspaceEditClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceEditClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceEditClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.document_changes {
     Some(v) => obj.set("documentChanges", @json.JsonValue::Bool(v))
     None => ()
@@ -19126,7 +19195,9 @@ pub impl @json.ToJson for WorkspaceEditClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceEditClientCapabilities with from_json(json) {
+pub impl @json.FromJson for WorkspaceEditClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -19135,7 +19206,7 @@ pub impl @json.FromJson for WorkspaceEditClientCapabilities with from_json(json)
       )
   }
   let document_changes : Bool? = match obj.get("documentChanges") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19146,7 +19217,7 @@ pub impl @json.FromJson for WorkspaceEditClientCapabilities with from_json(json)
   }
   let resource_operations : Array[ResourceOperationKind]? = match
     obj.get("resourceOperations") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -19158,11 +19229,11 @@ pub impl @json.FromJson for WorkspaceEditClientCapabilities with from_json(json)
   }
   let failure_handling : FailureHandlingKind? = match
     obj.get("failureHandling") {
-    Some(v) if not(v.is_null()) => Some(FailureHandlingKind::from_json(v))
+    Some(v) if !v.is_null() => Some(FailureHandlingKind::from_json(v))
     _ => None
   }
   let normalizes_line_endings : Bool? = match obj.get("normalizesLineEndings") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19173,12 +19244,12 @@ pub impl @json.FromJson for WorkspaceEditClientCapabilities with from_json(json)
   }
   let change_annotation_support : ChangeAnnotationsSupportOptions? = match
     obj.get("changeAnnotationSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ChangeAnnotationsSupportOptions::from_json(v))
     _ => None
   }
   let metadata_support : Bool? = match obj.get("metadataSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19188,7 +19259,7 @@ pub impl @json.FromJson for WorkspaceEditClientCapabilities with from_json(json)
     _ => None
   }
   let snippet_edit_support : Bool? = match obj.get("snippetEditSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19215,10 +19286,10 @@ pub struct DidChangeConfigurationClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeConfigurationClientCapabilities with to_json(
+pub impl @json.ToJson for DidChangeConfigurationClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19227,7 +19298,7 @@ pub impl @json.ToJson for DidChangeConfigurationClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DidChangeConfigurationClientCapabilities with from_json(
+pub impl @json.FromJson for DidChangeConfigurationClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19238,7 +19309,7 @@ pub impl @json.FromJson for DidChangeConfigurationClientCapabilities with from_j
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19259,10 +19330,10 @@ pub struct DidChangeWatchedFilesClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DidChangeWatchedFilesClientCapabilities with to_json(
+pub impl @json.ToJson for DidChangeWatchedFilesClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19275,7 +19346,7 @@ pub impl @json.ToJson for DidChangeWatchedFilesClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DidChangeWatchedFilesClientCapabilities with from_json(
+pub impl @json.FromJson for DidChangeWatchedFilesClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19286,7 +19357,7 @@ pub impl @json.FromJson for DidChangeWatchedFilesClientCapabilities with from_js
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19297,7 +19368,7 @@ pub impl @json.FromJson for DidChangeWatchedFilesClientCapabilities with from_js
   }
   let relative_pattern_support : Bool? = match
     obj.get("relativePatternSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19326,8 +19397,10 @@ pub struct WorkspaceSymbolClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for WorkspaceSymbolClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for WorkspaceSymbolClientCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19348,7 +19421,7 @@ pub impl @json.ToJson for WorkspaceSymbolClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for WorkspaceSymbolClientCapabilities with from_json(
+pub impl @json.FromJson for WorkspaceSymbolClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19359,7 +19432,7 @@ pub impl @json.FromJson for WorkspaceSymbolClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19369,17 +19442,16 @@ pub impl @json.FromJson for WorkspaceSymbolClientCapabilities with from_json(
     _ => None
   }
   let symbol_kind : ClientSymbolKindOptions? = match obj.get("symbolKind") {
-    Some(v) if not(v.is_null()) => Some(ClientSymbolKindOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientSymbolKindOptions::from_json(v))
     _ => None
   }
   let tag_support : ClientSymbolTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) => Some(ClientSymbolTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientSymbolTagOptions::from_json(v))
     _ => None
   }
   let resolve_support : ClientSymbolResolveOptions? = match
     obj.get("resolveSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientSymbolResolveOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientSymbolResolveOptions::from_json(v))
     _ => None
   }
   WorkspaceSymbolClientCapabilities::{
@@ -19398,8 +19470,8 @@ pub struct ExecuteCommandClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ExecuteCommandClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ExecuteCommandClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19408,7 +19480,7 @@ pub impl @json.ToJson for ExecuteCommandClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ExecuteCommandClientCapabilities with from_json(
+pub impl @json.FromJson for ExecuteCommandClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19419,7 +19491,7 @@ pub impl @json.FromJson for ExecuteCommandClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19439,10 +19511,10 @@ pub struct SemanticTokensWorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensWorkspaceClientCapabilities with to_json(
+pub impl @json.ToJson for SemanticTokensWorkspaceClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.refresh_support {
     Some(v) => obj.set("refreshSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19451,7 +19523,7 @@ pub impl @json.ToJson for SemanticTokensWorkspaceClientCapabilities with to_json
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensWorkspaceClientCapabilities with from_json(
+pub impl @json.FromJson for SemanticTokensWorkspaceClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19462,7 +19534,7 @@ pub impl @json.FromJson for SemanticTokensWorkspaceClientCapabilities with from_
       )
   }
   let refresh_support : Bool? = match obj.get("refreshSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19482,8 +19554,10 @@ pub struct CodeLensWorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for CodeLensWorkspaceClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeLensWorkspaceClientCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.refresh_support {
     Some(v) => obj.set("refreshSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19492,7 +19566,7 @@ pub impl @json.ToJson for CodeLensWorkspaceClientCapabilities with to_json(self)
 }
 
 ///|
-pub impl @json.FromJson for CodeLensWorkspaceClientCapabilities with from_json(
+pub impl @json.FromJson for CodeLensWorkspaceClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19503,7 +19577,7 @@ pub impl @json.FromJson for CodeLensWorkspaceClientCapabilities with from_json(
       )
   }
   let refresh_support : Bool? = match obj.get("refreshSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19535,8 +19609,8 @@ pub struct FileOperationClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for FileOperationClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FileOperationClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19569,7 +19643,9 @@ pub impl @json.ToJson for FileOperationClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json) {
+pub impl @json.FromJson for FileOperationClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -19578,7 +19654,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19588,7 +19664,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
     _ => None
   }
   let did_create : Bool? = match obj.get("didCreate") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19598,7 +19674,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
     _ => None
   }
   let will_create : Bool? = match obj.get("willCreate") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19608,7 +19684,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
     _ => None
   }
   let did_rename : Bool? = match obj.get("didRename") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19618,7 +19694,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
     _ => None
   }
   let will_rename : Bool? = match obj.get("willRename") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19628,7 +19704,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
     _ => None
   }
   let did_delete : Bool? = match obj.get("didDelete") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19638,7 +19714,7 @@ pub impl @json.FromJson for FileOperationClientCapabilities with from_json(json)
     _ => None
   }
   let will_delete : Bool? = match obj.get("willDelete") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19666,10 +19742,10 @@ pub struct InlineValueWorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueWorkspaceClientCapabilities with to_json(
+pub impl @json.ToJson for InlineValueWorkspaceClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.refresh_support {
     Some(v) => obj.set("refreshSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19678,7 +19754,7 @@ pub impl @json.ToJson for InlineValueWorkspaceClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for InlineValueWorkspaceClientCapabilities with from_json(
+pub impl @json.FromJson for InlineValueWorkspaceClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19689,7 +19765,7 @@ pub impl @json.FromJson for InlineValueWorkspaceClientCapabilities with from_jso
       )
   }
   let refresh_support : Bool? = match obj.get("refreshSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19709,10 +19785,10 @@ pub struct InlayHintWorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintWorkspaceClientCapabilities with to_json(
+pub impl @json.ToJson for InlayHintWorkspaceClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.refresh_support {
     Some(v) => obj.set("refreshSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19721,7 +19797,7 @@ pub impl @json.ToJson for InlayHintWorkspaceClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for InlayHintWorkspaceClientCapabilities with from_json(
+pub impl @json.FromJson for InlayHintWorkspaceClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19732,7 +19808,7 @@ pub impl @json.FromJson for InlayHintWorkspaceClientCapabilities with from_json(
       )
   }
   let refresh_support : Bool? = match obj.get("refreshSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19752,10 +19828,10 @@ pub struct DiagnosticWorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DiagnosticWorkspaceClientCapabilities with to_json(
+pub impl @json.ToJson for DiagnosticWorkspaceClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.refresh_support {
     Some(v) => obj.set("refreshSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19764,7 +19840,7 @@ pub impl @json.ToJson for DiagnosticWorkspaceClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticWorkspaceClientCapabilities with from_json(
+pub impl @json.FromJson for DiagnosticWorkspaceClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19775,7 +19851,7 @@ pub impl @json.FromJson for DiagnosticWorkspaceClientCapabilities with from_json
       )
   }
   let refresh_support : Bool? = match obj.get("refreshSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19795,10 +19871,10 @@ pub struct FoldingRangeWorkspaceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRangeWorkspaceClientCapabilities with to_json(
+pub impl @json.ToJson for FoldingRangeWorkspaceClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.refresh_support {
     Some(v) => obj.set("refreshSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19807,7 +19883,7 @@ pub impl @json.ToJson for FoldingRangeWorkspaceClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for FoldingRangeWorkspaceClientCapabilities with from_json(
+pub impl @json.FromJson for FoldingRangeWorkspaceClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19818,7 +19894,7 @@ pub impl @json.FromJson for FoldingRangeWorkspaceClientCapabilities with from_js
       )
   }
   let refresh_support : Bool? = match obj.get("refreshSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19838,10 +19914,10 @@ pub struct TextDocumentContentClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentContentClientCapabilities with to_json(
+pub impl @json.ToJson for TextDocumentContentClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19850,7 +19926,7 @@ pub impl @json.ToJson for TextDocumentContentClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentContentClientCapabilities with from_json(
+pub impl @json.FromJson for TextDocumentContentClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19861,7 +19937,7 @@ pub impl @json.FromJson for TextDocumentContentClientCapabilities with from_json
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19886,8 +19962,10 @@ pub struct TextDocumentSyncClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentSyncClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TextDocumentSyncClientCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -19908,7 +19986,7 @@ pub impl @json.ToJson for TextDocumentSyncClientCapabilities with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentSyncClientCapabilities with from_json(
+pub impl @json.FromJson for TextDocumentSyncClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19919,7 +19997,7 @@ pub impl @json.FromJson for TextDocumentSyncClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19929,7 +20007,7 @@ pub impl @json.FromJson for TextDocumentSyncClientCapabilities with from_json(
     _ => None
   }
   let will_save : Bool? = match obj.get("willSave") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19939,7 +20017,7 @@ pub impl @json.FromJson for TextDocumentSyncClientCapabilities with from_json(
     _ => None
   }
   let will_save_wait_until : Bool? = match obj.get("willSaveWaitUntil") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19949,7 +20027,7 @@ pub impl @json.FromJson for TextDocumentSyncClientCapabilities with from_json(
     _ => None
   }
   let did_save : Bool? = match obj.get("didSave") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -19973,10 +20051,10 @@ pub struct TextDocumentFilterClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for TextDocumentFilterClientCapabilities with to_json(
+pub impl @json.ToJson for TextDocumentFilterClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.relative_pattern_support {
     Some(v) => obj.set("relativePatternSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -19985,7 +20063,7 @@ pub impl @json.ToJson for TextDocumentFilterClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for TextDocumentFilterClientCapabilities with from_json(
+pub impl @json.FromJson for TextDocumentFilterClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -19997,7 +20075,7 @@ pub impl @json.FromJson for TextDocumentFilterClientCapabilities with from_json(
   }
   let relative_pattern_support : Bool? = match
     obj.get("relativePatternSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20026,8 +20104,8 @@ pub struct CompletionClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for CompletionClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20056,14 +20134,14 @@ pub impl @json.ToJson for CompletionClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionClientCapabilities with from_json(json) {
+pub impl @json.FromJson for CompletionClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for CompletionClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20074,22 +20152,21 @@ pub impl @json.FromJson for CompletionClientCapabilities with from_json(json) {
   }
   let completion_item : ClientCompletionItemOptions? = match
     obj.get("completionItem") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientCompletionItemOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientCompletionItemOptions::from_json(v))
     _ => None
   }
   let completion_item_kind : ClientCompletionItemOptionsKind? = match
     obj.get("completionItemKind") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientCompletionItemOptionsKind::from_json(v))
     _ => None
   }
   let insert_text_mode : InsertTextMode? = match obj.get("insertTextMode") {
-    Some(v) if not(v.is_null()) => Some(InsertTextMode::from_json(v))
+    Some(v) if !v.is_null() => Some(InsertTextMode::from_json(v))
     _ => None
   }
   let context_support : Bool? = match obj.get("contextSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20100,8 +20177,7 @@ pub impl @json.FromJson for CompletionClientCapabilities with from_json(json) {
   }
   let completion_list : CompletionListCapabilities? = match
     obj.get("completionList") {
-    Some(v) if not(v.is_null()) =>
-      Some(CompletionListCapabilities::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionListCapabilities::from_json(v))
     _ => None
   }
   CompletionClientCapabilities::{
@@ -20123,8 +20199,8 @@ pub struct HoverClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for HoverClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for HoverClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20141,13 +20217,13 @@ pub impl @json.ToJson for HoverClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for HoverClientCapabilities with from_json(json) {
+pub impl @json.FromJson for HoverClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for HoverClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20157,7 +20233,7 @@ pub impl @json.FromJson for HoverClientCapabilities with from_json(json) {
     _ => None
   }
   let content_format : Array[MarkupKind]? = match obj.get("contentFormat") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -20182,8 +20258,8 @@ pub struct SignatureHelpClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for SignatureHelpClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SignatureHelpClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20200,7 +20276,9 @@ pub impl @json.ToJson for SignatureHelpClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SignatureHelpClientCapabilities with from_json(json) {
+pub impl @json.FromJson for SignatureHelpClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -20209,7 +20287,7 @@ pub impl @json.FromJson for SignatureHelpClientCapabilities with from_json(json)
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20220,12 +20298,12 @@ pub impl @json.FromJson for SignatureHelpClientCapabilities with from_json(json)
   }
   let signature_information : ClientSignatureInformationOptions? = match
     obj.get("signatureInformation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientSignatureInformationOptions::from_json(v))
     _ => None
   }
   let context_support : Bool? = match obj.get("contextSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20251,8 +20329,8 @@ pub struct DeclarationClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DeclarationClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DeclarationClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20265,14 +20343,16 @@ pub impl @json.ToJson for DeclarationClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DeclarationClientCapabilities with from_json(json) {
+pub impl @json.FromJson for DeclarationClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for DeclarationClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20282,7 +20362,7 @@ pub impl @json.FromJson for DeclarationClientCapabilities with from_json(json) {
     _ => None
   }
   let link_support : Bool? = match obj.get("linkSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20304,8 +20384,8 @@ pub struct DefinitionClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DefinitionClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DefinitionClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20318,14 +20398,14 @@ pub impl @json.ToJson for DefinitionClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DefinitionClientCapabilities with from_json(json) {
+pub impl @json.FromJson for DefinitionClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for DefinitionClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20335,7 +20415,7 @@ pub impl @json.FromJson for DefinitionClientCapabilities with from_json(json) {
     _ => None
   }
   let link_support : Bool? = match obj.get("linkSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20357,8 +20437,8 @@ pub struct TypeDefinitionClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for TypeDefinitionClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeDefinitionClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20371,7 +20451,7 @@ pub impl @json.ToJson for TypeDefinitionClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeDefinitionClientCapabilities with from_json(
+pub impl @json.FromJson for TypeDefinitionClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -20382,7 +20462,7 @@ pub impl @json.FromJson for TypeDefinitionClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20392,7 +20472,7 @@ pub impl @json.FromJson for TypeDefinitionClientCapabilities with from_json(
     _ => None
   }
   let link_support : Bool? = match obj.get("linkSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20414,8 +20494,8 @@ pub struct ImplementationClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ImplementationClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ImplementationClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20428,7 +20508,7 @@ pub impl @json.ToJson for ImplementationClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ImplementationClientCapabilities with from_json(
+pub impl @json.FromJson for ImplementationClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -20439,7 +20519,7 @@ pub impl @json.FromJson for ImplementationClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20449,7 +20529,7 @@ pub impl @json.FromJson for ImplementationClientCapabilities with from_json(
     _ => None
   }
   let link_support : Bool? = match obj.get("linkSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20469,8 +20549,8 @@ pub struct ReferenceClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ReferenceClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ReferenceClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20479,14 +20559,14 @@ pub impl @json.ToJson for ReferenceClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ReferenceClientCapabilities with from_json(json) {
+pub impl @json.FromJson for ReferenceClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for ReferenceClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20506,8 +20586,10 @@ pub struct DocumentHighlightClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentHighlightClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentHighlightClientCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20516,7 +20598,7 @@ pub impl @json.ToJson for DocumentHighlightClientCapabilities with to_json(self)
 }
 
 ///|
-pub impl @json.FromJson for DocumentHighlightClientCapabilities with from_json(
+pub impl @json.FromJson for DocumentHighlightClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -20527,7 +20609,7 @@ pub impl @json.FromJson for DocumentHighlightClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20555,8 +20637,8 @@ pub struct DocumentSymbolClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentSymbolClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentSymbolClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20582,7 +20664,7 @@ pub impl @json.ToJson for DocumentSymbolClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentSymbolClientCapabilities with from_json(
+pub impl @json.FromJson for DocumentSymbolClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -20593,7 +20675,7 @@ pub impl @json.FromJson for DocumentSymbolClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20603,12 +20685,12 @@ pub impl @json.FromJson for DocumentSymbolClientCapabilities with from_json(
     _ => None
   }
   let symbol_kind : ClientSymbolKindOptions? = match obj.get("symbolKind") {
-    Some(v) if not(v.is_null()) => Some(ClientSymbolKindOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientSymbolKindOptions::from_json(v))
     _ => None
   }
   let hierarchical_document_symbol_support : Bool? = match
     obj.get("hierarchicalDocumentSymbolSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20618,11 +20700,11 @@ pub impl @json.FromJson for DocumentSymbolClientCapabilities with from_json(
     _ => None
   }
   let tag_support : ClientSymbolTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) => Some(ClientSymbolTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientSymbolTagOptions::from_json(v))
     _ => None
   }
   let label_support : Bool? = match obj.get("labelSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20664,8 +20746,8 @@ pub struct CodeActionClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20706,14 +20788,14 @@ pub impl @json.ToJson for CodeActionClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
+pub impl @json.FromJson for CodeActionClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for CodeActionClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20724,12 +20806,12 @@ pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
   }
   let code_action_literal_support : ClientCodeActionLiteralOptions? = match
     obj.get("codeActionLiteralSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientCodeActionLiteralOptions::from_json(v))
     _ => None
   }
   let is_preferred_support : Bool? = match obj.get("isPreferredSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20739,7 +20821,7 @@ pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
     _ => None
   }
   let disabled_support : Bool? = match obj.get("disabledSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20749,7 +20831,7 @@ pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
     _ => None
   }
   let data_support : Bool? = match obj.get("dataSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20760,13 +20842,13 @@ pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
   }
   let resolve_support : ClientCodeActionResolveOptions? = match
     obj.get("resolveSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientCodeActionResolveOptions::from_json(v))
     _ => None
   }
   let honors_change_annotations : Bool? = match
     obj.get("honorsChangeAnnotations") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20776,7 +20858,7 @@ pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
     _ => None
   }
   let documentation_support : Bool? = match obj.get("documentationSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20786,7 +20868,7 @@ pub impl @json.FromJson for CodeActionClientCapabilities with from_json(json) {
     _ => None
   }
   let tag_support : CodeActionTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) => Some(CodeActionTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(CodeActionTagOptions::from_json(v))
     _ => None
   }
   CodeActionClientCapabilities::{
@@ -20812,8 +20894,8 @@ pub struct CodeLensClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for CodeLensClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeLensClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20826,13 +20908,13 @@ pub impl @json.ToJson for CodeLensClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeLensClientCapabilities with from_json(json) {
+pub impl @json.FromJson for CodeLensClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeLensClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20843,8 +20925,7 @@ pub impl @json.FromJson for CodeLensClientCapabilities with from_json(json) {
   }
   let resolve_support : ClientCodeLensResolveOptions? = match
     obj.get("resolveSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientCodeLensResolveOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientCodeLensResolveOptions::from_json(v))
     _ => None
   }
   CodeLensClientCapabilities::{ dynamic_registration, resolve_support }
@@ -20860,8 +20941,8 @@ pub struct DocumentLinkClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentLinkClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentLinkClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20874,7 +20955,9 @@ pub impl @json.ToJson for DocumentLinkClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentLinkClientCapabilities with from_json(json) {
+pub impl @json.FromJson for DocumentLinkClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -20883,7 +20966,7 @@ pub impl @json.FromJson for DocumentLinkClientCapabilities with from_json(json) 
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20893,7 +20976,7 @@ pub impl @json.FromJson for DocumentLinkClientCapabilities with from_json(json) 
     _ => None
   }
   let tooltip_support : Bool? = match obj.get("tooltipSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20912,8 +20995,8 @@ pub struct DocumentColorClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentColorClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DocumentColorClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20922,7 +21005,9 @@ pub impl @json.ToJson for DocumentColorClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DocumentColorClientCapabilities with from_json(json) {
+pub impl @json.FromJson for DocumentColorClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -20931,7 +21016,7 @@ pub impl @json.FromJson for DocumentColorClientCapabilities with from_json(json)
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20951,10 +21036,10 @@ pub struct DocumentFormattingClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentFormattingClientCapabilities with to_json(
+pub impl @json.ToJson for DocumentFormattingClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -20963,7 +21048,7 @@ pub impl @json.ToJson for DocumentFormattingClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for DocumentFormattingClientCapabilities with from_json(
+pub impl @json.FromJson for DocumentFormattingClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -20974,7 +21059,7 @@ pub impl @json.FromJson for DocumentFormattingClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -20996,10 +21081,10 @@ pub struct DocumentRangeFormattingClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentRangeFormattingClientCapabilities with to_json(
+pub impl @json.ToJson for DocumentRangeFormattingClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21012,7 +21097,7 @@ pub impl @json.ToJson for DocumentRangeFormattingClientCapabilities with to_json
 }
 
 ///|
-pub impl @json.FromJson for DocumentRangeFormattingClientCapabilities with from_json(
+pub impl @json.FromJson for DocumentRangeFormattingClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -21023,7 +21108,7 @@ pub impl @json.FromJson for DocumentRangeFormattingClientCapabilities with from_
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21033,7 +21118,7 @@ pub impl @json.FromJson for DocumentRangeFormattingClientCapabilities with from_
     _ => None
   }
   let ranges_support : Bool? = match obj.get("rangesSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21056,10 +21141,10 @@ pub struct DocumentOnTypeFormattingClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DocumentOnTypeFormattingClientCapabilities with to_json(
+pub impl @json.ToJson for DocumentOnTypeFormattingClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21068,7 +21153,7 @@ pub impl @json.ToJson for DocumentOnTypeFormattingClientCapabilities with to_jso
 }
 
 ///|
-pub impl @json.FromJson for DocumentOnTypeFormattingClientCapabilities with from_json(
+pub impl @json.FromJson for DocumentOnTypeFormattingClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -21079,7 +21164,7 @@ pub impl @json.FromJson for DocumentOnTypeFormattingClientCapabilities with from
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21104,8 +21189,8 @@ pub struct RenameClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for RenameClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for RenameClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21126,13 +21211,13 @@ pub impl @json.ToJson for RenameClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RenameClientCapabilities with from_json(json) {
+pub impl @json.FromJson for RenameClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for RenameClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21142,7 +21227,7 @@ pub impl @json.FromJson for RenameClientCapabilities with from_json(json) {
     _ => None
   }
   let prepare_support : Bool? = match obj.get("prepareSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21153,13 +21238,12 @@ pub impl @json.FromJson for RenameClientCapabilities with from_json(json) {
   }
   let prepare_support_default_behavior : PrepareSupportDefaultBehavior? = match
     obj.get("prepareSupportDefaultBehavior") {
-    Some(v) if not(v.is_null()) =>
-      Some(PrepareSupportDefaultBehavior::from_json(v))
+    Some(v) if !v.is_null() => Some(PrepareSupportDefaultBehavior::from_json(v))
     _ => None
   }
   let honors_change_annotations : Bool? = match
     obj.get("honorsChangeAnnotations") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21191,8 +21275,8 @@ pub struct FoldingRangeClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for FoldingRangeClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for FoldingRangeClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21217,7 +21301,9 @@ pub impl @json.ToJson for FoldingRangeClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for FoldingRangeClientCapabilities with from_json(json) {
+pub impl @json.FromJson for FoldingRangeClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -21226,7 +21312,7 @@ pub impl @json.FromJson for FoldingRangeClientCapabilities with from_json(json) 
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21236,7 +21322,7 @@ pub impl @json.FromJson for FoldingRangeClientCapabilities with from_json(json) 
     _ => None
   }
   let range_limit : Int? = match obj.get("rangeLimit") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Number(n) => n.to_int()
@@ -21246,7 +21332,7 @@ pub impl @json.FromJson for FoldingRangeClientCapabilities with from_json(json) 
     _ => None
   }
   let line_folding_only : Bool? = match obj.get("lineFoldingOnly") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21257,13 +21343,12 @@ pub impl @json.FromJson for FoldingRangeClientCapabilities with from_json(json) 
   }
   let folding_range_kind : ClientFoldingRangeKindOptions? = match
     obj.get("foldingRangeKind") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientFoldingRangeKindOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientFoldingRangeKindOptions::from_json(v))
     _ => None
   }
   let folding_range : ClientFoldingRangeOptions? = match
     obj.get("foldingRange") {
-    Some(v) if not(v.is_null()) => Some(ClientFoldingRangeOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientFoldingRangeOptions::from_json(v))
     _ => None
   }
   FoldingRangeClientCapabilities::{
@@ -21282,8 +21367,8 @@ pub struct SelectionRangeClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for SelectionRangeClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SelectionRangeClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21292,7 +21377,7 @@ pub impl @json.ToJson for SelectionRangeClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SelectionRangeClientCapabilities with from_json(
+pub impl @json.FromJson for SelectionRangeClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -21303,7 +21388,7 @@ pub impl @json.FromJson for SelectionRangeClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21333,10 +21418,10 @@ pub struct PublishDiagnosticsClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for PublishDiagnosticsClientCapabilities with to_json(
+pub impl @json.ToJson for PublishDiagnosticsClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.related_information {
     Some(v) => obj.set("relatedInformation", @json.JsonValue::Bool(v))
     None => ()
@@ -21361,7 +21446,7 @@ pub impl @json.ToJson for PublishDiagnosticsClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with from_json(
+pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -21372,7 +21457,7 @@ pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with from_json(
       )
   }
   let related_information : Bool? = match obj.get("relatedInformation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21382,13 +21467,12 @@ pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with from_json(
     _ => None
   }
   let tag_support : ClientDiagnosticsTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientDiagnosticsTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientDiagnosticsTagOptions::from_json(v))
     _ => None
   }
   let code_description_support : Bool? = match
     obj.get("codeDescriptionSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21398,7 +21482,7 @@ pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with from_json(
     _ => None
   }
   let data_support : Bool? = match obj.get("dataSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21408,7 +21492,7 @@ pub impl @json.FromJson for PublishDiagnosticsClientCapabilities with from_json(
     _ => None
   }
   let version_support : Bool? = match obj.get("versionSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21434,8 +21518,8 @@ pub struct CallHierarchyClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for CallHierarchyClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CallHierarchyClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21444,7 +21528,9 @@ pub impl @json.ToJson for CallHierarchyClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CallHierarchyClientCapabilities with from_json(json) {
+pub impl @json.FromJson for CallHierarchyClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -21453,7 +21539,7 @@ pub impl @json.FromJson for CallHierarchyClientCapabilities with from_json(json)
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21489,8 +21575,8 @@ pub struct SemanticTokensClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for SemanticTokensClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for SemanticTokensClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21532,7 +21618,7 @@ pub impl @json.ToJson for SemanticTokensClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for SemanticTokensClientCapabilities with from_json(
+pub impl @json.FromJson for SemanticTokensClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -21543,7 +21629,7 @@ pub impl @json.FromJson for SemanticTokensClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21595,7 +21681,7 @@ pub impl @json.FromJson for SemanticTokensClientCapabilities with from_json(
   }
   let overlapping_token_support : Bool? = match
     obj.get("overlappingTokenSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21605,7 +21691,7 @@ pub impl @json.FromJson for SemanticTokensClientCapabilities with from_json(
     _ => None
   }
   let multiline_token_support : Bool? = match obj.get("multilineTokenSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21615,7 +21701,7 @@ pub impl @json.FromJson for SemanticTokensClientCapabilities with from_json(
     _ => None
   }
   let server_cancel_support : Bool? = match obj.get("serverCancelSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21625,7 +21711,7 @@ pub impl @json.FromJson for SemanticTokensClientCapabilities with from_json(
     _ => None
   }
   let augments_syntax_tokens : Bool? = match obj.get("augmentsSyntaxTokens") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21655,10 +21741,10 @@ pub struct LinkedEditingRangeClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for LinkedEditingRangeClientCapabilities with to_json(
+pub impl @json.ToJson for LinkedEditingRangeClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21667,7 +21753,7 @@ pub impl @json.ToJson for LinkedEditingRangeClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for LinkedEditingRangeClientCapabilities with from_json(
+pub impl @json.FromJson for LinkedEditingRangeClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -21678,7 +21764,7 @@ pub impl @json.FromJson for LinkedEditingRangeClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21698,8 +21784,8 @@ pub struct MonikerClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for MonikerClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MonikerClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21708,13 +21794,13 @@ pub impl @json.ToJson for MonikerClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MonikerClientCapabilities with from_json(json) {
+pub impl @json.FromJson for MonikerClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MonikerClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21734,8 +21820,8 @@ pub struct TypeHierarchyClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for TypeHierarchyClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for TypeHierarchyClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21744,7 +21830,9 @@ pub impl @json.ToJson for TypeHierarchyClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for TypeHierarchyClientCapabilities with from_json(json) {
+pub impl @json.FromJson for TypeHierarchyClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -21753,7 +21841,7 @@ pub impl @json.FromJson for TypeHierarchyClientCapabilities with from_json(json)
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21773,8 +21861,8 @@ pub struct InlineValueClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for InlineValueClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineValueClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21783,14 +21871,16 @@ pub impl @json.ToJson for InlineValueClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlineValueClientCapabilities with from_json(json) {
+pub impl @json.FromJson for InlineValueClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for InlineValueClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21812,8 +21902,8 @@ pub struct InlayHintClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for InlayHintClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlayHintClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21826,14 +21916,14 @@ pub impl @json.ToJson for InlayHintClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for InlayHintClientCapabilities with from_json(json) {
+pub impl @json.FromJson for InlayHintClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for InlayHintClientCapabilities")
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21844,8 +21934,7 @@ pub impl @json.FromJson for InlayHintClientCapabilities with from_json(json) {
   }
   let resolve_support : ClientInlayHintResolveOptions? = match
     obj.get("resolveSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientInlayHintResolveOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientInlayHintResolveOptions::from_json(v))
     _ => None
   }
   InlayHintClientCapabilities::{ dynamic_registration, resolve_support }
@@ -21871,8 +21960,8 @@ pub struct DiagnosticClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DiagnosticClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DiagnosticClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.related_information {
     Some(v) => obj.set("relatedInformation", @json.JsonValue::Bool(v))
     None => ()
@@ -21901,14 +21990,14 @@ pub impl @json.ToJson for DiagnosticClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticClientCapabilities with from_json(json) {
+pub impl @json.FromJson for DiagnosticClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for DiagnosticClientCapabilities")
   }
   let related_information : Bool? = match obj.get("relatedInformation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21918,13 +22007,12 @@ pub impl @json.FromJson for DiagnosticClientCapabilities with from_json(json) {
     _ => None
   }
   let tag_support : ClientDiagnosticsTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientDiagnosticsTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientDiagnosticsTagOptions::from_json(v))
     _ => None
   }
   let code_description_support : Bool? = match
     obj.get("codeDescriptionSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21934,7 +22022,7 @@ pub impl @json.FromJson for DiagnosticClientCapabilities with from_json(json) {
     _ => None
   }
   let data_support : Bool? = match obj.get("dataSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21944,7 +22032,7 @@ pub impl @json.FromJson for DiagnosticClientCapabilities with from_json(json) {
     _ => None
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21955,7 +22043,7 @@ pub impl @json.FromJson for DiagnosticClientCapabilities with from_json(json) {
   }
   let related_document_support : Bool? = match
     obj.get("relatedDocumentSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -21982,8 +22070,10 @@ pub struct InlineCompletionClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for InlineCompletionClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for InlineCompletionClientCapabilities with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -21992,7 +22082,7 @@ pub impl @json.ToJson for InlineCompletionClientCapabilities with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for InlineCompletionClientCapabilities with from_json(
+pub impl @json.FromJson for InlineCompletionClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -22003,7 +22093,7 @@ pub impl @json.FromJson for InlineCompletionClientCapabilities with from_json(
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22025,10 +22115,10 @@ pub struct NotebookDocumentSyncClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for NotebookDocumentSyncClientCapabilities with to_json(
+pub impl @json.ToJson for NotebookDocumentSyncClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.dynamic_registration {
     Some(v) => obj.set("dynamicRegistration", @json.JsonValue::Bool(v))
     None => ()
@@ -22041,7 +22131,7 @@ pub impl @json.ToJson for NotebookDocumentSyncClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for NotebookDocumentSyncClientCapabilities with from_json(
+pub impl @json.FromJson for NotebookDocumentSyncClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -22052,7 +22142,7 @@ pub impl @json.FromJson for NotebookDocumentSyncClientCapabilities with from_jso
       )
   }
   let dynamic_registration : Bool? = match obj.get("dynamicRegistration") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22063,7 +22153,7 @@ pub impl @json.FromJson for NotebookDocumentSyncClientCapabilities with from_jso
   }
   let execution_summary_support : Bool? = match
     obj.get("executionSummarySupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22086,10 +22176,10 @@ pub struct ShowMessageRequestClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ShowMessageRequestClientCapabilities with to_json(
+pub impl @json.ToJson for ShowMessageRequestClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.message_action_item {
     Some(v) => obj.set("messageActionItem", v.to_json())
     None => ()
@@ -22098,7 +22188,7 @@ pub impl @json.ToJson for ShowMessageRequestClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for ShowMessageRequestClientCapabilities with from_json(
+pub impl @json.FromJson for ShowMessageRequestClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -22110,7 +22200,7 @@ pub impl @json.FromJson for ShowMessageRequestClientCapabilities with from_json(
   }
   let message_action_item : ClientShowMessageActionItemOptions? = match
     obj.get("messageActionItem") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientShowMessageActionItemOptions::from_json(v))
     _ => None
   }
@@ -22125,14 +22215,16 @@ pub struct ShowDocumentClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for ShowDocumentClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ShowDocumentClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("support", @json.JsonValue::Bool(self.support))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ShowDocumentClientCapabilities with from_json(json) {
+pub impl @json.FromJson for ShowDocumentClientCapabilities with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -22161,8 +22253,8 @@ pub struct StaleRequestSupportOptions {
 }
 
 ///|
-pub impl @json.ToJson for StaleRequestSupportOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for StaleRequestSupportOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("cancel", @json.JsonValue::Bool(self.cancel))
   obj.set(
     "retryOnContentModified",
@@ -22174,7 +22266,7 @@ pub impl @json.ToJson for StaleRequestSupportOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for StaleRequestSupportOptions with from_json(json) {
+pub impl @json.FromJson for StaleRequestSupportOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for StaleRequestSupportOptions")
@@ -22214,10 +22306,10 @@ pub struct RegularExpressionsClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for RegularExpressionsClientCapabilities with to_json(
+pub impl @json.ToJson for RegularExpressionsClientCapabilities with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("engine", @json.JsonValue::String(self.engine))
   match self.version {
     Some(v) => obj.set("version", @json.JsonValue::String(v))
@@ -22227,7 +22319,7 @@ pub impl @json.ToJson for RegularExpressionsClientCapabilities with to_json(
 }
 
 ///|
-pub impl @json.FromJson for RegularExpressionsClientCapabilities with from_json(
+pub impl @json.FromJson for RegularExpressionsClientCapabilities with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -22246,7 +22338,7 @@ pub impl @json.FromJson for RegularExpressionsClientCapabilities with from_json(
     None => raise @json.JsonError("missing engine")
   }
   let version : String? = match obj.get("version") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -22270,8 +22362,8 @@ pub struct MarkdownClientCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for MarkdownClientCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for MarkdownClientCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("parser", @json.JsonValue::String(self.parser))
   match self.version {
     Some(v) => obj.set("version", @json.JsonValue::String(v))
@@ -22289,7 +22381,7 @@ pub impl @json.ToJson for MarkdownClientCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for MarkdownClientCapabilities with from_json(json) {
+pub impl @json.FromJson for MarkdownClientCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for MarkdownClientCapabilities")
@@ -22303,7 +22395,7 @@ pub impl @json.FromJson for MarkdownClientCapabilities with from_json(json) {
     None => raise @json.JsonError("missing parser")
   }
   let version : String? = match obj.get("version") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::String(s) => s
@@ -22313,7 +22405,7 @@ pub impl @json.FromJson for MarkdownClientCapabilities with from_json(json) {
     _ => None
   }
   let allowed_tags : Array[String]? = match obj.get("allowedTags") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -22339,8 +22431,8 @@ pub struct ChangeAnnotationsSupportOptions {
 }
 
 ///|
-pub impl @json.ToJson for ChangeAnnotationsSupportOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ChangeAnnotationsSupportOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.groups_on_label {
     Some(v) => obj.set("groupsOnLabel", @json.JsonValue::Bool(v))
     None => ()
@@ -22349,7 +22441,9 @@ pub impl @json.ToJson for ChangeAnnotationsSupportOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ChangeAnnotationsSupportOptions with from_json(json) {
+pub impl @json.FromJson for ChangeAnnotationsSupportOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -22358,7 +22452,7 @@ pub impl @json.FromJson for ChangeAnnotationsSupportOptions with from_json(json)
       )
   }
   let groups_on_label : Bool? = match obj.get("groupsOnLabel") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22378,8 +22472,8 @@ pub struct ClientSymbolKindOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientSymbolKindOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientSymbolKindOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.value_set {
     Some(v) =>
       obj.set("valueSet", @json.JsonValue::Array(v.map(item => item.to_json())))
@@ -22389,13 +22483,13 @@ pub impl @json.ToJson for ClientSymbolKindOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientSymbolKindOptions with from_json(json) {
+pub impl @json.FromJson for ClientSymbolKindOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ClientSymbolKindOptions")
   }
   let value_set : Array[SymbolKind]? = match obj.get("valueSet") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -22416,8 +22510,8 @@ pub struct ClientSymbolTagOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientSymbolTagOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientSymbolTagOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "valueSet",
     @json.JsonValue::Array(self.value_set.map(item => item.to_json())),
@@ -22426,7 +22520,7 @@ pub impl @json.ToJson for ClientSymbolTagOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientSymbolTagOptions with from_json(json) {
+pub impl @json.FromJson for ClientSymbolTagOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ClientSymbolTagOptions")
@@ -22451,8 +22545,8 @@ pub struct ClientSymbolResolveOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientSymbolResolveOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientSymbolResolveOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "properties",
     @json.JsonValue::Array(
@@ -22463,7 +22557,7 @@ pub impl @json.ToJson for ClientSymbolResolveOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientSymbolResolveOptions with from_json(json) {
+pub impl @json.FromJson for ClientSymbolResolveOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ClientSymbolResolveOptions")
@@ -22511,8 +22605,8 @@ pub struct ClientCompletionItemOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCompletionItemOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCompletionItemOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.snippet_support {
     Some(v) => obj.set("snippetSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -22561,14 +22655,14 @@ pub impl @json.ToJson for ClientCompletionItemOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
+pub impl @json.FromJson for ClientCompletionItemOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for ClientCompletionItemOptions")
   }
   let snippet_support : Bool? = match obj.get("snippetSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22579,7 +22673,7 @@ pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
   }
   let commit_characters_support : Bool? = match
     obj.get("commitCharactersSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22590,7 +22684,7 @@ pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
   }
   let documentation_format : Array[MarkupKind]? = match
     obj.get("documentationFormat") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -22601,7 +22695,7 @@ pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
     _ => None
   }
   let deprecated_support : Bool? = match obj.get("deprecatedSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22611,7 +22705,7 @@ pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
     _ => None
   }
   let preselect_support : Bool? = match obj.get("preselectSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22621,11 +22715,11 @@ pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
     _ => None
   }
   let tag_support : CompletionItemTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) => Some(CompletionItemTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(CompletionItemTagOptions::from_json(v))
     _ => None
   }
   let insert_replace_support : Bool? = match obj.get("insertReplaceSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22636,18 +22730,18 @@ pub impl @json.FromJson for ClientCompletionItemOptions with from_json(json) {
   }
   let resolve_support : ClientCompletionItemResolveOptions? = match
     obj.get("resolveSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientCompletionItemResolveOptions::from_json(v))
     _ => None
   }
   let insert_text_mode_support : ClientCompletionItemInsertTextModeOptions? = match
     obj.get("insertTextModeSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientCompletionItemInsertTextModeOptions::from_json(v))
     _ => None
   }
   let label_details_support : Bool? = match obj.get("labelDetailsSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22678,8 +22772,8 @@ pub struct ClientCompletionItemOptionsKind {
 }
 
 ///|
-pub impl @json.ToJson for ClientCompletionItemOptionsKind with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCompletionItemOptionsKind with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.value_set {
     Some(v) =>
       obj.set("valueSet", @json.JsonValue::Array(v.map(item => item.to_json())))
@@ -22689,7 +22783,9 @@ pub impl @json.ToJson for ClientCompletionItemOptionsKind with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientCompletionItemOptionsKind with from_json(json) {
+pub impl @json.FromJson for ClientCompletionItemOptionsKind with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -22698,7 +22794,7 @@ pub impl @json.FromJson for ClientCompletionItemOptionsKind with from_json(json)
       )
   }
   let value_set : Array[CompletionItemKind]? = match obj.get("valueSet") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -22721,8 +22817,8 @@ pub struct CompletionListCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for CompletionListCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionListCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.item_defaults {
     Some(v) =>
       obj.set(
@@ -22739,13 +22835,13 @@ pub impl @json.ToJson for CompletionListCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionListCapabilities with from_json(json) {
+pub impl @json.FromJson for CompletionListCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionListCapabilities")
   }
   let item_defaults : Array[String]? = match obj.get("itemDefaults") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -22761,7 +22857,7 @@ pub impl @json.FromJson for CompletionListCapabilities with from_json(json) {
     _ => None
   }
   let apply_kind_support : Bool? = match obj.get("applyKindSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22787,8 +22883,10 @@ pub struct ClientSignatureInformationOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientSignatureInformationOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientSignatureInformationOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.documentation_format {
     Some(v) =>
       obj.set(
@@ -22813,7 +22911,7 @@ pub impl @json.ToJson for ClientSignatureInformationOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientSignatureInformationOptions with from_json(
+pub impl @json.FromJson for ClientSignatureInformationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -22825,7 +22923,7 @@ pub impl @json.FromJson for ClientSignatureInformationOptions with from_json(
   }
   let documentation_format : Array[MarkupKind]? = match
     obj.get("documentationFormat") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -22837,13 +22935,13 @@ pub impl @json.FromJson for ClientSignatureInformationOptions with from_json(
   }
   let parameter_information : ClientSignatureParameterInformationOptions? = match
     obj.get("parameterInformation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(ClientSignatureParameterInformationOptions::from_json(v))
     _ => None
   }
   let active_parameter_support : Bool? = match
     obj.get("activeParameterSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22854,7 +22952,7 @@ pub impl @json.FromJson for ClientSignatureInformationOptions with from_json(
   }
   let no_active_parameter_support : Bool? = match
     obj.get("noActiveParameterSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -22879,14 +22977,16 @@ pub struct ClientCodeActionLiteralOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCodeActionLiteralOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCodeActionLiteralOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("codeActionKind", self.code_action_kind.to_json())
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for ClientCodeActionLiteralOptions with from_json(json) {
+pub impl @json.FromJson for ClientCodeActionLiteralOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -22909,8 +23009,8 @@ pub struct ClientCodeActionResolveOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCodeActionResolveOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCodeActionResolveOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "properties",
     @json.JsonValue::Array(
@@ -22921,7 +23021,9 @@ pub impl @json.ToJson for ClientCodeActionResolveOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientCodeActionResolveOptions with from_json(json) {
+pub impl @json.FromJson for ClientCodeActionResolveOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -22954,8 +23056,8 @@ pub struct CodeActionTagOptions {
 }
 
 ///|
-pub impl @json.ToJson for CodeActionTagOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CodeActionTagOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "valueSet",
     @json.JsonValue::Array(self.value_set.map(item => item.to_json())),
@@ -22964,7 +23066,7 @@ pub impl @json.ToJson for CodeActionTagOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CodeActionTagOptions with from_json(json) {
+pub impl @json.FromJson for CodeActionTagOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CodeActionTagOptions")
@@ -22989,8 +23091,8 @@ pub struct ClientCodeLensResolveOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCodeLensResolveOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCodeLensResolveOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "properties",
     @json.JsonValue::Array(
@@ -23001,7 +23103,7 @@ pub impl @json.ToJson for ClientCodeLensResolveOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientCodeLensResolveOptions with from_json(json) {
+pub impl @json.FromJson for ClientCodeLensResolveOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -23032,8 +23134,8 @@ pub struct ClientFoldingRangeKindOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientFoldingRangeKindOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientFoldingRangeKindOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.value_set {
     Some(v) =>
       obj.set("valueSet", @json.JsonValue::Array(v.map(item => item.to_json())))
@@ -23043,14 +23145,16 @@ pub impl @json.ToJson for ClientFoldingRangeKindOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientFoldingRangeKindOptions with from_json(json) {
+pub impl @json.FromJson for ClientFoldingRangeKindOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
       raise @json.JsonError("expected object for ClientFoldingRangeKindOptions")
   }
   let value_set : Array[FoldingRangeKind]? = match obj.get("valueSet") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Array(items) =>
@@ -23071,8 +23175,8 @@ pub struct ClientFoldingRangeOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientFoldingRangeOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientFoldingRangeOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.collapsed_text {
     Some(v) => obj.set("collapsedText", @json.JsonValue::Bool(v))
     None => ()
@@ -23081,13 +23185,13 @@ pub impl @json.ToJson for ClientFoldingRangeOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientFoldingRangeOptions with from_json(json) {
+pub impl @json.FromJson for ClientFoldingRangeOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ClientFoldingRangeOptions")
   }
   let collapsed_text : Bool? = match obj.get("collapsedText") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -23113,8 +23217,8 @@ pub struct DiagnosticsCapabilities {
 }
 
 ///|
-pub impl @json.ToJson for DiagnosticsCapabilities with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for DiagnosticsCapabilities with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.related_information {
     Some(v) => obj.set("relatedInformation", @json.JsonValue::Bool(v))
     None => ()
@@ -23135,13 +23239,13 @@ pub impl @json.ToJson for DiagnosticsCapabilities with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticsCapabilities with from_json(json) {
+pub impl @json.FromJson for DiagnosticsCapabilities with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for DiagnosticsCapabilities")
   }
   let related_information : Bool? = match obj.get("relatedInformation") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -23151,13 +23255,12 @@ pub impl @json.FromJson for DiagnosticsCapabilities with from_json(json) {
     _ => None
   }
   let tag_support : ClientDiagnosticsTagOptions? = match obj.get("tagSupport") {
-    Some(v) if not(v.is_null()) =>
-      Some(ClientDiagnosticsTagOptions::from_json(v))
+    Some(v) if !v.is_null() => Some(ClientDiagnosticsTagOptions::from_json(v))
     _ => None
   }
   let code_description_support : Bool? = match
     obj.get("codeDescriptionSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -23167,7 +23270,7 @@ pub impl @json.FromJson for DiagnosticsCapabilities with from_json(json) {
     _ => None
   }
   let data_support : Bool? = match obj.get("dataSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -23194,8 +23297,10 @@ pub struct ClientSemanticTokensRequestOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientSemanticTokensRequestOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientSemanticTokensRequestOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.range {
     Some(v) => obj.set("range", v)
     None => ()
@@ -23208,7 +23313,7 @@ pub impl @json.ToJson for ClientSemanticTokensRequestOptions with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for ClientSemanticTokensRequestOptions with from_json(
+pub impl @json.FromJson for ClientSemanticTokensRequestOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -23231,8 +23336,8 @@ pub struct ClientInlayHintResolveOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientInlayHintResolveOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientInlayHintResolveOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "properties",
     @json.JsonValue::Array(
@@ -23243,7 +23348,9 @@ pub impl @json.ToJson for ClientInlayHintResolveOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientInlayHintResolveOptions with from_json(json) {
+pub impl @json.FromJson for ClientInlayHintResolveOptions with fn from_json(
+  json,
+) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -23274,8 +23381,10 @@ pub struct ClientShowMessageActionItemOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientShowMessageActionItemOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientShowMessageActionItemOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.additional_properties_support {
     Some(v) => obj.set("additionalPropertiesSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -23284,7 +23393,7 @@ pub impl @json.ToJson for ClientShowMessageActionItemOptions with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for ClientShowMessageActionItemOptions with from_json(
+pub impl @json.FromJson for ClientShowMessageActionItemOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -23296,7 +23405,7 @@ pub impl @json.FromJson for ClientShowMessageActionItemOptions with from_json(
   }
   let additional_properties_support : Bool? = match
     obj.get("additionalPropertiesSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -23316,8 +23425,8 @@ pub struct CompletionItemTagOptions {
 }
 
 ///|
-pub impl @json.ToJson for CompletionItemTagOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for CompletionItemTagOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "valueSet",
     @json.JsonValue::Array(self.value_set.map(item => item.to_json())),
@@ -23326,7 +23435,7 @@ pub impl @json.ToJson for CompletionItemTagOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for CompletionItemTagOptions with from_json(json) {
+pub impl @json.FromJson for CompletionItemTagOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for CompletionItemTagOptions")
@@ -23351,8 +23460,10 @@ pub struct ClientCompletionItemResolveOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCompletionItemResolveOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCompletionItemResolveOptions with fn to_json(
+  self,
+) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "properties",
     @json.JsonValue::Array(
@@ -23363,7 +23474,7 @@ pub impl @json.ToJson for ClientCompletionItemResolveOptions with to_json(self) 
 }
 
 ///|
-pub impl @json.FromJson for ClientCompletionItemResolveOptions with from_json(
+pub impl @json.FromJson for ClientCompletionItemResolveOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -23397,10 +23508,10 @@ pub struct ClientCompletionItemInsertTextModeOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCompletionItemInsertTextModeOptions with to_json(
+pub impl @json.ToJson for ClientCompletionItemInsertTextModeOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "valueSet",
     @json.JsonValue::Array(self.value_set.map(item => item.to_json())),
@@ -23409,7 +23520,7 @@ pub impl @json.ToJson for ClientCompletionItemInsertTextModeOptions with to_json
 }
 
 ///|
-pub impl @json.FromJson for ClientCompletionItemInsertTextModeOptions with from_json(
+pub impl @json.FromJson for ClientCompletionItemInsertTextModeOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -23439,10 +23550,10 @@ pub struct ClientSignatureParameterInformationOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientSignatureParameterInformationOptions with to_json(
+pub impl @json.ToJson for ClientSignatureParameterInformationOptions with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.label_offset_support {
     Some(v) => obj.set("labelOffsetSupport", @json.JsonValue::Bool(v))
     None => ()
@@ -23451,7 +23562,7 @@ pub impl @json.ToJson for ClientSignatureParameterInformationOptions with to_jso
 }
 
 ///|
-pub impl @json.FromJson for ClientSignatureParameterInformationOptions with from_json(
+pub impl @json.FromJson for ClientSignatureParameterInformationOptions with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -23462,7 +23573,7 @@ pub impl @json.FromJson for ClientSignatureParameterInformationOptions with from
       )
   }
   let label_offset_support : Bool? = match obj.get("labelOffsetSupport") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b
@@ -23482,8 +23593,8 @@ pub struct ClientCodeActionKindOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientCodeActionKindOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientCodeActionKindOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "valueSet",
     @json.JsonValue::Array(self.value_set.map(item => item.to_json())),
@@ -23492,7 +23603,7 @@ pub impl @json.ToJson for ClientCodeActionKindOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientCodeActionKindOptions with from_json(json) {
+pub impl @json.FromJson for ClientCodeActionKindOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -23518,8 +23629,8 @@ pub struct ClientDiagnosticsTagOptions {
 }
 
 ///|
-pub impl @json.ToJson for ClientDiagnosticsTagOptions with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ClientDiagnosticsTagOptions with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set(
     "valueSet",
     @json.JsonValue::Array(self.value_set.map(item => item.to_json())),
@@ -23528,7 +23639,7 @@ pub impl @json.ToJson for ClientDiagnosticsTagOptions with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ClientDiagnosticsTagOptions with from_json(json) {
+pub impl @json.FromJson for ClientDiagnosticsTagOptions with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ =>
@@ -23554,10 +23665,10 @@ pub struct ClientSemanticTokensRequestFullDelta {
 }
 
 ///|
-pub impl @json.ToJson for ClientSemanticTokensRequestFullDelta with to_json(
+pub impl @json.ToJson for ClientSemanticTokensRequestFullDelta with fn to_json(
   self,
 ) {
-  let obj : Map[String, @json.JsonValue] = {}
+  let obj : Map[String, @json.JsonValue] = Map([])
   match self.delta {
     Some(v) => obj.set("delta", @json.JsonValue::Bool(v))
     None => ()
@@ -23566,7 +23677,7 @@ pub impl @json.ToJson for ClientSemanticTokensRequestFullDelta with to_json(
 }
 
 ///|
-pub impl @json.FromJson for ClientSemanticTokensRequestFullDelta with from_json(
+pub impl @json.FromJson for ClientSemanticTokensRequestFullDelta with fn from_json(
   json,
 ) {
   let obj = match json {
@@ -23577,7 +23688,7 @@ pub impl @json.FromJson for ClientSemanticTokensRequestFullDelta with from_json(
       )
   }
   let delta : Bool? = match obj.get("delta") {
-    Some(v) if not(v.is_null()) =>
+    Some(v) if !v.is_null() =>
       Some(
         match v {
           @json.JsonValue::Bool(b) => b

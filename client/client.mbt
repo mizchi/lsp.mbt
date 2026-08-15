@@ -36,8 +36,8 @@ pub fn Client::new(config : ClientConfig) -> Client {
     config,
     decoder: @jsonrpc.Decoder::new(),
     next_id: 1,
-    pending: Map::new(),
-    notification_handlers: Map::new(),
+    pending: Map([]),
+    notification_handlers: Map([]),
     initialized: false,
   }
 }
@@ -63,20 +63,20 @@ pub fn Client::on_notification(
 ///|
 /// Build capabilities object
 fn build_capabilities() -> @json.JsonValue {
-  let publish_diag : Map[String, @json.JsonValue] = {}
+  let publish_diag : Map[String, @json.JsonValue] = Map([])
   publish_diag.set("relatedInformation", @json.JsonValue::Bool(true))
 
-  let sync : Map[String, @json.JsonValue] = {}
+  let sync : Map[String, @json.JsonValue] = Map([])
   sync.set("dynamicRegistration", @json.JsonValue::Bool(false))
   sync.set("willSave", @json.JsonValue::Bool(false))
   sync.set("willSaveWaitUntil", @json.JsonValue::Bool(false))
   sync.set("didSave", @json.JsonValue::Bool(true))
 
-  let text_doc : Map[String, @json.JsonValue] = {}
+  let text_doc : Map[String, @json.JsonValue] = Map([])
   text_doc.set("publishDiagnostics", @json.JsonValue::Object(publish_diag))
   text_doc.set("synchronization", @json.JsonValue::Object(sync))
 
-  let caps : Map[String, @json.JsonValue] = {}
+  let caps : Map[String, @json.JsonValue] = Map([])
   caps.set("textDocument", @json.JsonValue::Object(text_doc))
   @json.JsonValue::Object(caps)
 }
@@ -85,7 +85,7 @@ fn build_capabilities() -> @json.JsonValue {
 /// Create initialize request
 pub fn Client::create_initialize_request(self : Client) -> (Int, String) {
   let id = self.get_next_id()
-  let params : Map[String, @json.JsonValue] = {}
+  let params : Map[String, @json.JsonValue] = Map([])
   params.set(
     "processId",
     @json.JsonValue::Number(self.config.process_id.to_double()),
@@ -105,7 +105,7 @@ pub fn Client::create_initialize_request(self : Client) -> (Int, String) {
 ///|
 /// Create initialized notification
 pub fn Client::create_initialized_notification(_self : Client) -> String {
-  let params : Map[String, @json.JsonValue] = {}
+  let params : Map[String, @json.JsonValue] = Map([])
   let request = @jsonrpc.Request::new(
     "initialized",
     params=Some(@json.JsonValue::Object(params)),
@@ -122,13 +122,13 @@ pub fn Client::create_did_open_notification(
   version : Int,
   text : String,
 ) -> String {
-  let text_document : Map[String, @json.JsonValue] = {}
+  let text_document : Map[String, @json.JsonValue] = Map([])
   text_document.set("uri", @json.JsonValue::String(uri))
   text_document.set("languageId", @json.JsonValue::String(language_id))
   text_document.set("version", @json.JsonValue::Number(version.to_double()))
   text_document.set("text", @json.JsonValue::String(text))
 
-  let params : Map[String, @json.JsonValue] = {}
+  let params : Map[String, @json.JsonValue] = Map([])
   params.set("textDocument", @json.JsonValue::Object(text_document))
 
   let request = @jsonrpc.Request::new(
@@ -144,10 +144,10 @@ pub fn Client::create_did_close_notification(
   _self : Client,
   uri : String,
 ) -> String {
-  let text_document : Map[String, @json.JsonValue] = {}
+  let text_document : Map[String, @json.JsonValue] = Map([])
   text_document.set("uri", @json.JsonValue::String(uri))
 
-  let params : Map[String, @json.JsonValue] = {}
+  let params : Map[String, @json.JsonValue] = Map([])
   params.set("textDocument", @json.JsonValue::Object(text_document))
 
   let request = @jsonrpc.Request::new(
