@@ -1,13 +1,40 @@
 ///| JSON-RPC 2.0 protocol types
 
-///| Request ID - can be string or number
+///|
+fn[T : Show] write_show_value(value : T, logger : &Logger) -> Unit {
+  value.output(logger)
+}
+
+///|
+fn[T : Debug] write_debug_value(value : T, logger : &Logger) -> Unit {
+  logger.write_string(Debug::to_repr(value).to_string())
+}
+
+///|
+/// Request ID - can be string or number
 pub(all) enum RequestId {
   Number(Int)
   String(String)
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for RequestId with to_json(self) {
+pub impl Show for RequestId with fn output(self, logger) {
+  match self {
+    Number(n) => {
+      logger.write_string("Number(")
+      write_show_value(n, logger)
+      logger.write_string(")")
+    }
+    String(s) => {
+      logger.write_string("String(")
+      write_show_value(s, logger)
+      logger.write_string(")")
+    }
+  }
+}
+
+///|
+pub impl @json.ToJson for RequestId with fn to_json(self) {
   match self {
     Number(n) => @json.JsonValue::int(n)
     String(s) => @json.JsonValue::string(s)
@@ -15,7 +42,7 @@ pub impl @json.ToJson for RequestId with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for RequestId with from_json(json) {
+pub impl @json.FromJson for RequestId with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) => Number(n.to_int())
     @json.JsonValue::String(s) => String(s)
@@ -23,18 +50,30 @@ pub impl @json.FromJson for RequestId with from_json(json) {
   }
 }
 
-///| JSON-RPC Request
+///|
+/// JSON-RPC Request
 pub struct Request {
   id : RequestId?
   method_name : String
   params : @json.JsonValue?
-} derive(Show)
+} derive(Debug)
+
+///|
+pub impl Show for Request with fn output(self, logger) {
+  logger.write_string("{id: ")
+  write_debug_value(self.id, logger)
+  logger.write_string(", method_name: ")
+  write_show_value(self.method_name, logger)
+  logger.write_string(", params: ")
+  write_debug_value(self.params, logger)
+  logger.write_string("}")
+}
 
 ///|
 pub fn Request::new(
   method_name : String,
-  params~ : @json.JsonValue? = None,
-  id~ : RequestId? = None
+  params? : @json.JsonValue? = None,
+  id? : RequestId? = None,
 ) -> Request {
   Request::{ id, method_name, params }
 }
@@ -45,8 +84,8 @@ pub fn Request::is_notification(self : Request) -> Bool {
 }
 
 ///|
-pub impl @json.ToJson for Request with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Request with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("jsonrpc", @json.JsonValue::string("2.0"))
   match self.id {
     Some(id) => obj.set("id", id.to_json())
@@ -61,7 +100,7 @@ pub impl @json.ToJson for Request with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Request with from_json(json) {
+pub impl @json.FromJson for Request with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Request")
@@ -71,37 +110,54 @@ pub impl @json.FromJson for Request with from_json(json) {
     _ => raise @json.JsonError("missing or invalid method")
   }
   let id : RequestId? = match obj.get("id") {
-    Some(v) if not(v.is_null()) => Some(RequestId::from_json(v))
+    Some(v) if !v.is_null() => Some(RequestId::from_json(v))
     _ => None
   }
   let params = obj.get("params")
   Request::{ id, method_name, params }
 }
 
-///| JSON-RPC Error
+///|
+/// JSON-RPC Error
 pub struct ResponseError {
   code : Int
   message : String
   data : @json.JsonValue?
-} derive(Show)
+} derive(Debug)
 
-///| Standard error codes
+///|
+pub impl Show for ResponseError with fn output(self, logger) {
+  logger.write_string("{code: ")
+  write_show_value(self.code, logger)
+  logger.write_string(", message: ")
+  write_show_value(self.message, logger)
+  logger.write_string(", data: ")
+  write_debug_value(self.data, logger)
+  logger.write_string("}")
+}
+
+///|
+/// Standard error codes
 pub fn error_parse_error() -> Int {
   -32700
 }
 
+///|
 pub fn error_invalid_request() -> Int {
   -32600
 }
 
+///|
 pub fn error_method_not_found() -> Int {
   -32601
 }
 
+///|
 pub fn error_invalid_params() -> Int {
   -32602
 }
 
+///|
 pub fn error_internal_error() -> Int {
   -32603
 }
@@ -110,14 +166,14 @@ pub fn error_internal_error() -> Int {
 pub fn ResponseError::new(
   code : Int,
   message : String,
-  data~ : @json.JsonValue? = None
+  data? : @json.JsonValue? = None,
 ) -> ResponseError {
   ResponseError::{ code, message, data }
 }
 
 ///|
-pub impl @json.ToJson for ResponseError with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for ResponseError with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("code", @json.JsonValue::int(self.code))
   obj.set("message", @json.JsonValue::string(self.message))
   match self.data {
@@ -128,7 +184,7 @@ pub impl @json.ToJson for ResponseError with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for ResponseError with from_json(json) {
+pub impl @json.FromJson for ResponseError with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for ResponseError")
@@ -145,12 +201,24 @@ pub impl @json.FromJson for ResponseError with from_json(json) {
   ResponseError::{ code, message, data }
 }
 
-///| JSON-RPC Response
+///|
+/// JSON-RPC Response
 pub struct Response {
   id : RequestId?
   result : @json.JsonValue?
   error : ResponseError?
-} derive(Show)
+} derive(Debug)
+
+///|
+pub impl Show for Response with fn output(self, logger) {
+  logger.write_string("{id: ")
+  write_debug_value(self.id, logger)
+  logger.write_string(", result: ")
+  write_debug_value(self.result, logger)
+  logger.write_string(", error: ")
+  write_debug_value(self.error, logger)
+  logger.write_string("}")
+}
 
 ///|
 pub fn Response::ok(id : RequestId?, result : @json.JsonValue) -> Response {
@@ -168,8 +236,8 @@ pub fn Response::is_success(self : Response) -> Bool {
 }
 
 ///|
-pub impl @json.ToJson for Response with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Response with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("jsonrpc", @json.JsonValue::string("2.0"))
   match self.id {
     Some(id) => obj.set("id", id.to_json())
@@ -187,31 +255,48 @@ pub impl @json.ToJson for Response with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Response with from_json(json) {
+pub impl @json.FromJson for Response with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Response")
   }
   let id : RequestId? = match obj.get("id") {
-    Some(v) if not(v.is_null()) => Some(RequestId::from_json(v))
+    Some(v) if !v.is_null() => Some(RequestId::from_json(v))
     _ => None
   }
   let result = obj.get("result")
   let error : ResponseError? = match obj.get("error") {
-    Some(v) if not(v.is_null()) => Some(ResponseError::from_json(v))
+    Some(v) if !v.is_null() => Some(ResponseError::from_json(v))
     _ => None
   }
   Response::{ id, result, error }
 }
 
-///| JSON-RPC Message - either request or response
+///|
+/// JSON-RPC Message - either request or response
 pub(all) enum Message {
   Request(Request)
   Response(Response)
-} derive(Show)
+}
 
 ///|
-pub impl @json.ToJson for Message with to_json(self) {
+pub impl Show for Message with fn output(self, logger) {
+  match self {
+    Request(r) => {
+      logger.write_string("Request(")
+      write_show_value(r, logger)
+      logger.write_string(")")
+    }
+    Response(r) => {
+      logger.write_string("Response(")
+      write_show_value(r, logger)
+      logger.write_string(")")
+    }
+  }
+}
+
+///|
+pub impl @json.ToJson for Message with fn to_json(self) {
   match self {
     Request(r) => r.to_json()
     Response(r) => r.to_json()
@@ -219,7 +304,7 @@ pub impl @json.ToJson for Message with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Message with from_json(json) {
+pub impl @json.FromJson for Message with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Message")

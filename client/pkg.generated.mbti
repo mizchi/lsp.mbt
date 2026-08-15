@@ -4,6 +4,7 @@ package "mizchi/lsp/client"
 import {
   "mizchi/lsp/json",
   "mizchi/lsp/jsonrpc",
+  "moonbitlang/core/debug",
 }
 
 // Values
@@ -51,8 +52,7 @@ pub(all) enum ReadResult {
   Data(String)
   Eof
   Error(String)
-}
-pub impl Eq for ReadResult
+} derive(Eq, @debug.Debug)
 pub impl Show for ReadResult
 
 type ResponseHandler
@@ -71,7 +71,6 @@ pub impl Transport for StubTransport
 
 // Traits
 pub(open) trait Transport {
-  read(Self) -> ReadResult
-  write(Self, String) -> Unit
+  fn read(Self) -> ReadResult
+  fn write(Self, String) -> Unit
 }
-

@@ -1,0 +1,13 @@
+name = "mizchi/lsp"
+
+version = "0.1.3"
+
+readme = "README.mbt.md"
+
+repository = "https://github.com/mizchi/lsp.mbt"
+
+license = "Apache-2.0"
+
+keywords = [ "lsp", "language-server", "jsonrpc" ]
+
+description = "LSP (Language Server Protocol) implementation for MoonBit"

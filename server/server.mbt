@@ -1,12 +1,14 @@
 ///| LSP Server - Platform-independent interface
 
-///| Server configuration
+///|
+/// Server configuration
 pub(all) struct ServerConfig {
   name : String
   version : String
 }
 
-///| Server instance that handles LSP communication
+///|
+/// Server instance that handles LSP communication
 pub struct Server {
   config : ServerConfig
   dispatcher : @jsonrpc.Dispatcher
@@ -22,44 +24,48 @@ pub fn Server::new(config : ServerConfig) -> Server {
   }
 }
 
-///| Register a request handler
+///|
+/// Register a request handler
 pub fn Server::on_request(
   self : Server,
   name : String,
-  handler : @jsonrpc.Handler
+  handler : @jsonrpc.Handler,
 ) -> Unit {
   self.dispatcher.on_request(name, handler)
 }
 
-///| Register a notification handler
+///|
+/// Register a notification handler
 pub fn Server::on_notification(
   self : Server,
   name : String,
-  handler : (@jsonrpc.Request) -> Unit
+  handler : (@jsonrpc.Request) -> Unit,
 ) -> Unit {
   self.dispatcher.on_notification(name, handler)
 }
 
-///| Process a single message and return response if any
+///|
+/// Process a single message and return response if any
 pub fn Server::process_message(
   self : Server,
-  message : @jsonrpc.Message
+  message : @jsonrpc.Message,
 ) -> @jsonrpc.Response? {
   self.dispatcher.dispatch(message)
 }
 
-///| Feed data to the decoder and process any complete messages
+///|
+/// Feed data to the decoder and process any complete messages
 pub fn[H : IoHandler] Server::feed(
   self : Server,
   io : H,
-  data : String
+  data : String,
 ) -> Unit {
   self.decoder.push(data)
   // Process all complete messages in the buffer
   while true {
-    let result = try { self.decoder.decode() } catch { _ => None }
+    let result = self.decoder.decode() catch { _ => None }
     match result {
-      Some(decode_result) => {
+      Some(decode_result) =>
         match self.dispatcher.dispatch(decode_result.message) {
           Some(response) => {
             let encoded = @jsonrpc.encode_response(response)
@@ -67,13 +73,13 @@ pub fn[H : IoHandler] Server::feed(
           }
           None => ()
         }
-      }
       None => break
     }
   }
 }
 
-///| Run the server with the given IO handler
+///|
+/// Run the server with the given IO handler
 pub fn[H : IoHandler] Server::run(self : Server, io : H) -> Unit {
   while true {
     match io.read() {

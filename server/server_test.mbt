@@ -1,5 +1,5 @@
-///| Server module tests
-
+///|
+/// Server module tests
 test "StubIoHandler basic operations" {
   let io = StubIoHandler::new()
 
@@ -24,6 +24,7 @@ test "StubIoHandler basic operations" {
   assert_eq(io.get_errors().length(), 1)
 }
 
+///|
 test "Server creation" {
   let config = ServerConfig::{ name: "test-server", version: "0.1.0" }
   let server = Server::new(config)
@@ -31,6 +32,7 @@ test "Server creation" {
   assert_eq(server.config.version, "0.1.0")
 }
 
+///|
 test "Server request handler registration" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
@@ -43,7 +45,7 @@ test "Server request handler registration" {
   let request = @jsonrpc.Request::new(
     "test/echo",
     params=Some(@json.JsonValue::String("hello")),
-    id=Some(@jsonrpc.RequestId::Number(1))
+    id=Some(@jsonrpc.RequestId::Number(1)),
   )
   let response = server.process_message(@jsonrpc.Message::Request(request))
 
@@ -57,14 +59,13 @@ test "Server request handler registration" {
   }
 }
 
+///|
 test "Server notification handler" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
   let mut called = false
 
-  server.on_notification("test/notify", fn(_req) {
-    called = true
-  })
+  server.on_notification("test/notify", fn(_req) { called = true })
 
   // Process a notification (no id)
   let notification = @jsonrpc.Request::new("test/notify")
@@ -74,6 +75,7 @@ test "Server notification handler" {
   assert_true(called)
 }
 
+///|
 test "Server feed with StubIoHandler" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
@@ -94,6 +96,7 @@ test "Server feed with StubIoHandler" {
   assert_true(output[0].contains("pong"))
 }
 
+///|
 test "Server multiple requests" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
@@ -102,7 +105,10 @@ test "Server multiple requests" {
 
   server.on_request("test/count", fn(req) {
     call_count.val = call_count.val + 1
-    @jsonrpc.Response::ok(req.id, @json.JsonValue::Number(call_count.val.to_double()))
+    @jsonrpc.Response::ok(
+      req.id,
+      @json.JsonValue::Number(call_count.val.to_double()),
+    )
   })
 
   let msg1 = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"test/count\"}"
@@ -115,15 +121,14 @@ test "Server multiple requests" {
   assert_eq(io.get_output().length(), 2)
 }
 
+///|
 test "Server notification no response" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
   let io = StubIoHandler::new()
   let notified : Ref[Bool] = { val: false }
 
-  server.on_notification("test/notify", fn(_req) {
-    notified.val = true
-  })
+  server.on_notification("test/notify", fn(_req) { notified.val = true })
 
   // Notification has no id
   let message = "{\"jsonrpc\":\"2.0\",\"method\":\"test/notify\"}"
@@ -134,6 +139,7 @@ test "Server notification no response" {
   assert_eq(io.get_output().length(), 0)
 }
 
+///|
 test "Server method not found response" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
@@ -145,9 +151,10 @@ test "Server method not found response" {
   let output = io.get_output()
   assert_eq(output.length(), 1)
   assert_true(output[0].contains("error"))
-  assert_true(output[0].contains("-32601"))  // method not found
+  assert_true(output[0].contains("-32601")) // method not found
 }
 
+///|
 test "Server with params" {
   let config = ServerConfig::{ name: "test", version: "0.1.0" }
   let server = Server::new(config)
@@ -164,7 +171,10 @@ test "Server with params" {
           Some(@json.JsonValue::Number(n)) => n.to_int()
           _ => 0
         }
-        @jsonrpc.Response::ok(req.id, @json.JsonValue::Number((a + b).to_double()))
+        @jsonrpc.Response::ok(
+          req.id,
+          @json.JsonValue::Number((a + b).to_double()),
+        )
       }
       _ => @jsonrpc.Response::ok(req.id, @json.JsonValue::Number(0.0))
     }

@@ -1,15 +1,26 @@
 ///| LSP Diagnostic Types
 
-///| Diagnostic severity
+///|
+/// Diagnostic severity
 pub enum DiagnosticSeverity {
-  Error       // 1
-  Warning     // 2
+  Error // 1
+  Warning // 2
   Information // 3
-  Hint        // 4
-} derive(Eq, Show)
+  Hint // 4
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for DiagnosticSeverity with to_json(self) {
+pub impl Show for DiagnosticSeverity with fn output(self, logger) {
+  match self {
+    Error => logger.write_string("Error")
+    Warning => logger.write_string("Warning")
+    Information => logger.write_string("Information")
+    Hint => logger.write_string("Hint")
+  }
+}
+
+///|
+pub impl @json.ToJson for DiagnosticSeverity with fn to_json(self) {
   let n = match self {
     Error => 1
     Warning => 2
@@ -20,7 +31,7 @@ pub impl @json.ToJson for DiagnosticSeverity with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticSeverity with from_json(json) {
+pub impl @json.FromJson for DiagnosticSeverity with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -34,14 +45,23 @@ pub impl @json.FromJson for DiagnosticSeverity with from_json(json) {
   }
 }
 
-///| Diagnostic tag
+///|
+/// Diagnostic tag
 pub enum DiagnosticTag {
   Unnecessary // 1
-  Deprecated  // 2
-} derive(Eq, Show)
+  Deprecated // 2
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for DiagnosticTag with to_json(self) {
+pub impl Show for DiagnosticTag with fn output(self, logger) {
+  match self {
+    Unnecessary => logger.write_string("Unnecessary")
+    Deprecated => logger.write_string("Deprecated")
+  }
+}
+
+///|
+pub impl @json.ToJson for DiagnosticTag with fn to_json(self) {
   let n = match self {
     Unnecessary => 1
     Deprecated => 2
@@ -50,7 +70,7 @@ pub impl @json.ToJson for DiagnosticTag with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticTag with from_json(json) {
+pub impl @json.FromJson for DiagnosticTag with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) =>
       match n.to_int() {
@@ -62,25 +82,36 @@ pub impl @json.FromJson for DiagnosticTag with from_json(json) {
   }
 }
 
-///| Related diagnostic information
+///|
+/// Related diagnostic information
 pub struct DiagnosticRelatedInformation {
   location : Location
   message : String
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for DiagnosticRelatedInformation with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl Show for DiagnosticRelatedInformation with fn output(self, logger) {
+  logger.write_string("{location: ")
+  write_show_value(self.location, logger)
+  logger.write_string(", message: ")
+  write_show_value(self.message, logger)
+  logger.write_string("}")
+}
+
+///|
+pub impl @json.ToJson for DiagnosticRelatedInformation with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("location", self.location.to_json())
   obj.set("message", @json.JsonValue::string(self.message))
   @json.JsonValue::Object(obj)
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticRelatedInformation with from_json(json) {
+pub impl @json.FromJson for DiagnosticRelatedInformation with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
-    _ => raise @json.JsonError("expected object for DiagnosticRelatedInformation")
+    _ =>
+      raise @json.JsonError("expected object for DiagnosticRelatedInformation")
   }
   let location = match obj.get("location") {
     Some(v) => Location::from_json(v)
@@ -93,14 +124,31 @@ pub impl @json.FromJson for DiagnosticRelatedInformation with from_json(json) {
   DiagnosticRelatedInformation::{ location, message }
 }
 
-///| Diagnostic code (can be string or number)
+///|
+/// Diagnostic code (can be string or number)
 pub enum DiagnosticCode {
   Number(Int)
   String(String)
-} derive(Eq, Show)
+} derive(Eq, Debug)
 
 ///|
-pub impl @json.ToJson for DiagnosticCode with to_json(self) {
+pub impl Show for DiagnosticCode with fn output(self, logger) {
+  match self {
+    Number(n) => {
+      logger.write_string("Number(")
+      write_show_value(n, logger)
+      logger.write_string(")")
+    }
+    String(s) => {
+      logger.write_string("String(")
+      write_show_value(s, logger)
+      logger.write_string(")")
+    }
+  }
+}
+
+///|
+pub impl @json.ToJson for DiagnosticCode with fn to_json(self) {
   match self {
     Number(n) => @json.JsonValue::int(n)
     String(s) => @json.JsonValue::string(s)
@@ -108,7 +156,7 @@ pub impl @json.ToJson for DiagnosticCode with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for DiagnosticCode with from_json(json) {
+pub impl @json.FromJson for DiagnosticCode with fn from_json(json) {
   match json {
     @json.JsonValue::Number(n) => Number(n.to_int())
     @json.JsonValue::String(s) => String(s)
@@ -116,7 +164,8 @@ pub impl @json.FromJson for DiagnosticCode with from_json(json) {
   }
 }
 
-///| A diagnostic message
+///|
+/// A diagnostic message
 pub struct Diagnostic {
   range : Range
   severity : DiagnosticSeverity?
@@ -125,24 +174,51 @@ pub struct Diagnostic {
   message : String
   tags : Array[DiagnosticTag]?
   related_information : Array[DiagnosticRelatedInformation]?
-} derive(Show)
+} derive(Debug)
+
+///|
+pub impl Show for Diagnostic with fn output(self, logger) {
+  logger.write_string("{range: ")
+  write_show_value(self.range, logger)
+  logger.write_string(", severity: ")
+  write_debug_value(self.severity, logger)
+  logger.write_string(", code: ")
+  write_debug_value(self.code, logger)
+  logger.write_string(", source: ")
+  write_debug_value(self.source, logger)
+  logger.write_string(", message: ")
+  write_show_value(self.message, logger)
+  logger.write_string(", tags: ")
+  write_debug_value(self.tags, logger)
+  logger.write_string(", related_information: ")
+  write_debug_value(self.related_information, logger)
+  logger.write_string("}")
+}
 
 ///|
 pub fn Diagnostic::new(
   range : Range,
   message : String,
-  severity~ : DiagnosticSeverity? = None,
-  code~ : DiagnosticCode? = None,
-  source~ : String? = None,
-  tags~ : Array[DiagnosticTag]? = None,
-  related_information~ : Array[DiagnosticRelatedInformation]? = None
+  severity? : DiagnosticSeverity? = None,
+  code? : DiagnosticCode? = None,
+  source? : String? = None,
+  tags? : Array[DiagnosticTag]? = None,
+  related_information? : Array[DiagnosticRelatedInformation]? = None,
 ) -> Diagnostic {
-  Diagnostic::{ range, severity, code, source, message, tags, related_information }
+  Diagnostic::{
+    range,
+    severity,
+    code,
+    source,
+    message,
+    tags,
+    related_information,
+  }
 }
 
 ///|
-pub impl @json.ToJson for Diagnostic with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl @json.ToJson for Diagnostic with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("range", self.range.to_json())
   obj.set("message", @json.JsonValue::string(self.message))
   match self.severity {
@@ -181,7 +257,7 @@ pub impl @json.ToJson for Diagnostic with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for Diagnostic with from_json(json) {
+pub impl @json.FromJson for Diagnostic with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for Diagnostic")
@@ -195,11 +271,11 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     _ => raise @json.JsonError("missing or invalid message")
   }
   let severity : DiagnosticSeverity? = match obj.get("severity") {
-    Some(v) if not(v.is_null()) => Some(DiagnosticSeverity::from_json(v))
+    Some(v) if !v.is_null() => Some(DiagnosticSeverity::from_json(v))
     _ => None
   }
   let code : DiagnosticCode? = match obj.get("code") {
-    Some(v) if not(v.is_null()) => Some(DiagnosticCode::from_json(v))
+    Some(v) if !v.is_null() => Some(DiagnosticCode::from_json(v))
     _ => None
   }
   let source : String? = match obj.get("source") {
@@ -216,9 +292,8 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     }
     _ => None
   }
-  let related_information : Array[DiagnosticRelatedInformation]? = match obj.get(
-    "relatedInformation"
-  ) {
+  let related_information : Array[DiagnosticRelatedInformation]? = match
+    obj.get("relatedInformation") {
     Some(@json.JsonValue::Array(arr)) => {
       let result : Array[DiagnosticRelatedInformation] = []
       for item in arr {
@@ -228,19 +303,39 @@ pub impl @json.FromJson for Diagnostic with from_json(json) {
     }
     _ => None
   }
-  Diagnostic::{ range, severity, code, source, message, tags, related_information }
+  Diagnostic::{
+    range,
+    severity,
+    code,
+    source,
+    message,
+    tags,
+    related_information,
+  }
 }
 
-///| Publish diagnostics params
+///|
+/// Publish diagnostics params
 pub struct PublishDiagnosticsParams {
   uri : DocumentUri
   version : Int?
   diagnostics : Array[Diagnostic]
-} derive(Show)
+} derive(Debug)
 
 ///|
-pub impl @json.ToJson for PublishDiagnosticsParams with to_json(self) {
-  let obj : Map[String, @json.JsonValue] = {}
+pub impl Show for PublishDiagnosticsParams with fn output(self, logger) {
+  logger.write_string("{uri: ")
+  write_show_value(self.uri, logger)
+  logger.write_string(", version: ")
+  write_debug_value(self.version, logger)
+  logger.write_string(", diagnostics: ")
+  write_debug_value(self.diagnostics, logger)
+  logger.write_string("}")
+}
+
+///|
+pub impl @json.ToJson for PublishDiagnosticsParams with fn to_json(self) {
+  let obj : Map[String, @json.JsonValue] = Map([])
   obj.set("uri", self.uri.to_json())
   match self.version {
     Some(v) => obj.set("version", @json.JsonValue::int(v))
@@ -255,7 +350,7 @@ pub impl @json.ToJson for PublishDiagnosticsParams with to_json(self) {
 }
 
 ///|
-pub impl @json.FromJson for PublishDiagnosticsParams with from_json(json) {
+pub impl @json.FromJson for PublishDiagnosticsParams with fn from_json(json) {
   let obj = match json {
     @json.JsonValue::Object(o) => o
     _ => raise @json.JsonError("expected object for PublishDiagnosticsParams")

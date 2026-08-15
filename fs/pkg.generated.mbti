@@ -1,6 +1,10 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "mizchi/lsp/fs"
 
+import {
+  "moonbitlang/core/debug",
+}
+
 // Values
 pub fn path_to_uri(String) -> String
 
@@ -10,8 +14,7 @@ pub fn path_to_uri(String) -> String
 pub(all) struct DirEntry {
   name : String
   kind : EntryKind
-}
-pub impl Eq for DirEntry
+} derive(Eq, @debug.Debug)
 pub impl Show for DirEntry
 
 pub struct DocumentStore[F] {
@@ -31,8 +34,7 @@ pub fn[F : FileSystem] DocumentStore::write_file(Self[F], String, String) -> FsR
 pub(all) enum EntryKind {
   File
   Directory
-}
-pub impl Eq for EntryKind
+} derive(Eq, @debug.Debug)
 pub impl Show for EntryKind
 
 type FsNode
@@ -42,10 +44,9 @@ pub(all) enum FsResult[T] {
   NotFound(String)
   PermissionDenied(String)
   IoError(String)
-}
+} derive(Eq, @debug.Debug)
 pub fn[T] FsResult::is_ok(Self[T]) -> Bool
 pub fn[T] FsResult::unwrap(Self[T]) -> T
-pub impl[T : Eq] Eq for FsResult[T]
 pub impl[T : Show] Show for FsResult[T]
 
 pub struct MemoryFs {
@@ -71,14 +72,13 @@ pub fn TextDocument::set_content(Self, Int, String) -> Unit
 
 // Traits
 pub(open) trait FileSystem {
-  read_file(Self, String) -> FsResult[String]
-  write_file(Self, String, String) -> FsResult[Unit]
-  exists(Self, String) -> Bool
-  is_file(Self, String) -> Bool
-  is_directory(Self, String) -> Bool
-  read_dir(Self, String) -> FsResult[Array[DirEntry]]
-  create_dir(Self, String) -> FsResult[Unit]
-  remove_file(Self, String) -> FsResult[Unit]
-  remove_dir(Self, String) -> FsResult[Unit]
+  fn read_file(Self, String) -> FsResult[String]
+  fn write_file(Self, String, String) -> FsResult[Unit]
+  fn exists(Self, String) -> Bool
+  fn is_file(Self, String) -> Bool
+  fn is_directory(Self, String) -> Bool
+  fn read_dir(Self, String) -> FsResult[Array[DirEntry]]
+  fn create_dir(Self, String) -> FsResult[Unit]
+  fn remove_file(Self, String) -> FsResult[Unit]
+  fn remove_dir(Self, String) -> FsResult[Unit]
 }
-

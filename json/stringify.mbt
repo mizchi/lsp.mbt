@@ -1,6 +1,7 @@
 ///| JSON stringify implementation
 
-///| Convert JsonValue to string
+///|
+/// Convert JsonValue to string
 pub fn stringify(value : JsonValue) -> String {
   let buf = StringBuilder::new()
   write_value(value, buf)
@@ -92,7 +93,7 @@ fn write_object(obj : Map[String, JsonValue], buf : StringBuilder) -> Unit {
   buf.write_char('{')
   let mut first = true
   obj.each(fn(key, value) {
-    if not(first) {
+    if !first {
       buf.write_char(',')
     }
     first = false
@@ -103,7 +104,8 @@ fn write_object(obj : Map[String, JsonValue], buf : StringBuilder) -> Unit {
   buf.write_char('}')
 }
 
-///| Pretty print JSON with indentation
+///|
+/// Pretty print JSON with indentation
 pub fn stringify_pretty(value : JsonValue) -> String {
   let buf = StringBuilder::new()
   write_value_pretty(value, buf, 0)
@@ -111,7 +113,11 @@ pub fn stringify_pretty(value : JsonValue) -> String {
 }
 
 ///|
-fn write_value_pretty(value : JsonValue, buf : StringBuilder, indent : Int) -> Unit {
+fn write_value_pretty(
+  value : JsonValue,
+  buf : StringBuilder,
+  indent : Int,
+) -> Unit {
   match value {
     JsonValue::Null => buf.write_string("null")
     JsonValue::Bool(b) =>
@@ -138,7 +144,7 @@ fn write_indent(buf : StringBuilder, indent : Int) -> Unit {
 fn write_array_pretty(
   arr : Array[JsonValue],
   buf : StringBuilder,
-  indent : Int
+  indent : Int,
 ) -> Unit {
   if arr.is_empty() {
     buf.write_string("[]")
@@ -161,7 +167,7 @@ fn write_array_pretty(
 fn write_object_pretty(
   obj : Map[String, JsonValue],
   buf : StringBuilder,
-  indent : Int
+  indent : Int,
 ) -> Unit {
   if obj.is_empty() {
     buf.write_string("{}")
@@ -170,7 +176,7 @@ fn write_object_pretty(
   buf.write_string("{\n")
   let mut first = true
   obj.each(fn(key, value) {
-    if not(first) {
+    if !first {
       buf.write_string(",\n")
     }
     first = false

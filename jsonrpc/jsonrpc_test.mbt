@@ -1,26 +1,35 @@
-///| JSON-RPC module tests
-
+///|
+/// JSON-RPC module tests
 test "encode request" {
-  let req = Request::new("test/method", params=Some(@json.JsonValue::int(42)), id=Some(RequestId::Number(1)))
+  let req = Request::new(
+    "test/method",
+    params=Some(@json.JsonValue::int(42)),
+    id=Some(RequestId::Number(1)),
+  )
   let encoded = encode_request(req)
   assert_true(encoded.contains("Content-Length:"))
   assert_true(encoded.contains("test/method"))
 }
 
+///|
 test "encode response" {
-  let resp = Response::ok(Some(RequestId::Number(1)), @json.JsonValue::string("result"))
+  let resp = Response::ok(
+    Some(RequestId::Number(1)),
+    @json.JsonValue::string("result"),
+  )
   let encoded = encode_response(resp)
   assert_true(encoded.contains("Content-Length:"))
   assert_true(encoded.contains("result"))
 }
 
+///|
 test "decode single message" {
   let decoder = Decoder::new()
   let msg = "Content-Length: 40\r\n\r\n{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"test\"}"
   decoder.push(msg)
   let result = decoder.decode()
   match result {
-    Some(r) => {
+    Some(r) =>
       match r.message {
         Message::Request(req) => {
           assert_eq(req.method_name, "test")
@@ -28,11 +37,11 @@ test "decode single message" {
         }
         _ => fail("expected request")
       }
-    }
     None => fail("expected message")
   }
 }
 
+///|
 test "decode incomplete message" {
   let decoder = Decoder::new()
   decoder.push("Content-Length: 100\r\n\r\n{\"jsonrpc\":")
@@ -40,13 +49,21 @@ test "decode incomplete message" {
   assert_true(result is None)
 }
 
+///|
 test "dispatcher handles request" {
   let dispatcher = Dispatcher::new()
-  dispatcher.on_request("echo", Handler(fn(req) {
-    Response::ok(req.id, req.params.unwrap_or(@json.JsonValue::Null))
-  }))
+  dispatcher.on_request(
+    "echo",
+    Handler(fn(req) {
+      Response::ok(req.id, req.params.unwrap_or(@json.JsonValue::Null))
+    }),
+  )
 
-  let req = Request::new("echo", params=Some(@json.JsonValue::string("hello")), id=Some(RequestId::Number(1)))
+  let req = Request::new(
+    "echo",
+    params=Some(@json.JsonValue::string("hello")),
+    id=Some(RequestId::Number(1)),
+  )
   let response = dispatcher.dispatch(Message::Request(req))
 
   match response {
@@ -58,20 +75,20 @@ test "dispatcher handles request" {
   }
 }
 
+///|
 test "dispatcher handles notification" {
   let dispatcher = Dispatcher::new()
   let mut called = false
-  dispatcher.on_notification("notify", fn(_req) {
-    called = true
-  })
+  dispatcher.on_notification("notify", fn(_req) { called = true })
 
-  let req = Request::new("notify")  // No id = notification
+  let req = Request::new("notify") // No id = notification
   let response = dispatcher.dispatch(Message::Request(req))
 
   assert_true(response is None)
   assert_true(called)
 }
 
+///|
 test "dispatcher method not found" {
   let dispatcher = Dispatcher::new()
   let req = Request::new("unknown", id=Some(RequestId::Number(1)))
@@ -89,11 +106,14 @@ test "dispatcher method not found" {
   }
 }
 
+///|
 test "request serialization roundtrip" {
   let req = Request::new(
     "test/method",
-    params=Some(@json.JsonValue::Object({ "key": @json.JsonValue::string("value") })),
-    id=Some(RequestId::String("abc"))
+    params=Some(
+      @json.JsonValue::Object({ "key": @json.JsonValue::string("value") }),
+    ),
+    id=Some(RequestId::String("abc")),
   )
   let json = req.to_json()
   let parsed = Request::from_json(json)
@@ -101,10 +121,11 @@ test "request serialization roundtrip" {
   assert_eq(parsed.id, req.id)
 }
 
+///|
 test "response serialization roundtrip" {
   let resp = Response::ok(
     Some(RequestId::Number(42)),
-    @json.JsonValue::Array([@json.JsonValue::int(1), @json.JsonValue::int(2)])
+    @json.JsonValue::Array([@json.JsonValue::int(1), @json.JsonValue::int(2)]),
   )
   let json = resp.to_json()
   let parsed = Response::from_json(json)
@@ -112,11 +133,12 @@ test "response serialization roundtrip" {
   assert_true(parsed.is_success())
 }
 
+///|
 test "error response" {
   let err = ResponseError::new(
     error_invalid_params(),
     "Invalid parameters",
-    data=Some(@json.JsonValue::string("details"))
+    data=Some(@json.JsonValue::string("details")),
   )
   let resp = Response::err(Some(RequestId::Number(1)), err)
   assert_false(resp.is_success())
@@ -133,6 +155,7 @@ test "error response" {
   }
 }
 
+///|
 test "decode multiple messages" {
   let decoder = Decoder::new()
   let msg1 = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"test1\"}"
@@ -150,6 +173,7 @@ test "decode multiple messages" {
   assert_true(result3 is None)
 }
 
+///|
 test "decode chunked message" {
   let decoder = Decoder::new()
   let msg = "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"test\"}"
@@ -164,6 +188,7 @@ test "decode chunked message" {
   assert_true(result is Some(_))
 }
 
+///|
 test "request id types" {
   // Number ID
   let req1 = Request::new("test", id=Some(RequestId::Number(42)))
@@ -174,6 +199,7 @@ test "request id types" {
   assert_eq(req2.id, Some(RequestId::String("abc-123")))
 }
 
+///|
 test "standard error codes" {
   assert_eq(error_parse_error(), -32700)
   assert_eq(error_invalid_request(), -32600)
@@ -182,19 +208,26 @@ test "standard error codes" {
   assert_eq(error_internal_error(), -32603)
 }
 
+///|
 test "dispatcher multiple handlers" {
   let dispatcher = Dispatcher::new()
   let call_log : Array[String] = []
 
-  dispatcher.on_request("method1", Handler(fn(req) {
-    call_log.push("method1")
-    Response::ok(req.id, @json.JsonValue::Null)
-  }))
+  dispatcher.on_request(
+    "method1",
+    Handler(fn(req) {
+      call_log.push("method1")
+      Response::ok(req.id, @json.JsonValue::Null)
+    }),
+  )
 
-  dispatcher.on_request("method2", Handler(fn(req) {
-    call_log.push("method2")
-    Response::ok(req.id, @json.JsonValue::Null)
-  }))
+  dispatcher.on_request(
+    "method2",
+    Handler(fn(req) {
+      call_log.push("method2")
+      Response::ok(req.id, @json.JsonValue::Null)
+    }),
+  )
 
   let req1 = Request::new("method1", id=Some(RequestId::Number(1)))
   let req2 = Request::new("method2", id=Some(RequestId::Number(2)))
@@ -207,6 +240,7 @@ test "dispatcher multiple handlers" {
   assert_eq(call_log[1], "method2")
 }
 
+///|
 test "response to message dispatch" {
   let dispatcher = Dispatcher::new()
   let resp = Response::ok(Some(RequestId::Number(1)), @json.JsonValue::Null)

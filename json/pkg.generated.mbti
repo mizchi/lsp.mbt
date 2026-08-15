@@ -1,6 +1,10 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "mizchi/lsp/json"
 
+import {
+  "moonbitlang/core/debug",
+}
+
 // Values
 pub fn json_error(String) -> JsonError
 
@@ -23,7 +27,7 @@ pub(all) enum JsonValue {
   String(String)
   Array(Array[JsonValue])
   Object(Map[String, JsonValue])
-}
+} derive(Eq, @debug.Debug)
 pub fn JsonValue::array(Array[Self]) -> Self
 pub fn JsonValue::as_array(Self) -> Array[Self]?
 pub fn JsonValue::as_bool(Self) -> Bool?
@@ -42,14 +46,13 @@ pub fn JsonValue::object(Map[String, Self]) -> Self
 pub fn JsonValue::string(String) -> Self
 pub impl FromJson for JsonValue
 pub impl ToJson for JsonValue
-pub impl Eq for JsonValue
 pub impl Show for JsonValue
 
 // Type aliases
 
 // Traits
 pub(open) trait FromJson {
-  from_json(JsonValue) -> Self raise JsonError
+  fn from_json(JsonValue) -> Self raise JsonError
 }
 pub impl FromJson for Bool
 pub impl FromJson for Int
@@ -60,7 +63,7 @@ pub impl[T : FromJson] FromJson for T?
 pub impl[T : FromJson] FromJson for Array[T]
 
 pub(open) trait ToJson {
-  to_json(Self) -> JsonValue
+  fn to_json(Self) -> JsonValue
 }
 pub impl ToJson for Bool
 pub impl ToJson for Int
@@ -69,4 +72,3 @@ pub impl ToJson for Double
 pub impl ToJson for String
 pub impl[T : ToJson] ToJson for T?
 pub impl[T : ToJson] ToJson for Array[T]
-

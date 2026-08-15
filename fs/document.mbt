@@ -1,7 +1,9 @@
 ///| Document management for LSP
+
 ///| Tracks open documents and their content, backed by a FileSystem
 
-///| Text document with version tracking
+///|
+/// Text document with version tracking
 pub struct TextDocument {
   uri : String
   language_id : String
@@ -14,7 +16,7 @@ pub fn TextDocument::new(
   uri : String,
   language_id : String,
   version : Int,
-  content : String
+  content : String,
 ) -> TextDocument {
   TextDocument::{ uri, language_id, version, content }
 }
@@ -43,14 +45,16 @@ pub fn TextDocument::get_content(self : TextDocument) -> String {
 pub fn TextDocument::set_content(
   self : TextDocument,
   version : Int,
-  content : String
+  content : String,
 ) -> Unit {
   self.version = version
   self.content = content
 }
 
 ///| Document store - manages open documents
-///| Can be backed by any FileSystem implementation
+
+///|
+/// Can be backed by any FileSystem implementation
 pub struct DocumentStore[F] {
   fs : F
   documents : Map[String, TextDocument]
@@ -58,16 +62,17 @@ pub struct DocumentStore[F] {
 
 ///|
 pub fn[F] DocumentStore::new(fs : F) -> DocumentStore[F] {
-  DocumentStore::{ fs, documents: Map::new() }
+  DocumentStore::{ fs, documents: Map([]) }
 }
 
-///| Open a document (load from FS if not provided)
+///|
+/// Open a document (load from FS if not provided)
 pub fn[F : FileSystem] DocumentStore::open(
   self : DocumentStore[F],
   uri : String,
   language_id : String,
   version : Int,
-  content : String?
+  content : String?,
 ) -> TextDocument? {
   let text = match content {
     Some(c) => c
@@ -85,28 +90,28 @@ pub fn[F : FileSystem] DocumentStore::open(
   Some(doc)
 }
 
-///| Get an open document
+///|
+/// Get an open document
 pub fn[F] DocumentStore::get(
   self : DocumentStore[F],
-  uri : String
+  uri : String,
 ) -> TextDocument? {
   self.documents.get(uri)
 }
 
-///| Close a document
-pub fn[F] DocumentStore::close(
-  self : DocumentStore[F],
-  uri : String
-) -> Unit {
+///|
+/// Close a document
+pub fn[F] DocumentStore::close(self : DocumentStore[F], uri : String) -> Unit {
   self.documents.remove(uri)
 }
 
-///| Update document content
+///|
+/// Update document content
 pub fn[F] DocumentStore::update(
   self : DocumentStore[F],
   uri : String,
   version : Int,
-  content : String
+  content : String,
 ) -> Bool {
   match self.documents.get(uri) {
     Some(doc) => {
@@ -117,10 +122,11 @@ pub fn[F] DocumentStore::update(
   }
 }
 
-///| Save document to filesystem
+///|
+/// Save document to filesystem
 pub fn[F : FileSystem] DocumentStore::save(
   self : DocumentStore[F],
-  uri : String
+  uri : String,
 ) -> FsResult[Unit] {
   match self.documents.get(uri) {
     Some(doc) => {
@@ -131,34 +137,39 @@ pub fn[F : FileSystem] DocumentStore::save(
   }
 }
 
-///| List all open documents
+///|
+/// List all open documents
 pub fn[F] DocumentStore::list_open(self : DocumentStore[F]) -> Array[String] {
   let uris : Array[String] = []
   self.documents.each(fn(uri, _) { uris.push(uri) })
   uris
 }
 
-///| Read file from filesystem (without opening)
+///|
+/// Read file from filesystem (without opening)
 pub fn[F : FileSystem] DocumentStore::read_file(
   self : DocumentStore[F],
-  uri : String
+  uri : String,
 ) -> FsResult[String] {
   let path = uri_to_path(uri)
   self.fs.read_file(path)
 }
 
-///| Write file to filesystem (without opening)
+///|
+/// Write file to filesystem (without opening)
 pub fn[F : FileSystem] DocumentStore::write_file(
   self : DocumentStore[F],
   uri : String,
-  content : String
+  content : String,
 ) -> FsResult[Unit] {
   let path = uri_to_path(uri)
   self.fs.write_file(path, content)
 }
 
 ///| Convert file URI to path
-///| "file:///path/to/file" -> "/path/to/file"
+
+///|
+/// "file:///path/to/file" -> "/path/to/file"
 fn uri_to_path(uri : String) -> String {
   if uri.has_prefix("file://") {
     // Remove "file://" prefix (7 characters)
@@ -177,7 +188,9 @@ fn uri_to_path(uri : String) -> String {
 }
 
 ///| Convert path to file URI
-///| "/path/to/file" -> "file:///path/to/file"
+
+///|
+/// "/path/to/file" -> "file:///path/to/file"
 pub fn path_to_uri(path : String) -> String {
   if path.has_prefix("file://") {
     path

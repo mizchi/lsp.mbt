@@ -3,6 +3,7 @@ package "mizchi/lsp/jsonrpc"
 
 import {
   "mizchi/lsp/json",
+  "moonbitlang/core/debug",
 }
 
 // Values
@@ -78,8 +79,6 @@ pub fn Dispatcher::on_request(Self, String, Handler) -> Unit
 pub fn Dispatcher::process(Self, String) -> String? raise @json.JsonError
 
 pub(all) struct Handler((Request) -> Response raise RpcError)
-#deprecated
-pub fn Handler::inner(Self) -> (Request) -> Response raise RpcError
 
 pub(all) enum Message {
   Request(Request)
@@ -100,7 +99,7 @@ pub struct Request {
   id : RequestId?
   method_name : String
   params : @json.JsonValue?
-}
+} derive(@debug.Debug)
 pub fn Request::is_notification(Self) -> Bool
 pub fn Request::new(String, params? : @json.JsonValue?, id? : RequestId?) -> Self
 pub impl @json.FromJson for Request
@@ -110,17 +109,16 @@ pub impl Show for Request
 pub(all) enum RequestId {
   Number(Int)
   String(String)
-}
+} derive(Eq, @debug.Debug)
 pub impl @json.FromJson for RequestId
 pub impl @json.ToJson for RequestId
-pub impl Eq for RequestId
 pub impl Show for RequestId
 
 pub struct Response {
   id : RequestId?
   result : @json.JsonValue?
   error : ResponseError?
-}
+} derive(@debug.Debug)
 pub fn Response::err(RequestId?, ResponseError) -> Self
 pub fn Response::is_success(Self) -> Bool
 pub fn Response::ok(RequestId?, @json.JsonValue) -> Self
@@ -132,7 +130,7 @@ pub struct ResponseError {
   code : Int
   message : String
   data : @json.JsonValue?
-}
+} derive(@debug.Debug)
 pub fn ResponseError::new(Int, String, data? : @json.JsonValue?) -> Self
 pub impl @json.FromJson for ResponseError
 pub impl @json.ToJson for ResponseError
@@ -141,4 +139,3 @@ pub impl Show for ResponseError
 // Type aliases
 
 // Traits
-

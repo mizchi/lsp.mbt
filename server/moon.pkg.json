@@ -1,8 +1,0 @@
-{
-  "import": [
-    "mizchi/lsp/jsonrpc"
-  ],
-  "test-import": [
-    "mizchi/lsp/json"
-  ]
-}

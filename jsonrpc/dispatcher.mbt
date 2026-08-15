@@ -1,16 +1,19 @@
 ///| JSON-RPC dispatcher - routes messages to handlers
 
-///| Handler function type
+///|
+/// Handler function type
 pub(all) struct Handler((Request) -> Response raise RpcError)
 
-///| RPC error type
+///|
+/// RPC error type
 pub(all) suberror RpcError {
   MethodNotFound(String)
   InvalidParams(String)
   InternalError(String)
 }
 
-///| Convert RpcError to ResponseError
+///|
+/// Convert RpcError to ResponseError
 pub fn RpcError::to_response_error(self : RpcError) -> ResponseError {
   match self {
     MethodNotFound(msg) =>
@@ -22,7 +25,8 @@ pub fn RpcError::to_response_error(self : RpcError) -> ResponseError {
   }
 }
 
-///| Dispatcher manages method handlers
+///|
+/// Dispatcher manages method handlers
 pub struct Dispatcher {
   handlers : Map[String, Handler]
   notification_handlers : Map[String, (Request) -> Unit]
@@ -30,34 +34,34 @@ pub struct Dispatcher {
 
 ///|
 pub fn Dispatcher::new() -> Dispatcher {
-  Dispatcher::{
-    handlers: {},
-    notification_handlers: {},
-  }
+  Dispatcher::{ handlers: {}, notification_handlers: {} }
 }
 
-///| Register a request handler
+///|
+/// Register a request handler
 pub fn Dispatcher::on_request(
   self : Dispatcher,
   method_name : String,
-  handler : Handler
+  handler : Handler,
 ) -> Unit {
   self.handlers.set(method_name, handler)
 }
 
-///| Register a notification handler
+///|
+/// Register a notification handler
 pub fn Dispatcher::on_notification(
   self : Dispatcher,
   method_name : String,
-  handler : (Request) -> Unit
+  handler : (Request) -> Unit,
 ) -> Unit {
   self.notification_handlers.set(method_name, handler)
 }
 
-///| Dispatch a message and return response (if any)
+///|
+/// Dispatch a message and return response (if any)
 pub fn Dispatcher::dispatch(self : Dispatcher, message : Message) -> Response? {
   match message {
-    Message::Request(req) => {
+    Message::Request(req) =>
       if req.is_notification() {
         // Notification - no response expected
         match self.notification_handlers.get(req.method_name) {
@@ -69,21 +73,18 @@ pub fn Dispatcher::dispatch(self : Dispatcher, message : Message) -> Response? {
         // Request - response required
         Some(self.dispatch_request(req))
       }
-    }
     Message::Response(_) => None // Responses are not dispatched
   }
 }
 
-///| Dispatch a request and return response
+///|
+/// Dispatch a request and return response
 fn Dispatcher::dispatch_request(self : Dispatcher, req : Request) -> Response {
   match self.handlers.get(req.method_name) {
-    Some(handler) => {
-      try {
-        (handler.0)(req)
-      } catch {
+    Some(handler) =>
+      (handler.0)(req) catch {
         err => Response::err(req.id, err.to_response_error())
       }
-    }
     None =>
       Response::err(
         req.id,
@@ -95,8 +96,12 @@ fn Dispatcher::dispatch_request(self : Dispatcher, req : Request) -> Response {
   }
 }
 
-///| Process a raw message string and return encoded response (if any)
-pub fn Dispatcher::process(self : Dispatcher, input : String) -> String? raise @json.JsonError {
+///|
+/// Process a raw message string and return encoded response (if any)
+pub fn Dispatcher::process(
+  self : Dispatcher,
+  input : String,
+) -> String? raise @json.JsonError {
   let json = @json.parse(input)
   let message = Message::from_json(json)
   match self.dispatch(message) {
